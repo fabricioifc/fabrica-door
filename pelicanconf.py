@@ -2,11 +2,14 @@ AUTHOR = 'Fabricio Bizotto'
 SITENAME = 'Fabrica Door'
 SITEURL = ""
 
+THEME = "/home/fabricio/pelican-themes/mnmlist"
+# THEME = "/home/fabricio/pelican-themes/monospace"
+
 PATH = "content"
 
 TIMEZONE = 'America/Sao_Paulo'
 
-DEFAULT_LANG = 'en'
+DEFAULT_LANG = 'pt-br'
 
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None
@@ -33,3 +36,15 @@ DEFAULT_PAGINATION = False
 
 # Uncomment following line if you want document-relative URLs when developing
 # RELATIVE_URLS = True
+
+
+# Adicione esta linha ao arquivo pelicanconf.py
+MENUITEMS = [
+    ('Início', '/'),
+    ('Sobre', '/sobre'),
+    ('Equipe', '/equipe'),
+    ('Contato', '/contato'),
+]
+
+INDEX_SAVE_AS = 'index.html'
+RELATIVE_URLS = True
