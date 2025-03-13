@@ -1,23 +1,41 @@
 Title: Nossa Equipe
-Date: 2023-10-01
 Slug: equipe
-Status: hidden
+Template: team
 
-# Nossa Equipe
+# Conheça Nossa Equipe
 
-Conheça os talentosos profissionais que fazem a **Fábrica de Software** acontecer.
+Nossa equipe multidisciplinar reúne profissionais apaixonados por educação e tecnologia.
 
-## João Silva
-**Cargo:** CEO  
-**Foto:** ![João Silva](/images/joao.jpg)  
-João é o fundador da empresa e tem mais de 15 anos de experiência em desenvolvimento de software.
+## Diretoria
 
-## Maria Oliveira
-**Cargo:** Desenvolvedora Sênior  
-**Foto:** ![Maria Oliveira](/images/maria.jpg)  
-Maria é especialista em front-end e adora criar interfaces intuitivas e responsivas.
+### Ana Silva
+**Diretora Pedagógica**
+Mestre em Educação, com mais de 15 anos de experiência em tecnologia educacional.
 
-## Pedro Santos
-**Cargo:** Gerente de Projetos  
-**Foto:** ![Pedro Santos](/images/pedro.jpg)  
-Pedro garante que todos os projetos sejam entregues no prazo e dentro do orçamento.
+### Carlos Oliveira
+**Diretor de Tecnologia**
+Engenheiro de Software especializado em desenvolvimento de aplicações educacionais.
+
+## Desenvolvedores
+
+### Mariana Santos
+**Desenvolvedora Full Stack**
+Especialista em interfaces interativas e gamificação.
+
+### Pedro Costa
+**Desenvolvedor de Software Educacional**
+Especialista em Learning Analytics e sistemas adaptativos.
+
+### Juliana Martins
+**UX/UI Designer**
+Designer com foco em experiências de aprendizagem digital.
+
+## Equipe Pedagógica
+
+### Rafael Souza
+**Especialista em Conteúdo Educacional**
+Doutor em Didática das Ciências.
+
+### Camila Ferreira
+**Consultora Pedagógica**
+Especialista em metodologias ativas e avaliação da aprendizagem.

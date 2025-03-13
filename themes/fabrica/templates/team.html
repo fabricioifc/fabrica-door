@@ -1,0 +1,140 @@
+{% extends "base.html" %} {% block title %}{% if page %}{{ page.title }} - {%
+endif %}{{ SITENAME }}{% endblock %} {% block content %} {% if page %}
+<div class="page-header">
+  <div class="container">
+    <h1>{{ page.title }}</h1>
+  </div>
+</div>
+
+<div class="container">
+  <div class="page-content">
+    <!-- Div para conteúdo introdutório -->
+    <div class="team-introduction">
+      <!-- Conteúdo inserido via JavaScript -->
+    </div>
+
+    <!-- Seções da equipe -->
+    <div class="team-section" id="diretoria">
+      <h2>Diretoria</h2>
+      <div class="team-grid">
+        <!-- Conteúdo inserido via JavaScript -->
+      </div>
+    </div>
+
+    <div class="team-section" id="desenvolvedores">
+      <h2>Desenvolvedores</h2>
+      <div class="team-grid">
+        <!-- Conteúdo inserido via JavaScript -->
+      </div>
+    </div>
+
+    <div class="team-section" id="equipe-pedagogica">
+      <h2>Equipe Pedagógica</h2>
+      <div class="team-grid">
+        <!-- Conteúdo inserido via JavaScript -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Conteúdo da página como string segura
+    const rawContent = `{{ page.content|replace('\n', '\\n')|replace("'", "\\'") }}`;
+    const pageContent = rawContent.replace(/\\n/g, "\n");
+
+    // Extrair introdução
+    const introEnd = pageContent.indexOf("## Diretoria");
+    if (introEnd !== -1) {
+      const intro = pageContent.substring(0, introEnd).trim();
+      document.querySelector(".team-introduction").innerHTML = intro;
+    }
+
+    // Função para extrair seções específicas
+    function extractSection(content, startMarker, endMarker) {
+      const start = content.indexOf(startMarker);
+      if (start === -1) return "";
+
+      const end = endMarker
+        ? content.indexOf(endMarker, start)
+        : content.length;
+      if (end === -1) return content.substring(start + startMarker.length);
+
+      return content.substring(start + startMarker.length, end);
+    }
+
+    // Função para processar membros da equipe
+    function processTeamMembers(sectionContent, containerId) {
+      const container = document
+        .getElementById(containerId)
+        .querySelector(".team-grid");
+      if (!container) return;
+
+      const members = sectionContent
+        .split("###")
+        .filter((item) => item.trim().length > 0);
+
+      members.forEach((member) => {
+        const lines = member.trim().split("\n");
+        const name = lines[0].trim();
+
+        // Separar cargo e descrição
+        let role = "";
+        let description = "";
+
+        if (lines.length > 1) {
+          role = lines[1].trim().replace(/^\*\*|\*\*$/g, "");
+
+          if (lines.length > 2) {
+            description = lines.slice(2).join("<br>").trim();
+          }
+        }
+
+        // Criar elemento para membro da equipe
+        const teamMember = document.createElement("div");
+        teamMember.className = "team-member";
+        teamMember.innerHTML = `
+                    <div class="team-photo">
+                        <img src="{{ SITEURL }}/images/team/placeholder.png" alt="${name}">
+                    </div>
+                    <div class="team-info">
+                        <h3>${name}</h3>
+                        <span class="team-role">${role}</span>
+                        <p>${description}</p>
+                    </div>
+                `;
+
+        container.appendChild(teamMember);
+      });
+    }
+
+    // Processar cada seção
+    const diretoriaSection = extractSection(
+      pageContent,
+      "## Diretoria",
+      "## Desenvolvedores"
+    );
+    const desenvolvedoresSection = extractSection(
+      pageContent,
+      "## Desenvolvedores",
+      "## Equipe Pedagógica"
+    );
+    const pedagogicaSection = extractSection(
+      pageContent,
+      "## Equipe Pedagógica",
+      "##"
+    );
+
+    processTeamMembers(diretoriaSection, "diretoria");
+    processTeamMembers(desenvolvedoresSection, "desenvolvedores");
+    processTeamMembers(pedagogicaSection, "equipe-pedagogica");
+  });
+</script>
+{% else %}
+<div class="container">
+  <div class="page-content">
+    <h1>Equipe não encontrada</h1>
+    <p>O conteúdo solicitado não está disponível.</p>
+  </div>
+</div>
+{% endif %} {% endblock %}
