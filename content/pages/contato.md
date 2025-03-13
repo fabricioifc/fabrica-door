@@ -1,17 +1,10 @@
 Title: Contato
 Slug: contato
+show_header: false
 
 # Entre em Contato
 
-Estamos ansiosos para conhecer seu projeto educacional e discutir como podemos ajudar.
-
-## Informações de Contato
-
-**E-mail**: contato@fabricasoftwareeducativa.com.br
-**Telefone**: (11) 3456-7890
-**Endereço**: Av. Educação Digital, 123 - São Paulo/SP
-
-## Formulário de Contato
+Estamos ansiosos para conhecer seu projeto e discutir como podemos ajudar.
 
 <form id="contact-form">
   <div class="form-group">
@@ -25,14 +18,9 @@ Estamos ansiosos para conhecer seu projeto educacional e discutir como podemos a
   </div>
   
   <div class="form-group">
-    <label for="institution">Instituição</label>
-    <input type="text" id="institution" name="institution">
-  </div>
-  
-  <div class="form-group">
     <label for="subject">Assunto</label>
     <select id="subject" name="subject">
-      <option value="orcamento">Solicitar orçamento</option>
+      <option value="orcamento">Enviar ideias</option>
       <option value="parceria">Propor parceria</option>
       <option value="suporte">Suporte técnico</option>
       <option value="outros">Outros</option>
@@ -47,8 +35,8 @@ Estamos ansiosos para conhecer seu projeto educacional e discutir como podemos a
   <button type="submit" class="btn-primary">Enviar mensagem</button>
 </form>
 
-## Agende uma Demonstração
+<!-- ## Agende uma Demonstração
 
 Quer ver nossos softwares em ação? Agende uma demonstração online gratuita.
 
-[Agendar demonstração](#)
+[Agendar demonstração](#) -->

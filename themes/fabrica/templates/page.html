@@ -1,14 +1,17 @@
-{% extends "base.html" %} {% block title %}{% if page %}{{ page.title }} - {%
-endif %}{{ SITENAME }}{% endblock %} {% block content %} {% if page %}
+{% extends "base.html" %} {% block title %} {% if page %}{{ page.title }} - {%
+endif %}{{ SITENAME }} {% endblock %} {% block content %} {% if page %} {% if
+page.show_header is not defined or page.show_header|string|lower != "false" %}
 <div class="page-header">
   <div class="container">
     <h1>{{ page.title }}</h1>
   </div>
 </div>
+{% endif %}
 
 <div class="container">
   <div class="page-content">{{ page.content }}</div>
 </div>
+
 {% else %}
 <div class="container">
   <div class="page-content">
