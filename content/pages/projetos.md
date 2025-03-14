@@ -12,12 +12,12 @@ Laboratório virtual para práticas de ciências, permitindo simulações de exp
 **Tecnologias utilizadas**: React, Three.js, Python
 **Público-alvo**: Ensino Fundamental II e Médio
 
-## MathQuest
+## Cogercon
 
-Plataforma gamificada para aprendizagem de matemática, com desafios adaptados ao nível de cada estudante e feedback imediato.
+A COGERCON é uma cooperativa de energia solar.
 
-**Tecnologias utilizadas**: Vue.js, Django, PostgreSQL
-**Público-alvo**: Ensino Fundamental
+**Tecnologias utilizadas**: Django, PostgreSQL, Docker, TailwindCSS
+**Público-alvo**: Associados da cooperativa
 
 ## LiteraTour
 

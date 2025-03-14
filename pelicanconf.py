@@ -32,10 +32,10 @@ AUTHOR_FEED_RSS = None
 # Configurações de menu
 MENUITEMS = [
     ('Início', '/'),
-    ('Sobre', '/sobre.html'),
-    ('Projetos', '/projetos.html'),
-    ('Equipe', '/equipe.html'),
-    ('Contato', '/contato.html'),
+    ('Sobre', '/sobre'),
+    ('Projetos', '/projetos'),
+    ('Equipe', '/equipe'),
+    ('Contato', '/contato'),
 ]
 
 # Plugins, se necessário
