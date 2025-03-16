@@ -40,6 +40,8 @@ Engenheiro de Software especializado em desenvolvimento web.
 
 ## Desenvolvedores
 
+Conheça os desenvolvedores que fazem fizeram ou fazem parte da nossa equipe.
+
 ### Paulo
 ![Paulo](/images/equipe/default.jpg) 
 
@@ -57,7 +59,7 @@ Aluno do curso de Ciência da Computação do IFC Campus Videira.
 ### Maicon
 ![Maicon](/images/equipe/default.jpg)
 
-**UX/UI Designer**  
+**Desenvolvedor Full Stack**  
 
 Aluno do curso de Ciência da Computação do IFC Campus Videira.
 

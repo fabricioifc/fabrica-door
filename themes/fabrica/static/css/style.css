@@ -20,6 +20,10 @@
   --container-width: 1200px;
 }
 
+:root {
+  scroll-padding-top: 100px; /* Ajusta o scroll globalmente */
+}
+
 /* Reset básico */
 * {
   margin: 0;
