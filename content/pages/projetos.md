@@ -5,30 +5,29 @@ Slug: projetos
 
 Conheça alguns dos softwares educacionais desenvolvidos pela nossa fábrica.
 
-## EduLab Virtual
+## Fabrica de Software {#fabrica}
 
-Laboratório virtual para práticas de ciências, permitindo simulações de experimentos científicos em ambientes onde não há laboratórios físicos disponíveis.
+A Fábrica de Software é um ambiente de desenvolvimento de software criado para auxiliar professores e alunos na execução de projetos de software. Este projeto foi criado para divulgar o trabalho da nossa equipe e incentivar a criação de novos projetos.
 
-**Tecnologias utilizadas**: React, Three.js, Python
-**Público-alvo**: Ensino Fundamental II e Médio
+ - **Tecnologias utilizadas**: HTML, CSS, JavaScript, Python/Pelican.
+ - **Público-alvo**: Professores e alunos do IFC Campus Videira e comunidade em geral.
+ - **Código-fonte**: [https://github.com/fabricioifc/fabrica-door](https://github.com/fabricioifc/fabrica-door)
+ - **Desenvolvedores**: Fabricio Bizotto (Professor)
 
-## Cogercon
+## Cogercon {#cogercon}
 
 A COGERCON é uma cooperativa de energia solar.
 
-**Tecnologias utilizadas**: Django, PostgreSQL, Docker, TailwindCSS
-**Público-alvo**: Associados da cooperativa
+ - **Tecnologias utilizadas**: Django, PostgreSQL, Docker, TailwindCSS
+ - **Público-alvo**: Associados da cooperativa
+ - **Código-fonte**: Repositório Privado
+ - **Desenvolvedores**: Fabricio Bizotto (Professor), Paulo Sérgio Pierdona (Aluno - Ciência da Computação), Gabriel Sousa (Aluno - Ciência da Computação), Helder Martins (Aluno - Ciência da Computação)
 
-## LiteraTour
+## E-Stagio {#estagio}
 
-Aplicativo que transforma clássicos da literatura em experiências interativas, com mapas conceituais, análises de personagens e contexto histórico.
+Sistema de gestão de estágios para instituições de ensino, empresas e estudantes.
 
-**Tecnologias utilizadas**: Flutter, Firebase
-**Público-alvo**: Ensino Médio e Superior
-
-## EduGestor
-
-Sistema de gestão escolar simplificado, focado em pequenas instituições educacionais e projetos sociais.
-
-**Tecnologias utilizadas**: Laravel, MySQL, Bootstrap
-**Público-alvo**: Gestores educacionais
+ - **Tecnologias utilizadas**: Python, Flask, SQLite
+ - **Público-alvo**: Alunos de cursos técnicos, professores e empresas
+ - **Código-fonte**: [https://github.com/wanderson-rigo/e-stagio](https://github.com/wanderson-rigo/e-stagio)
+ - **Desenvolvedores**: Wanderson Rigo (Professor), Bruno Pergher (Egresso - Ciência da Computação)
