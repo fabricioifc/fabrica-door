@@ -38,8 +38,8 @@ body {
   line-height: 1.6;
   color: var(--text-color);
   background-color: var(--background-color);
-  margin: 0; /* Remove margens padrão */
-  overflow-x: hidden; /* Evita scroll horizontal indesejado */
+  margin: 0;
+  overflow-x: hidden;
 }
 
 .container {
@@ -70,7 +70,7 @@ header .container {
 /* Logo */
 .logo {
   transition: transform 0.3s ease;
-  z-index: 101; /* Mantém o logo acima do menu */
+  z-index: 101;
 }
 
 .logo:hover {
@@ -84,7 +84,7 @@ header .container {
 
 /* Hamburger Button */
 .hamburger {
-  display: none; /* Escondido por padrão */
+  display: none;
   background: none;
   border: none;
   cursor: pointer;
@@ -126,7 +126,7 @@ nav a {
   transition: all 0.3s ease;
   position: relative;
   display: block;
-  scroll-margin-top: 80px; /* Ajusta o ponto de parada do scroll considerando o header fixo */
+  scroll-margin-top: 80px;
 }
 
 nav a::after {
@@ -150,6 +150,16 @@ nav a:hover {
   transform: translateY(-2px);
 }
 
+/* Estilo para o item ativo */
+nav a.active {
+  color: var(--primary-color);
+  font-weight: 600; /* Um pouco mais negrito para destaque */
+}
+
+nav a.active::after {
+  width: 100%; /* Exibe a linha completa por padrão */
+}
+
 header.scrolled {
   background-color: rgba(255, 255, 255, 0.95);
   box-shadow: 0 4px 15px var(--header-shadow);
@@ -158,7 +168,7 @@ header.scrolled {
 /* Media Query para Mobile */
 @media (max-width: 768px) {
   .hamburger {
-    display: block; /* Mostra o hamburger em telas menores */
+    display: block;
   }
 
   nav {
@@ -173,7 +183,6 @@ header.scrolled {
     box-shadow: 0 4px 15px var(--header-shadow);
   }
 
-  /* Classe para mostrar o menu quando ativo */
   nav.active {
     transform: translateX(0);
     opacity: 1;
@@ -202,7 +211,11 @@ header.scrolled {
   }
 
   nav a:hover::after {
-    width: 50px; /* Underline menor no mobile */
+    width: 50px;
+  }
+
+  nav a.active::after {
+    width: 50px; /* Mantém o tamanho reduzido no mobile */
   }
 
   /* Animação do hamburger para X */
@@ -217,12 +230,6 @@ header.scrolled {
   .hamburger.active span:nth-child(3) {
     transform: rotate(-45deg) translate(7px, -7px);
   }
-}
-
-/* Efeito de scroll (opcional) */
-header.scrolled {
-  background-color: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 4px 15px var(--header-shadow);
 }
 
 /* Hero Section */
@@ -271,7 +278,6 @@ header.scrolled {
   text-align: center;
 }
 
-/* Estilo do botão primário */
 .btn-primary {
   background-color: var(--primary-color);
   color: var(--secondary-color);
@@ -283,7 +289,6 @@ header.scrolled {
   border-color: var(--primary-color-hover);
 }
 
-/* Estilo do botão secundário */
 .btn-secondary {
   background-color: var(--secondary-color);
   color: var(--secondary-text-color);
@@ -376,50 +381,99 @@ header.scrolled {
 /* Team Section */
 .team-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 30px;
-  margin-top: 40px;
+  grid-template-columns: repeat(3, 1fr); /* Três colunas fixas */
+  gap: 30px; /* Aumentado para mais espaço entre os membros */
+  margin-top: 30px; /* Mais espaço acima do grid */
+  padding: 0 10px; /* Margem lateral para evitar colisão com bordas */
 }
 
 .team-member {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px; /* Aumentado para mais espaço interno */
   background-color: var(--secondary-color);
   border-radius: var(--border-radius);
-  overflow: hidden;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+  min-height: 350px; /* Altura mínima para consistência */
 }
 
-.team-photo {
+.team-member:hover {
+  transform: translateY(-5px);
+}
+
+.team-photo img {
   width: 100%;
-  height: 250px;
-  background-color: #e0e0e0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  max-width: 120px; /* Reduzido para melhor proporção */
+  height: auto;
+  border-radius: 50%; /* Foto circular */
+  margin-bottom: 15px; /* Mais espaço abaixo da foto */
+  object-fit: cover; /* Garante que a imagem preencha o espaço */
 }
 
 .team-info {
-  padding: 20px;
+  flex-grow: 1; /* Permite que o conteúdo textual ocupe o espaço disponível */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .team-info h3 {
-  margin-bottom: 5px;
+  margin: 0 0 8px; /* Espaçamento ajustado */
+  font-size: 1.1em; /* Levemente menor para caber melhor */
   color: var(--primary-color);
+  font-weight: 600;
 }
 
 .team-role {
-  font-weight: 500;
-  color: #666;
-  margin-bottom: 10px;
+  font-style: italic;
+  color: #555;
   display: block;
+  margin-bottom: 10px; /* Mais espaço antes da descrição */
+  font-weight: 500;
+  font-size: 0.95em; /* Levemente menor */
 }
 
-.team-section {
+.team-info p {
+  font-size: 0.9em;
+  color: var(--text-color);
+  margin: 0; /* Remove margens extras */
+  line-height: 1.4; /* Melhora a legibilidade */
+  padding: 0 10px; /* Margem lateral interna para evitar corte */
+}
+
+.team-section:not(:first-child) {
   margin-top: 60px;
 }
 
 .team-section h2 {
-  margin-bottom: 30px;
+  margin-bottom: 20px; /* Reduzido para alinhar com o grid */
   color: var(--primary-color);
+}
+
+/* Responsividade para Team Section */
+@media (max-width: 1024px) {
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr); /* Duas colunas em telas médias */
+  }
+}
+
+@media (max-width: 768px) {
+  .team-grid {
+    grid-template-columns: 1fr; /* Uma coluna em telas pequenas */
+    padding: 0; /* Remove padding lateral em mobile */
+  }
+
+  .team-member {
+    min-height: auto; /* Remove altura mínima em mobile */
+    padding: 15px; /* Reduz padding em mobile */
+  }
+
+  .team-photo img {
+    max-width: 100px; /* Reduz ainda mais em mobile */
+  }
 }
 
 /* Projetos em Destaque */
@@ -481,22 +535,7 @@ header.scrolled {
   margin-bottom: 15px;
 }
 
-/* Ajustando o btn-primary duplicado
-.btn-primary {
-  display: inline-block;
-  padding: var(--btn-padding);
-  border-radius: var(--border-radius);
-  background-color: var(--primary-color);
-  color: var(--secondary-color);
-  text-decoration: none;
-  font-weight: 500;
-  transition: background 0.3s;
-}
-
-.btn-primary:hover {
-  background-color: var(--primary-color-hover);
-} */
-
+/* CTA */
 .cta {
   background: linear-gradient(
     135deg,
@@ -515,63 +554,6 @@ header.scrolled {
   flex-direction: column;
   gap: 20px;
   align-items: center;
-}
-
-/* Responsivo */
-@media (max-width: 768px) {
-  header .container {
-    flex-direction: row;
-    justify-content: space-between;
-    /* padding: 10px 20px; */
-  }
-
-  nav {
-    /* margin-top: 15px; */
-    width: 100%;
-  }
-
-  nav ul {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-  }
-
-  nav li {
-    margin: 5px 15px;
-  }
-
-  nav a {
-    padding: 6px 10px;
-  }
-
-  /* Ajusta o efeito underline no mobile */
-  nav a::after {
-    height: 1px;
-  }
-}
-
-/* Efeito de scroll (opcional) */
-header.scrolled {
-  background-color: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 4px 15px var(--header-shadow);
-}
-
-/* Responsivo */
-@media (max-width: 1024px) {
-  .project-showcase {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  }
-}
-
-@media (max-width: 768px) {
-  .project-showcase {
-    grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
-  }
-
-  .project-card {
-    max-width: 400px;
-    margin: 0 auto;
-  }
 }
 
 /* Contact Form */
@@ -602,34 +584,162 @@ header.scrolled {
 
 /* Footer */
 footer {
-  background-color: #fff;
+  background-color: var(--header-bg);
   color: var(--text-color);
   padding: 60px 0 30px;
+  border-top: 2px solid var(--border-color);
 }
 
 .footer-content {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 40px;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.footer-info,
+.footer-contact,
+.footer-social {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .footer-content h3 {
   color: var(--primary-color);
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+  font-size: 1.3em;
+  font-weight: 600;
+}
+
+.footer-info p,
+.footer-contact p {
+  /* margin-bottom: 10px; */
+  font-size: 0.85em;
+  line-height: 1.5;
+}
+
+.footer-contact a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-contact a:hover {
+  color: var(--primary-color-hover);
+  text-decoration: underline;
 }
 
 .footer-social ul {
   list-style: none;
   display: flex;
-  gap: 10px;
+  flex-direction: row; /* Organiza em linha horizontal */
+  gap: 20px; /* Espaçamento maior entre ícones */
+  margin-top: 10px; /* Espaço após o h3 */
+}
+
+.footer-social li {
+  display: flex;
+  align-items: center;
 }
 
 .footer-social a {
   color: var(--primary-color);
   text-decoration: none;
-  transition: color 0.3s;
+  font-size: 1.5em; /* Tamanho maior para os ícones */
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px; /* Largura fixa para consistência */
+  height: 40px; /* Altura fixa para consistência */
+  border-radius: 50%; /* Forma circular */
 }
 
 .footer-social a:hover {
   color: var(--primary-color-hover);
+  background-color: rgba(134, 0, 131, 0.1); /* Fundo sutil ao passar o mouse */
+  transform: scale(1.1); /* Leve aumento no hover */
+}
+
+/* Remove o estilo específico para i, já que o a agora controla tudo */
+.footer-social a i {
+  line-height: 1; /* Garante alinhamento vertical correto */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  footer {
+    padding: 40px 0 20px;
+  }
+
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding: 0 15px;
+  }
+
+  .footer-info,
+  .footer-contact,
+  .footer-social {
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-social ul {
+    justify-content: center; /* Centraliza os ícones em mobile */
+    gap: 15px; /* Reduz o espaço em mobile */
+  }
+
+  .footer-social a {
+    width: 35px; /* Reduz o tamanho em mobile */
+    height: 35px;
+  }
+}
+
+/* Responsivo */
+@media (max-width: 1024px) {
+  .project-showcase {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  header .container {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  nav {
+    width: 100%;
+  }
+
+  nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  nav li {
+    margin: 5px 15px;
+  }
+
+  nav a {
+    padding: 6px 10px;
+  }
+
+  nav a::after {
+    height: 1px;
+  }
+
+  .project-showcase {
+    grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+  }
+
+  .project-card {
+    max-width: 400px;
+    margin: 0 auto;
+  }
 }

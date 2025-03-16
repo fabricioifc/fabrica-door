@@ -1,41 +1,69 @@
-Title: Nossa Equipe
-Slug: equipe
-Template: team
+---
+title: Nossa Equipe
+slug: equipe
+template: team
+---
 
-# Conheça Nossa Equipe
+<!-- # Conheça Nossa Equipe
 
-Nossa equipe multidisciplinar reúne profissionais apaixonados por educação e tecnologia.
+Nossa equipe multidisciplinar reúne profissionais apaixonados por educação e tecnologia. -->
 
-## Diretoria
+## Coordenação e Colaboração
 
-### Ana Silva
-**Diretora Pedagógica**
-Mestre em Educação, com mais de 15 anos de experiência em tecnologia educacional.
+### Fabio José Rodrigues Pinheiro
+![Fabio José Rodrigues Pinheiro](/images/equipe/default.jpg)
 
-### Carlos Oliveira
-**Diretor de Tecnologia**
-Engenheiro de Software especializado em desenvolvimento de aplicações educacionais.
+**Coordenador**
+
+Mestre em Ciência da Computação e professor do IFC Campus Videira
+
+### Fabricio Bizotto
+![Fabricio Bizotto](/images/equipe/default.jpg)
+
+**Professor**
+
+Engenheiro de Software especializado em desenvolvimento web.
+
+### Tiago Lopes Gonçalves
+![Fabricio Bizotto](/images/equipe/default.jpg)
+
+**Professor**
+
+Engenheiro de Software especializado em desenvolvimento web.
+
+### Wanderson Rigo
+![Wanderson Rigo](/images/equipe/default.jpg)
+
+**Professor**
+
+Engenheiro de Software especializado em desenvolvimento web.
 
 ## Desenvolvedores
 
-### Mariana Santos
-**Desenvolvedora Full Stack**
-Especialista em interfaces interativas e gamificação.
+### Paulo
+![Paulo](/images/equipe/default.jpg) 
 
-### Pedro Costa
-**Desenvolvedor de Software Educacional**
-Especialista em Learning Analytics e sistemas adaptativos.
+**Desenvolvedor Full Stack** 
 
-### Juliana Martins
-**UX/UI Designer**
-Designer com foco em experiências de aprendizagem digital.
+Aluno do curso de Ciência da Computação do IFC Campus Videira.
 
-## Equipe Pedagógica
+### Gabriel
+![Gabriel](/images/equipe/default.jpg)
 
-### Rafael Souza
-**Especialista em Conteúdo Educacional**
-Doutor em Didática das Ciências.
+**Desenvolvedor Full Stack**  
 
-### Camila Ferreira
-**Consultora Pedagógica**
-Especialista em metodologias ativas e avaliação da aprendizagem.
+Aluno do curso de Ciência da Computação do IFC Campus Videira.
+
+### Maicon
+![Maicon](/images/equipe/default.jpg)
+
+**UX/UI Designer**  
+
+Aluno do curso de Ciência da Computação do IFC Campus Videira.
+
+### Bruno Pergher
+![Bruno Pergher](/images/equipe/default.jpg)
+
+**Desenvolvedor Full Stack**
+
+Aluno do curso de Ciência da Computação do IFC Campus Videira.

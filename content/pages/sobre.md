@@ -1,9 +1,9 @@
 Title: Sobre Nós
 Slug: sobre
 
-# Sobre a Fábrica de Software Educativa
+# Sobre a Fábrica de Software
 
-A Fábrica de Software Educativa nasceu da convicção de que a tecnologia pode transformar positivamente a educação quando desenvolvida com propósito pedagógico claro.
+A Fábrica de Software nasceu da convicção de que a tecnologia pode transformar positivamente a educação quando desenvolvida com propósito pedagógico claro.
 
 ## Nossa Missão
 
