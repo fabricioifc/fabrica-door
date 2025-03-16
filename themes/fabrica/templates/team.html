@@ -1,5 +1,5 @@
-{% extends "base.html" %} {% block title %}{% if page %}{{ page.title }} - {%
-endif %}{{ SITENAME }}{% endblock %} {% block content %} {% if page %}
+{% extends "base.html" %} {% block title %}{{ page.title }} - {{ SITENAME }}{%
+endblock %} {% block content %}
 <div class="page-header">
   <div class="container">
     <h1>{{ page.title }}</h1>
@@ -12,7 +12,7 @@ endif %}{{ SITENAME }}{% endblock %} {% block content %} {% if page %}
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    // Mover introdução para team-introduction
+    // Mover introdução global para .team-introduction
     const intro = document.querySelector(".page-content > p:first-child");
     if (intro) {
       const introDiv = document.createElement("div");
@@ -28,10 +28,22 @@ endif %}{{ SITENAME }}{% endblock %} {% block content %} {% if page %}
       const grid = document.createElement("div");
       grid.className = "team-grid";
 
-      // Coletar todos os membros da seção
-      const members = [];
+      // Verificar e preservar o parágrafo introdutório da seção
       let nextElement = section.nextElementSibling;
+      let introParagraph = null;
+      if (
+        nextElement &&
+        nextElement.tagName === "P" &&
+        !nextElement.querySelector("img") &&
+        !nextElement.querySelector("strong")
+      ) {
+        introParagraph = nextElement;
+        introParagraph.className = "section-intro"; // Adiciona classe para estilização
+        nextElement = nextElement.nextElementSibling; // Avança para o próximo elemento
+      }
 
+      // Coletar todos os membros da seção a partir do próximo elemento
+      const members = [];
       while (nextElement && nextElement.tagName !== "H2") {
         if (nextElement.tagName === "H3") {
           members.push(nextElement);
@@ -45,14 +57,11 @@ endif %}{{ SITENAME }}{% endblock %} {% block content %} {% if page %}
         memberDiv.className = "team-member";
 
         const name = nameElement.textContent.trim();
-        let imgSrc = "{{ SITEURL }}/images/equipe/default.jpg";
+        let imgSrc = "{{ SITEURL }}/images/team/placeholder.png";
         let role = "";
         let description = "";
 
-        // Avançar pelos irmãos até o próximo H3 ou H2
         let currentElement = nameElement.nextElementSibling;
-        console.log(currentElement);
-
         while (
           currentElement &&
           currentElement.tagName !== "H3" &&
@@ -61,20 +70,9 @@ endif %}{{ SITENAME }}{% endblock %} {% block content %} {% if page %}
           if (currentElement.tagName === "P") {
             const img = currentElement.querySelector("img");
             const strong = currentElement.querySelector("strong");
-
-            if (img && !imgSrc.includes("ana-silva.jpg")) {
-              // Evitar sobrescrever se já encontrado
-              imgSrc = img.src;
-            } else if (strong && !role) {
-              // Capturar cargo apenas se ainda não encontrado
-              role = strong.textContent.trim();
-            } else if (
-              !description &&
-              !currentElement.querySelector("img") &&
-              !currentElement.querySelector("strong")
-            ) {
-              description = currentElement.textContent.trim(); // Capturar descrição se não for imagem ou cargo
-            }
+            if (img) imgSrc = img.src;
+            else if (strong) role = strong.textContent.trim();
+            else description = currentElement.textContent.trim();
           }
           currentElement = currentElement.nextElementSibling;
         }
@@ -92,7 +90,7 @@ endif %}{{ SITENAME }}{% endblock %} {% block content %} {% if page %}
 
         grid.appendChild(memberDiv);
 
-        // Remover os elementos originais
+        // Remover os elementos originais do membro
         currentElement = nameElement.nextElementSibling;
         while (
           currentElement &&
@@ -106,17 +104,14 @@ endif %}{{ SITENAME }}{% endblock %} {% block content %} {% if page %}
         nameElement.remove();
       });
 
-      // Adicionar o grid após a seção
-      section.insertAdjacentElement("afterend", grid);
+      // Inserir o grid após o parágrafo introdutório (ou após o <h2> se não houver intro)
+      if (introParagraph) {
+        introParagraph.insertAdjacentElement("afterend", grid);
+      } else {
+        section.insertAdjacentElement("afterend", grid);
+      }
       section.className = "team-section";
     });
   });
 </script>
-{% else %}
-<div class="container">
-  <div class="page-content">
-    <h1>Equipe não encontrada</h1>
-    <p>O conteúdo solicitado não está disponível.</p>
-  </div>
-</div>
-{% endif %} {% endblock %}
+{% endblock %}

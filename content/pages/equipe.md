@@ -8,7 +8,9 @@ template: team
 
 Nossa equipe multidisciplinar reúne profissionais apaixonados por educação e tecnologia. -->
 
-## Coordenação e Colaboração
+## Coordenação
+
+Nossa equipe é coordenada por profissionais com experiência em educação e tecnologia.
 
 ### Fabio José Rodrigues Pinheiro
 ![Fabio José Rodrigues Pinheiro](/images/equipe/default.jpg)
