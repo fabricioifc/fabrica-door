@@ -1,11 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- #
+import os
 
 AUTHOR = 'Fábrica de Software'
-SITENAME = 'Fábrica de Software'
-SITEURL = ''
+SITENAME = os.getenv("SITE_NAME", "Fábrica de Software")
+SITEURL = os.getenv("SITE_URL", "fsw-ifc.brdrive.net")
+PATH = os.getenv("CONTENT_PATH", "content")
+OUTPUT_PATH = os.getenv("OUTPUT_PATH", "output")
+DELETE_OUTPUT_DIRECTORY = True
+THEME = 'themes/fabrica'
 
-PATH = 'content'
 STATIC_PATHS = ['images']
 PAGE_PATHS = ['pages']
 ARTICLE_PATHS = []
@@ -15,7 +19,6 @@ DEFAULT_LANG = 'pt-br'
 
 # Tema customizado
 # THEME = 'themes/monospace'
-THEME = 'themes/fabrica'
 
 # URLs
 PAGE_URL = '{slug}.html'

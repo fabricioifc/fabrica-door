@@ -1,0 +1,9 @@
+services:
+  pelican:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "${GUNICORN_PORT}:${GUNICORN_PORT}"
+    env_file:
+      - .env
