@@ -31,35 +31,69 @@ document.addEventListener("DOMContentLoaded", function () {
   // Verifica se estamos na página de contato
   const contactForm = document.getElementById("contact-form");
   if (contactForm) {
-    contactForm.addEventListener("submit", function (e) {
+    contactForm.addEventListener("submit", async function (e) {
       e.preventDefault();
 
-      // Simula envio de formulário
       const submitButton = this.querySelector('button[type="submit"]');
       const originalText = submitButton.textContent;
-
       submitButton.disabled = true;
       submitButton.textContent = "Enviando...";
 
-      // Simulação de requisição AJAX (apenas para demonstração)
-      setTimeout(function () {
-        submitButton.textContent = "Mensagem enviada!";
+      // Coletando os dados do formulário
+      const formData = new FormData(this);
+      let formText = "";
+      formData.forEach((value, key) => {
+        formText += `${key}: ${value}\n`;
+      });
+      const formEntries = Object.fromEntries(formData);
 
-        // Feedback visual
-        const formMessage = document.createElement("div");
-        formMessage.className = "form-message success";
-        formMessage.textContent =
-          "Sua mensagem foi enviada com sucesso! Entraremos em contato em breve.";
+      // Criando o corpo da requisição
+      const emailData = {
+        destinatario: "fabricio.bizotto@ifc.edu.br",
+        assunto: "[Fábrica] Nova mensagem de contato",
+        corpo: window.createContactEmailBody(formEntries),
+      };
 
-        contactForm.appendChild(formMessage);
-        contactForm.reset();
+      try {
+        const response = await fetch(
+          "https://fsw-ifc.brdrive.net/services/email/api/enviar-email",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            body: JSON.stringify(emailData),
+          }
+        );
 
-        // Restaura o botão após 3 segundos
-        setTimeout(function () {
+        if (response.ok) {
+          submitButton.textContent = "Mensagem enviada!";
+
+          // Feedback visual
+          const formMessage = document.createElement("div");
+          formMessage.className = "form-message success";
+          formMessage.textContent =
+            "Sua mensagem foi enviada com sucesso! Entraremos em contato em breve.";
+          contactForm.appendChild(formMessage);
+          contactForm.reset();
+        } else {
+          // Exiba mensagem mais detalhada
+          const errorData = await response.text();
+          console.error("Erro na resposta:", response.status, errorData);
+          throw new Error(
+            `Erro ao enviar o e-mail. Status: ${response.status}`
+          );
+        }
+      } catch (error) {
+        console.error("Erro ao enviar o formulário:", error);
+        alert("Falha ao enviar a mensagem. Tente novamente mais tarde.");
+      } finally {
+        setTimeout(() => {
           submitButton.disabled = false;
           submitButton.textContent = originalText;
         }, 3000);
-      }, 1500);
+      }
     });
   }
 
@@ -129,3 +163,28 @@ document.addEventListener("DOMContentLoaded", function () {
     `;
   document.head.appendChild(style);
 });
+
+// Funções de feedback
+function showFeedback(type, message) {
+  clearFeedback();
+  const formMessage = document.createElement("div");
+  formMessage.className = `form-message ${type}`;
+  formMessage.textContent = message;
+  formMessage.style.cssText = `
+    padding: 10px 15px;
+    margin-top: 10px;
+    border-radius: 4px;
+    font-family: Arial, sans-serif;
+    ${
+      type === "success"
+        ? "background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb;"
+        : "background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;"
+    }
+  `;
+  contactForm.appendChild(formMessage);
+}
+
+function clearFeedback() {
+  const existingMessage = contactForm.querySelector(".form-message");
+  if (existingMessage) existingMessage.remove();
+}

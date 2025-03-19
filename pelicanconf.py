@@ -4,7 +4,7 @@ import os
 
 AUTHOR = 'Fábrica de Software'
 SITENAME = os.getenv("SITE_NAME", "Fábrica de Software")
-SITEURL = os.getenv("SITE_URL", "fsw-ifc.brdrive.net")
+SITEURL = os.getenv("SITE_URL", "")
 PATH = os.getenv("CONTENT_PATH", "content")
 OUTPUT_PATH = os.getenv("OUTPUT_PATH", "output")
 DELETE_OUTPUT_DIRECTORY = True

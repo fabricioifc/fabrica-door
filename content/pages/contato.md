@@ -8,8 +8,8 @@ Estamos ansiosos para conhecer seu projeto e discutir como podemos ajudar.
 
 <form id="contact-form">
   <div class="form-group">
-    <label for="name">Nome</label>
-    <input type="text" id="name" name="name" required>
+    <label for="nome">Nome</label>
+    <input type="text" id="nome" name="nome" required>
   </div>
   
   <div class="form-group">
@@ -18,8 +18,8 @@ Estamos ansiosos para conhecer seu projeto e discutir como podemos ajudar.
   </div>
   
   <div class="form-group">
-    <label for="subject">Assunto</label>
-    <select id="subject" name="subject">
+    <label for="assunto">Assunto</label>
+    <select id="assunto" name="assunto">
       <option value="orcamento">Enviar ideias</option>
       <option value="parceria">Propor parceria</option>
       <option value="suporte">Suporte técnico</option>
@@ -28,8 +28,8 @@ Estamos ansiosos para conhecer seu projeto e discutir como podemos ajudar.
   </div>
   
   <div class="form-group">
-    <label for="message">Mensagem</label>
-    <textarea id="message" name="message" rows="5" required></textarea>
+    <label for="mensagem">Mensagem</label>
+    <textarea id="mensagem" name="mensagem" rows="5" required></textarea>
   </div>
   
   <button type="submit" class="btn-primary">Enviar mensagem</button>
