@@ -20,7 +20,7 @@ Estamos ansiosos para conhecer seu projeto e discutir como podemos ajudar.
   <div class="form-group">
     <label for="assunto">Assunto</label>
     <select id="assunto" name="assunto">
-      <option value="orcamento">Enviar ideias</option>
+      <option value="ideia">Enviar ideias</option>
       <option value="parceria">Propor parceria</option>
       <option value="suporte">Suporte técnico</option>
       <option value="outros">Outros</option>

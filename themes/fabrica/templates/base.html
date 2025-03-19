@@ -76,5 +76,24 @@
     <script src="{{ SITEURL }}/theme/js/emailTemplate.js"></script>
     <script src="{{ SITEURL }}/theme/js/main.js"></script>
     {% block extra_scripts %}{% endblock %}
+
+    <div id="cookie-banner" style="display: none; position: fixed; bottom: 0px; left: 0px; right: 0px; background: #222; color: #fff; padding: 15px; text-align: center; z-index: 1000;">
+      <p>Este site usa cookies para melhorar sua experiência.</p>
+      <button onclick="aceitarCookies()" style="background: #860083; color: white; border: none; padding: 10px 15px; cursor: pointer;">Aceitar</button>
+    </div>
+  
+    <script>
+      function aceitarCookies() {
+          document.cookie = "cookies_aceitos=true; path=/; max-age=" + (60*60*24*365);
+          document.getElementById('cookie-banner').style.display = 'none';
+      }
+      
+      (function() {
+          if (!document.cookie.includes("cookies_aceitos=true")) {
+              document.getElementById('cookie-banner').style.display = 'block';
+          }
+      })();
+    </script>
+  
   </body>
 </html>

@@ -73,8 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
           // Feedback visual
           const formMessage = document.createElement("div");
           formMessage.className = "form-message success";
-          formMessage.textContent =
-            "Sua mensagem foi enviada com sucesso! Entraremos em contato em breve.";
+          formMessage.textContent = "Sua mensagem foi enviada com sucesso.";
           contactForm.appendChild(formMessage);
           contactForm.reset();
         } else {
