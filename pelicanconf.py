@@ -4,7 +4,7 @@ import os
 
 AUTHOR = 'Fábrica de Software'
 SITENAME = os.getenv("SITE_NAME", "Fábrica de Software - IFC Videira")
-SITEURL = os.getenv("SITE_URL", "")
+SITEURL = os.getenv("SITE_URL", "http://localhost:8000")
 PATH = os.getenv("CONTENT_PATH", "content")
 OUTPUT_PATH = os.getenv("OUTPUT_PATH", "output")
 DELETE_OUTPUT_DIRECTORY = True
@@ -42,7 +42,8 @@ MENUITEMS = [
 ]
 
 # Plugins, se necessário
-PLUGINS = []
+PLUGIN_PATHS=['plugins']
+PLUGINS = ['sitemap']
 
 # Configurações adicionais
 DEFAULT_PAGINATION = False
@@ -61,3 +62,19 @@ SOCIAL_LINKS = [
     # ('instagram', '#'),
     # ('youtube', '#')
 ]
+
+# Configuração do sitemap
+SITEMAP = {
+    'format': 'xml',  # Formato do sitemap: 'xml' ou 'txt'
+    'priorities': {
+        'articles': 0.7,  # Prioridade para artigos (0.0 a 1.0)
+        'pages': 0.5,     # Prioridade para páginas estáticas
+        'indexes': 0.3    # Prioridade para índices (tags, categorias, etc.)
+    },
+    'changefreqs': {
+        'articles': 'monthly',  # Frequência de atualização dos artigos
+        'pages': 'yearly',      # Frequência de atualização das páginas
+        'indexes': 'weekly'     # Frequência de atualização dos índices
+    },
+    'exclude': ['drafts']  # Opcional: exclui páginas ou seções específicas
+}

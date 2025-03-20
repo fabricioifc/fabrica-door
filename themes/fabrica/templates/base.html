@@ -3,8 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Entre em contato com a Fábrica de Software para saber mais sobre nossos projetos e parcerias.">
-    <meta name="keywords" content="contato, fábrica de software, desenvolvimento, tecnologia">
+
+    {% if article %}
+      <meta name="description" content="{{ article.summary|striptags|truncate(150) }}" />
+      <meta name="keywords" content="{% for tag in article.tags %}{{ tag }}, {% endfor %}" />
+    {% elif page %}
+      <meta name="description" content="{{ page.summary|striptags|truncate(150) }}" />
+      <meta name="keywords" content="contato, fábrica de software, desenvolvimento, tecnologia">
+    {% else %}
+      <meta name="description" content="{{ SITENAME }} - {{ SITESUBTITLE }}" />
+      <meta name="keywords" content="contato, fábrica de software, desenvolvimento, tecnologia">
+      {% endif %}
+
     <meta name="author" content="Fábrica de Software">
     <meta property="og:title" content="Contato - Fábrica de Software">
     <meta property="og:description" content="Fale conosco para saber mais sobre nossos projetos.">
