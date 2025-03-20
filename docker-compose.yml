@@ -4,6 +4,6 @@ services:
     volumes:
       - .:/app
     ports:
-      - "${GUNICORN_PORT}:${GUNICORN_PORT}"
+      - "${PORT}:${PORT}"
     env_file:
       - .env

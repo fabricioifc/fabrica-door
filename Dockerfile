@@ -13,5 +13,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copiar o projeto
 COPY . .
 
-# Usar variáveis de ambiente no CMD
-CMD ["sh", "-c", "gunicorn --bind ${GUNICORN_BIND}:${GUNICORN_PORT} --workers ${GUNICORN_WORKERS} wsgi:application"]
+# Comando para gerar e servir o site
+CMD ["sh", "-c", "pelican ${CONTENT_PATH} -o ${OUTPUT_PATH} -s ${CONFIG_FILE} && pelican --listen --bind 0.0.0.0 --port ${PORT} ${OUTPUT_PATH}"]
