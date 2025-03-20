@@ -376,8 +376,8 @@ header.scrolled {
 /* Page Content */
 .page-content {
   background-color: var(--secondary-color);
-  padding: 50px;
-  margin: 40px 0;
+  padding: 25px;
+  margin: 20px 0;
   border-radius: var(--border-radius);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 }
@@ -567,10 +567,6 @@ header.scrolled {
 }
 
 /* Contact Form */
-form#contact-form {
-  margin-bottom: 20px;
-}
-
 .form-group {
   margin-bottom: 10px;
 }
@@ -760,4 +756,117 @@ footer {
     max-width: 400px;
     margin: 0 auto;
   } */
+}
+
+/* Contact Container */
+.contact-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  margin: 40px 0;
+}
+
+.contact-form,
+.contact-map {
+  flex: 1;
+  min-width: 0; /* Evita overflow em telas menores */
+}
+
+.contact-form,
+.contact-map {
+  background-color: var(--secondary-color);
+  padding: 30px;
+  border-radius: var(--border-radius);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.contact-map {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contact-map h2 {
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.contact-map p {
+  margin-bottom: 0;
+}
+
+#map {
+  height: 400px;
+  width: 100%;
+  border-radius: var(--border-radius);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Ajustes no formulário */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  font-size: 1rem;
+  color: var(--text-color);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--primary-color-hover);
+  outline: none;
+}
+
+button.btn-primary {
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* Responsividade */
+@media (max-width: 1024px) {
+  .contact-container {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .contact-form,
+  .contact-map {
+    width: 100%;
+  }
+
+  #map {
+    height: 300px; /* Reduz a altura em telas menores */
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-form {
+    padding: 20px;
+  }
+
+  .form-group label {
+    font-size: 0.9rem;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+
+  .contact-map h2 {
+    font-size: 1.3rem;
+  }
 }

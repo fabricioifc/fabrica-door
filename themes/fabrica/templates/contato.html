@@ -19,24 +19,26 @@ defined or page.show_header|string|lower != "false" %}
 </div>
 
 <script>
-  var lat = -27.02635661799897;
-  var lng = -51.14445241614298;
-  var map = L.map("map").setView([lat, lng], 19);
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 19,
-    attribution:
-      '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-  }).addTo(map);
-  var marker = L.marker([lat, lng]).addTo(map);
-  marker
-    .bindPopup(
-      '<b>Nossa Localização</b><br><a href="https://www.google.com/maps/dir/?api=1&destination=' +
-        lat +
-        "," +
-        lng +
-        '" target="_blank">Como Chegar</a>'
-    )
-    .openPopup();
+  document.addEventListener("DOMContentLoaded", function () {
+    var lat = -27.02635661799897;
+    var lng = -51.14445241614298;
+    var map = L.map("map").setView([lat, lng], 19);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution:
+        '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    }).addTo(map);
+    var marker = L.marker([lat, lng]).addTo(map);
+    marker
+      .bindPopup(
+        '<b>Nossa Localização</b><br><a href="https://www.google.com/maps/dir/?api=1&destination=' +
+          lat +
+          "," +
+          lng +
+          '" target="_blank">Como Chegar</a>'
+      )
+      .openPopup();
+  });
 </script>
 {% else %}
 <div class="container">

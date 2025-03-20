@@ -83,7 +83,7 @@ endif %}{{ SITENAME }} {% endblock %} {% block content %} {% if page %}
         <h3>Principais Funcionalidades</h3>
         <ul class="features-list">
           {% for feature in page.key_features.split(',') %}
-          <li class="feature-item">{{ feature.strip() }}</li>
+          <li class="funcionalidade-item">{{ feature.strip() }}</li>
           {% endfor %}
         </ul>
       </div>

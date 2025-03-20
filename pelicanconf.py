@@ -40,8 +40,7 @@ MENUITEMS = [
 ]
 
 # Plugins
-PLUGIN_PATHS = ['plugins']
-PLUGINS = ['sitemap']
+PLUGINS = []
 
 # Configurações adicionais
 DEFAULT_PAGINATION = False
@@ -56,19 +55,3 @@ GOOGLE_ANALYTICS = os.getenv("GOOGLE_ANALYTICS", "")
 SOCIAL_LINKS = [
     ('github', 'https://github.com/fabricaSoftwareVideira'),
 ]
-
-# Configuração do sitemap
-SITEMAP = {
-    'format': 'xml',
-    'priorities': {
-        'articles': 0.7,
-        'pages': 0.5,
-        'indexes': 0.3
-    },
-    'changefreqs': {
-        'articles': 'monthly',
-        'pages': 'yearly',
-        'indexes': 'weekly'
-    },
-    'exclude': ['drafts']
-}

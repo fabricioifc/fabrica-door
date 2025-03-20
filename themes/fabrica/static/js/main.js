@@ -117,11 +117,17 @@ document.addEventListener("DOMContentLoaded", function () {
   // Adiciona classe de ativo ao item de menu correspondente à página atual
   const currentPage = window.location.pathname;
   document.querySelectorAll("nav a").forEach((link) => {
-    if (
-      link.getAttribute("href") === currentPage ||
-      link.getAttribute("href") ===
-        currentPage.substring(currentPage.lastIndexOf("/"))
-    ) {
+    const linkHref = link.getAttribute("href");
+
+    // Garante que ambas as URLs terminem com '/' para comparação consistente
+    const normalizedCurrentPage = currentPage.endsWith("/")
+      ? currentPage
+      : currentPage + "/";
+    const normalizedLinkHref = linkHref.endsWith("/")
+      ? linkHref
+      : linkHref + "/";
+
+    if (normalizedCurrentPage === normalizedLinkHref) {
       link.classList.add("active");
     }
   });
