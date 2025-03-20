@@ -5,7 +5,7 @@ Slug: projetos
 
 Conheça alguns dos projetos desenvolvidos por nossa equipe.
 
-## Fabrica de Software {#fabrica}
+## Fabrica de Software - IFC Videira {#fabrica}
 
 A Fábrica de Software é um ambiente de desenvolvimento de software criado para auxiliar professores e alunos na execução de projetos de software. Este projeto foi criado para divulgar o trabalho da nossa equipe e incentivar a criação de novos projetos.
 
