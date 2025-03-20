@@ -23,6 +23,7 @@
     <meta property="og:url" content="{{ SITEURL }}/contato.html">
     <title>{% block title %}{{ SITENAME }}{% endblock %}</title>
     <link rel="stylesheet" href="{{ SITEURL }}/theme/css/style.css" />
+    <link rel="stylesheet" href="{{ SITEURL }}/theme/css/projects.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap"
       rel="stylesheet"
@@ -43,7 +44,7 @@
     {% block extra_head %}{% endblock %}
   </head>
   <body>
-    <header>
+    <header id="header">
       <div class="container">
         <div class="logo">
           <a href="{{ SITEURL }}/">

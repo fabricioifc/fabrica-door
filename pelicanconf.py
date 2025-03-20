@@ -11,26 +11,25 @@ DELETE_OUTPUT_DIRECTORY = True
 THEME = 'themes/fabrica'
 
 STATIC_PATHS = ['images']
-PAGE_PATHS = ['pages']
+PAGE_PATHS = ['pages', 'projetos']  # Subdiretórios para páginas e projetos
 ARTICLE_PATHS = []
 
 TIMEZONE = 'America/Sao_Paulo'
 DEFAULT_LANG = 'pt-br'
 
-# Tema customizado
-# THEME = 'themes/monospace'
+# URLs padrão para páginas regulares (em pages/)
+PAGE_URL = '{slug}/'
+PAGE_SAVE_AS = '{slug}/index.html'
 
-# URLs
-PAGE_URL = '{slug}.html'
-PAGE_SAVE_AS = '{slug}.html'
-INDEX_SAVE_AS = 'index.html'
+# URLs específicas para projetos (em projetos/)
+PROJETOS_URL = 'projetos/{slug}/'
+PROJETOS_SAVE_AS = 'projetos/{slug}/index.html'
 
-# Desativar feeds, pois não serão necessários para uma landing page
-FEED_ALL_ATOM = None
-CATEGORY_FEED_ATOM = None
-TRANSLATION_FEED_ATOM = None
-AUTHOR_FEED_ATOM = None
-AUTHOR_FEED_RSS = None
+# # Aplica URLs específicas para o subdiretório projetos/
+# for page_path in PAGE_PATHS:
+#     if page_path == 'projetos':
+#         globals()['{}_URL'.format(page_path.upper())] = PROJETOS_URL
+#         globals()['{}_SAVE_AS'.format(page_path.upper())] = PROJETOS_SAVE_AS
 
 # Configurações de menu
 MENUITEMS = [
@@ -41,40 +40,36 @@ MENUITEMS = [
     ('Contato', '/contato'),
 ]
 
-# Plugins, se necessário
-PLUGIN_PATHS=['plugins']
+# Plugins
+PLUGIN_PATHS = ['plugins']
 PLUGINS = ['sitemap']
 
 # Configurações adicionais
 DEFAULT_PAGINATION = False
 
 from datetime import datetime
-
 JINJA_GLOBALS = {
     'current_year': datetime.now().year
 }
 
-# Mais configurações
 EMAIL_FABRICA = 'fabricadesoftware.videira@ifc.edu.br'
 GOOGLE_ANALYTICS = os.getenv("GOOGLE_ANALYTICS", "")
 SOCIAL_LINKS = [
     ('github', 'https://github.com/fabricaSoftwareVideira'),
-    # ('instagram', '#'),
-    # ('youtube', '#')
 ]
 
 # Configuração do sitemap
 SITEMAP = {
-    'format': 'xml',  # Formato do sitemap: 'xml' ou 'txt'
+    'format': 'xml',
     'priorities': {
-        'articles': 0.7,  # Prioridade para artigos (0.0 a 1.0)
-        'pages': 0.5,     # Prioridade para páginas estáticas
-        'indexes': 0.3    # Prioridade para índices (tags, categorias, etc.)
+        'articles': 0.7,
+        'pages': 0.5,
+        'indexes': 0.3
     },
     'changefreqs': {
-        'articles': 'monthly',  # Frequência de atualização dos artigos
-        'pages': 'yearly',      # Frequência de atualização das páginas
-        'indexes': 'weekly'     # Frequência de atualização dos índices
+        'articles': 'monthly',
+        'pages': 'yearly',
+        'indexes': 'weekly'
     },
-    'exclude': ['drafts']  # Opcional: exclui páginas ou seções específicas
+    'exclude': ['drafts']
 }
