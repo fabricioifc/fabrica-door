@@ -1,6 +1,7 @@
 Title: Contato
 Slug: contato
 show_header: false
+Template: contato
 
 # Entre em Contato
 
@@ -35,8 +36,8 @@ Estamos ansiosos para conhecer seu projeto e discutir como podemos ajudar.
   <button type="submit" class="btn-primary">Enviar mensagem</button>
 </form>
 
-<!-- ## Agende uma Demonstração
+## Localização
 
-Quer ver nossos softwares em ação? Agende uma demonstração online gratuita.
+Estamos localizados no Instituto Federal Catarinense - Campus Videira. Veja no mapa abaixo:
 
-[Agendar demonstração](#) -->
+<div id="map" style="height: 400px; width: 100%; z-index: 0;"></div>

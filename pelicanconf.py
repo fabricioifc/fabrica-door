@@ -52,3 +52,12 @@ from datetime import datetime
 JINJA_GLOBALS = {
     'current_year': datetime.now().year
 }
+
+# Mais configurações
+EMAIL_FABRICA = 'fabricadesoftware.videira@ifc.edu.br'
+GOOGLE_ANALYTICS = os.getenv("GOOGLE_ANALYTICS", "")
+SOCIAL_LINKS = [
+    ('github', 'https://github.com/fabricaSoftwareVideira'),
+    # ('instagram', '#'),
+    # ('youtube', '#')
+]
