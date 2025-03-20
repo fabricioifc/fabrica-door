@@ -1,36 +1,44 @@
 Title: Nossos Projetos
 Slug: projetos
+Template: page
 
 # Principais Projetos
 
 Conheça alguns dos projetos desenvolvidos por nossa equipe.
 
-## Fabrica de Software {#fabrica}
-
-A Fábrica de Software é um ambiente de desenvolvimento de software criado para auxiliar professores e alunos na execução de projetos de software. Este projeto foi criado para divulgar o trabalho da nossa equipe e incentivar a criação de novos projetos.
-
- - **Tecnologias utilizadas**: HTML, CSS, JavaScript, Python/Pelican.
- - **Público-alvo**: Professores e alunos do IFC Campus Videira e comunidade em geral.
- - **Código-fonte**: [https://github.com/fabricioifc/fabrica-door](https://github.com/fabricioifc/fabrica-door)
- - **Desenvolvedores**: Fabricio Bizotto (Professor)
- - **Período de desenvolvimento**: 03/2025
-
-## Cogercon {#cogercon}
-
-A COGERCON é uma cooperativa de energia solar.
-
- - **Tecnologias utilizadas**: Django, PostgreSQL, Docker, TailwindCSS
- - **Público-alvo**: Associados da cooperativa
- - **Código-fonte**: Repositório Privado
- - **Desenvolvedores**: Fabricio Bizotto (Professor), Paulo Sérgio Pierdona (Aluno - Ciência da Computação), Gabriel Sousa (Aluno - Ciência da Computação), Helder Martins (Aluno - Ciência da Computação)
- - **Período de desenvolvimento**: 03/2024 - 12/2024
-
-## E-Stagio {#estagio}
-
-Sistema de gestão de estágios para instituições de ensino, empresas e estudantes.
-
- - **Tecnologias utilizadas**: Python, Flask, SQLite
- - **Público-alvo**: Alunos de cursos técnicos, professores e empresas
- - **Código-fonte**: [https://github.com/wanderson-rigo/e-stagio](https://github.com/wanderson-rigo/e-stagio)
- - **Desenvolvedores**: Wanderson Rigo (Professor), Bruno Pergher (Egresso - Ciência da Computação)
- - **Período de desenvolvimento**: 03/2024 - 12/2024
+<div class="projects-grid">
+    <div class="project-card">
+        <h2>Fabrica de Software - IFC Videira</h2>
+        <p>A Fábrica de Software é um ambiente de desenvolvimento de software criado para auxiliar professores e alunos na execução de projetos de software.</p>
+        <div class="project-tech">
+            <span>HTML</span>
+            <span>CSS</span>
+            <span>JavaScript</span>
+            <span>Python/Pelican</span>
+        </div>
+        <a href="/projetos/fabrica" class="btn-details">Ver detalhes</a>
+    </div>
+    
+    <div class="project-card">
+        <h2>Cogercon</h2>
+        <p>A COGERCON é uma cooperativa de energia solar.</p>
+        <div class="project-tech">
+            <span>Django</span>
+            <span>PostgreSQL</span>
+            <span>Docker</span>
+            <span>TailwindCSS</span>
+        </div>
+        <a href="/cogercon" class="btn-details">Ver detalhes</a>
+    </div>
+    
+    <div class="project-card">
+        <h2>E-Stagio</h2>
+        <p>Sistema de gestão de estágios para instituições de ensino, empresas e estudantes.</p>
+        <div class="project-tech">
+            <span>Python</span>
+            <span>Flask</span>
+            <span>SQLite</span>
+        </div>
+        <a href="/estagio" class="btn-details">Ver detalhes</a>
+    </div>
+</div>

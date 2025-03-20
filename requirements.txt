@@ -1,5 +1,7 @@
 anyio==4.9.0
-blinker==1.9.0
+beautifulsoup4==4.13.3
+blinker==1.7.0
+bs4==0.0.2
 docutils==0.21.2
 dotenv==0.9.9
 feedgenerator==2.1.0
@@ -10,7 +12,6 @@ markdown-it-py==3.0.0
 MarkupSafe==3.0.2
 mdurl==0.1.2
 ordered-set==4.1.0
-packaging==24.2
 pelican==4.11.0
 Pygments==2.18.0
 python-dateutil==2.9.0.post0

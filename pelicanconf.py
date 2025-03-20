@@ -3,30 +3,32 @@
 import os
 
 AUTHOR = 'Fábrica de Software'
-SITENAME = os.getenv("SITE_NAME", "Fábrica de Software")
-SITEURL = os.getenv("SITE_URL", "")
+SITENAME = os.getenv("SITE_NAME", "Fábrica de Software - IFC Videira")
+SITEURL = os.getenv("SITE_URL", "http://localhost:8000")
 PATH = os.getenv("CONTENT_PATH", "content")
 OUTPUT_PATH = os.getenv("OUTPUT_PATH", "output")
 THEME = "themes/fabrica"
 
 STATIC_PATHS = ['images']
-PAGE_PATHS = ['pages']
+PAGE_PATHS = ['pages', 'projetos']  # Subdiretórios para páginas e projetos
 ARTICLE_PATHS = []
 
 TIMEZONE = 'America/Sao_Paulo'
 DEFAULT_LANG = 'pt-br'
 
-# URLs
-PAGE_URL = '{slug}.html'
-PAGE_SAVE_AS = '{slug}.html'
-INDEX_SAVE_AS = 'index.html'
+# URLs padrão para páginas regulares (em pages/)
+PAGE_URL = '{slug}/'
+PAGE_SAVE_AS = '{slug}/index.html'
 
-# Desativar feeds, pois não serão necessários para uma landing page
-FEED_ALL_ATOM = None
-CATEGORY_FEED_ATOM = None
-TRANSLATION_FEED_ATOM = None
-AUTHOR_FEED_ATOM = None
-AUTHOR_FEED_RSS = None
+# URLs específicas para projetos (em projetos/)
+PROJETOS_URL = 'projetos/{slug}/'
+PROJETOS_SAVE_AS = 'projetos/{slug}/index.html'
+
+# # Aplica URLs específicas para o subdiretório projetos/
+# for page_path in PAGE_PATHS:
+#     if page_path == 'projetos':
+#         globals()['{}_URL'.format(page_path.upper())] = PROJETOS_URL
+#         globals()['{}_SAVE_AS'.format(page_path.upper())] = PROJETOS_SAVE_AS
 
 # Configurações de menu
 MENUITEMS = [
@@ -37,14 +39,36 @@ MENUITEMS = [
     ('Contato', '/contato/'),
 ]
 
-# Plugins, se necessário
-PLUGINS = []
+# Plugins
+PLUGIN_PATHS = ['plugins']
+PLUGINS = ['sitemap']
 
 # Configurações adicionais
 DEFAULT_PAGINATION = False
 
 from datetime import datetime
-
 JINJA_GLOBALS = {
     'current_year': datetime.now().year
+}
+
+EMAIL_FABRICA = 'fabricadesoftware.videira@ifc.edu.br'
+GOOGLE_ANALYTICS = os.getenv("GOOGLE_ANALYTICS", "")
+SOCIAL_LINKS = [
+    ('github', 'https://github.com/fabricaSoftwareVideira'),
+]
+
+# Configuração do sitemap
+SITEMAP = {
+    'format': 'xml',
+    'priorities': {
+        'articles': 0.7,
+        'pages': 0.5,
+        'indexes': 0.3
+    },
+    'changefreqs': {
+        'articles': 'monthly',
+        'pages': 'yearly',
+        'indexes': 'weekly'
+    },
+    'exclude': ['drafts']
 }
