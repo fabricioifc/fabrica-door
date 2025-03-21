@@ -44,6 +44,11 @@ jobs:
           sudo openvpn --config vpn-config.ovpn --auth-user-pass auth.txt --daemon --log /tmp/vpn.log
           sleep 10  # Aguarda a conexão estabilizar
 
+      # New Step: Check VPN Logs if Connection Fails
+      - name: Check VPN Logs
+        if: failure()
+        run: cat /tmp/vpn.log
+
       # 6. Implanta no servidor via SSH
       - name: Deploy to Server
         uses: appleboy/ssh-action@v1.0.3
