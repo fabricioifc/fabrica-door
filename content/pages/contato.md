@@ -3,14 +3,10 @@ Slug: contato
 show_header: false
 Template: contato
 
-<!-- # Entre em Contato
-
-Estamos ansiosos para conhecer seu projeto e discutir como podemos ajudar. -->
-
 <div class="contact-container">
   <div class="contact-form">
   <h2>Entre em contato</h2>
-    <!-- <p>Estamos ansiosos para conhecer seu projeto e discutir como podemos ajudar.</p> -->
+    <p>Estamos ansiosos para conhecer seu projeto e discutir como podemos ajudar.</p>
     <form id="contact-form">
       <div class="form-group">
         <label for="nome">Nome</label>
