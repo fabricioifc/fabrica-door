@@ -327,7 +327,7 @@ footer {
   gap: 20px;
   max-width: var(--container-width);
   margin: 0 auto;
-  padding: 0 20px;
+  /* padding: 0 20px; */
 }
 
 .footer-info,
@@ -339,7 +339,7 @@ footer {
 }
 
 .footer-social {
-  align-items: flex-end;
+  align-items: flex-start;
 }
 
 .footer-content h3 {
