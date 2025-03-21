@@ -29,23 +29,23 @@ jobs:
           tags: ${{ secrets.DOCKER_USERNAME }}/fabrica-door:latest
 
       # 2. Conexão via OpenVPN
-      - name: Setup OpenVPN
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y openvpn
+      # - name: Setup OpenVPN
+      #   run: |
+      #     sudo apt-get update
+      #     sudo apt-get install -y openvpn
 
-      - name: Configure OpenVPN
-        run: |
-          echo "${{ secrets.OPENVPN_CONFIG }}" > config.ovpn
-          echo -e "${{ secrets.OPENVPN_USERNAME }}\n${{ secrets.OPENVPN_PASSWORD }}" > auth.txt
-          sudo openvpn --config config.ovpn --auth-user-pass auth.txt --daemon
-          sleep 10
+      # - name: Configure OpenVPN
+      #   run: |
+      #     echo "${{ secrets.OPENVPN_CONFIG }}" > config.ovpn
+      #     echo -e "${{ secrets.OPENVPN_USERNAME }}\n${{ secrets.OPENVPN_PASSWORD }}" > auth.txt
+      #     sudo openvpn --config config.ovpn --auth-user-pass auth.txt --daemon
+      #     sleep 10
 
-      # 3. Deploy via SSH
-      - name: Add SSH private key
-        uses: webfactory/ssh-agent@v0.7.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      # # 3. Deploy via SSH
+      # - name: Add SSH private key
+      #   uses: webfactory/ssh-agent@v0.7.0
+      #   with:
+      #     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Execute deploy commands
         run: |
