@@ -1,4 +1,4 @@
-name: CI/CD Pipeline with VPN
+name: CI/CD Pipeline
 
 on:
   push:
@@ -25,36 +25,35 @@ jobs:
           echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
           docker push fabricioifc/fabrica-door:${{ github.sha }}
 
-      # 4. Instala o OpenVPN e dependências
+      # 4. Instala cliente VPN (exemplo: OpenVPN)
       - name: Install OpenVPN
         run: |
           sudo apt-get update
-          sudo apt-get install -y openvpn openssh-client
+          sudo apt-get install -y openvpn
 
-      # 5. Configura a VPN
-      - name: Set up VPN
+      # 5. Conecta à VPN
+      - name: Connect to VPN
         env:
-          VPN_CONFIG: ${{ secrets.VPN_CONFIG }} # Conteúdo do .ovpn
-          VPN_CERT: ${{ secrets.VPN_CERT }} # Conteúdo do .crt
+          VPN_USERNAME: ${{ secrets.VPN_USERNAME }}
+          VPN_PASSWORD: ${{ secrets.VPN_PASSWORD }}
+          VPN_CONFIG: ${{ secrets.VPN_CONFIG }} # Conteúdo do arquivo .ovpn
         run: |
-          echo "$VPN_CONFIG" > vpn-config.ovpn
-          echo "$VPN_CERT" > vpn-cert.crt
-          # Se o .ovpn referencia o .crt, ajuste o caminho no .ovpn ou coloque inline
-          sudo openvpn --config vpn-config.ovpn --daemon  # Inicia a VPN em background
+          echo "$VPN_CONFIG" > vpn-config.ovpn  # Arquivo de configuração da VPN
+          echo "$VPN_USERNAME" > auth.txt
+          echo "$VPN_PASSWORD" >> auth.txt
+          sudo openvpn --config vpn-config.ovpn --auth-user-pass auth.txt --daemon
           sleep 10  # Aguarda a conexão estabilizar
 
-      # 6. Implanta no servidor via SSH através da VPN
+      # 6. Implanta no servidor via SSH
       - name: Deploy to Server
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SSH_HOST: ${{ secrets.SSH_HOST }} # IP interno da VPS na VPN
-          SSH_USER: ${{ secrets.SSH_USER }}
-          SSH_PORT: ${{ secrets.SSH_PORT }} # Porta SSH, se diferente de 22
-        run: |
-          mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh -o StrictHostKeyChecking=no -p ${SSH_PORT:-22} ${SSH_USER}@${SSH_HOST} "
-            docker pull fabricioifc/fabrica-door:${{ github.sha }} &&
-            docker-compose up -d
-          "
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }} # Recomendado: chave SSH
+          # password: ${{ secrets.SSH_PASSWORD }}  # Alternativa: senha SSH (menos segura)
+          port: ${{ secrets.SSH_PORT }} # Ex.: 2222
+          script: |
+            docker pull fabricioifc/fabrica-door:${{ github.sha }}
+            cd /home/${{ secrets.SSH_USER }}/fabrica-door
+            docker-compose up -d --force-recreate
