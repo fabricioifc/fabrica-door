@@ -54,4 +54,5 @@ EMAIL_FABRICA = 'fabricadesoftware.videira@ifc.edu.br'
 GOOGLE_ANALYTICS = os.getenv("GOOGLE_ANALYTICS", "")
 SOCIAL_LINKS = [
     ('github', 'https://github.com/fabricaSoftwareVideira'),
+    ('youtube', 'https://www.youtube.com/@FábricadeSoftwareCampusVideira')
 ]
