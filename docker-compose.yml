@@ -7,3 +7,9 @@ services:
       - "${PORT}:${PORT}"
     env_file:
       - .env
+    networks:
+      - fabrica-door-network
+
+networks:
+  fabrica-door-network:
+    driver: bridge

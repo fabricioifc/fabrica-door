@@ -408,7 +408,7 @@ footer {
       rgba(0, 0, 0, 0.6),
       rgba(0, 0, 0, 0.7)
     ),
-    url("../image/fabrica-hero.jpg");
+    url("../image/banner.jpeg");
   background-size: cover;
   background-position: center;
   color: var(--secondary-color);
