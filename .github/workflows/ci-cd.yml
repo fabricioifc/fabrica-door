@@ -38,8 +38,10 @@ jobs:
           # Verifica se a resolução do domínio funciona
           ping -c 2 fsw-ifc.brdrive.net
 
-          # Cria arquivos de configuração VPN
-          echo "${{ secrets.VPN_CONFIG }}" > vpn-config.ovpn
+          # Decodifica o arquivo de configuração VPN de base64
+          echo "${{ secrets.VPN_CONFIG_BASE64 }}" | base64 -d > vpn-config.ovpn
+
+          # Cria arquivo de credenciais
           echo "${{ secrets.VPN_USERNAME }}" > auth.txt
           echo "${{ secrets.VPN_PASSWORD }}" >> auth.txt
 
