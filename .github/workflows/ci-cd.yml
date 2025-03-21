@@ -1,80 +1,57 @@
-name: CI/CD Pipeline
+name: Deploy with Docker Hub and SSH
 
 on:
   push:
-    branches: [main]
-  pull_request:
     branches: [main]
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      # 1. Baixa o código do repositório
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      # 2. Configura o Docker Buildx
+      # 1. Build e push da imagem para o Docker Hub
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      # 3. Constrói e publica a imagem Docker
-      - name: Build and Push Docker Image
-        run: |
-          docker build -t fabrica-door:latest .
-          docker tag fabrica-door:latest fabricioifc/fabrica-door:${{ github.sha }}
-          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-          docker push fabricioifc/fabrica-door:${{ github.sha }}
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # 4. Configurar resolução DNS e VPN
-      - name: Setup DNS and VPN
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/fabrica-door:latest
+
+      # 2. Conexão via OpenVPN
+      - name: Setup OpenVPN
         run: |
-          # Instala o OpenVPN
           sudo apt-get update
           sudo apt-get install -y openvpn
 
-          # Adiciona entrada DNS manual no /etc/hosts
-          echo "${{ secrets.VPN_SERVER_IP }} fsw-ifc.brdrive.net" | sudo tee -a /etc/hosts
+      - name: Configure OpenVPN
+        run: |
+          echo "${{ secrets.OPENVPN_CONFIG }}" > config.ovpn
+          echo -e "${{ secrets.OPENVPN_USERNAME }}\n${{ secrets.OPENVPN_PASSWORD }}" > auth.txt
+          sudo openvpn --config config.ovpn --auth-user-pass auth.txt --daemon
+          sleep 10
 
-          # Verifica se a resolução do domínio funciona
-          ping -c 2 fsw-ifc.brdrive.net
-
-          # Decodifica o arquivo de configuração VPN de base64
-          echo "${{ secrets.VPN_CONFIG_BASE64 }}" | base64 -d > vpn-config.ovpn
-
-          # Cria arquivo de credenciais
-          echo "${{ secrets.VPN_USERNAME }}" > auth.txt
-          echo "${{ secrets.VPN_PASSWORD }}" >> auth.txt
-
-          # Inicia OpenVPN e aguarda pela conexão
-          sudo openvpn --config vpn-config.ovpn --auth-user-pass auth.txt --daemon --log /tmp/vpn.log
-
-          # Aguarda até 30 segundos pela conexão
-          echo "Aguardando conexão VPN..."
-          for i in {1..30}; do
-            if ip addr | grep -q "tun[0-9]\|tap[0-9]"; then
-              echo "VPN conectada após $i segundos!"
-              break
-            fi
-            sleep 1
-            echo -n "."
-          done
-
-          # Verifica se a VPN está conectada
-          if ! ip addr | grep -q "tun[0-9]\|tap[0-9]"; then
-            echo "Falha ao conectar VPN. Log:"
-            cat /tmp/vpn.log
-            exit 1
-          fi
-
-      # 5. Implanta no servidor via SSH
-      - name: Deploy to Server
-        uses: appleboy/ssh-action@v1.0.3
+      # 3. Deploy via SSH
+      - name: Add SSH private key
+        uses: webfactory/ssh-agent@v0.7.0
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SSH_PORT }}
-          script: |
-            docker pull fabricioifc/fabrica-door:${{ github.sha }}
-            cd /home/${{ secrets.SSH_USER }}/fabrica-door
-            docker-compose up -d --force-recreate
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Execute deploy commands
+        run: |
+          ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
+            docker pull ${{ secrets.DOCKER_USERNAME }}/fabrica-door:latest
+            cd /caminho/para/o/projeto/no/servidor
+            docker-compose down
+            docker-compose up -d
+          "
