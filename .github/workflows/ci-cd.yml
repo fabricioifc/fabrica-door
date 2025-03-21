@@ -33,35 +33,16 @@ jobs:
 
       # 5. Conecta à VPN
       - name: Connect to VPN
-        run: |
-          # Escreve o arquivo de configuração da VPN
-          echo "$VPN_CONFIG" > vpn-config.ovpn
-
-          # Escreve as credenciais no arquivo auth.txt
-          echo "$VPN_USERNAME" > auth.txt
-          echo "$VPN_PASSWORD" >> auth.txt
-
-          # Verifica se os arquivos foram criados corretamente
-          if [ ! -s vpn-config.ovpn ] || [ ! -s auth.txt ]; then
-            echo "Erro: Arquivos de configuração ou autenticação estão vazios!"
-            exit 1
-          fi
-
-          # Tenta conectar à VPN com logs detalhados
-          sudo openvpn --config vpn-config.ovpn --auth-user-pass auth.txt --daemon --log vpn.log
-
-          # Aguarda até a conexão ser estabelecida ou falhar
-          timeout 30s bash -c "until grep -q 'Initialization Sequence Completed' vpn.log; do sleep 1; done" || {
-            echo "Erro: Falha ao conectar à VPN. Logs:"
-            cat vpn.log
-            exit 1
-          }
-
-          echo "VPN conectada com sucesso!"
         env:
           VPN_USERNAME: ${{ secrets.VPN_USERNAME }}
           VPN_PASSWORD: ${{ secrets.VPN_PASSWORD }}
-          VPN_CONFIG: ${{ secrets.VPN_CONFIG }}
+          VPN_CONFIG: ${{ secrets.VPN_CONFIG }} # Conteúdo do arquivo .ovpn
+        run: |
+          echo "$VPN_CONFIG" > vpn-config.ovpn  # Arquivo de configuração da VPN
+          echo "$VPN_USERNAME" > auth.txt
+          echo "$VPN_PASSWORD" >> auth.txt
+          sudo openvpn --config vpn-config.ovpn --auth-user-pass auth.txt --daemon --log /tmp/vpn.log
+          sleep 10  # Aguarda a conexão estabilizar
 
       # 6. Implanta no servidor via SSH
       - name: Deploy to Server
