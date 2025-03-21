@@ -35,5 +35,5 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             docker pull fabricioifc/fabrica-door:${{ github.sha }}
-            cd /home/${{ secrets.SSH_USER }}/fabrica-door
+            cd /opt/fabrica-door-docker
             docker-compose up -d --force-recreate
