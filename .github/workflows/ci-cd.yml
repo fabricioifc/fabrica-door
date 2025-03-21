@@ -1,82 +1,39 @@
-name: CI/CD Pipeline
+name: Deploy to VPS
 
-# Aciona o workflow em push para main ou em pull requests
 on:
   push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout do código
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      # Configura o Docker Buildx
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      # Login no Docker Hub
-      - name: Login to Docker Hub
+      - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # Build e push da imagem Docker
       - name: Build and push Docker image
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/fabrica-prod-door:latest
-          # Cache para builds mais rápidas
-          cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/fabrica-prod-door:latest
-          cache-to: type=inline
-
-      # Deploy para VPS (somente em push para main)
-      - name: Deploy to VPS
-        if: github.event_name == 'push'
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SSH_HOST: ${{ secrets.SSH_HOST }}
-          SSH_PORT: ${{ secrets.SSH_PORT }}
-          SSH_USER: ${{ secrets.SSH_USER }}
         run: |
-          # Instala o SSH client
-          sudo apt-get update && sudo apt-get install -y openssh-client
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/fabrica-prod-door:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/fabrica-prod-door:latest
 
-          # Configura o SSH
-          mkdir -p ~/.ssh/
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -p $SSH_PORT -H $SSH_HOST >> ~/.ssh/known_hosts
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-          # Comandos de deploy no servidor remoto
-          ssh -p $SSH_PORT $SSH_USER@$SSH_HOST << 'EOF'
-            # Para qualquer container existente
+      - name: Deploy to VPS
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -p ${{ secrets.SSH_PORT }} << 'EOF'
+            docker pull ${{ secrets.DOCKER_USERNAME }}/fabrica-prod-door:latest
             docker stop fabrica-prod-door || true
             docker rm fabrica-prod-door || true
-            
-            # Faz pull da nova imagem
-            docker pull ${{ secrets.DOCKER_USERNAME }}/fabrica-prod-door:latest
-            
-            # Inicia o container com docker-compose
-            cd /home/fabricio/fabrica-prod-door
-            docker compose up -d
+            docker-compose up -d
           EOF
-
-      # Opcional: Notificação de sucesso/falha
-      - name: Notify deployment status
-        if: always()
-        uses: slackapi/slack-github-action@v1.24.0
-        with:
-          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
-          slack-channel: "#deployments"
-          text: "Deploy to VPS ${{ job.status }} for ${{ github.repository }}"
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
