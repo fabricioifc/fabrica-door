@@ -75,9 +75,34 @@ jobs:
           VPN_SERVER=$(grep -E '^remote\s+' client.ovpn | head -1 | awk '{print $2}')
           VPN_PORT=$(grep -E '^remote\s+' client.ovpn | head -1 | awk '{print $3}')
 
+          # Modifique a parte de verificação do servidor VPN para:
           if [ -n "$VPN_SERVER" ]; then
-            echo "Verificando conectividade com servidor VPN: $VPN_SERVER"
-            ping -c 2 $VPN_SERVER || echo "Aviso: Não foi possível pingar o servidor VPN"
+            echo "Servidor VPN identificado: $VPN_SERVER"
+            
+            # Tenta resolver o nome se for um domínio
+            if [[ $VPN_SERVER =~ ^[a-zA-Z] ]]; then
+              echo "Resolvendo DNS para $VPN_SERVER..."
+              IP_ADDRESSES=$(dig +short $VPN_SERVER)
+              if [ -n "$IP_ADDRESSES" ]; then
+                echo "IP(s) resolvido(s): $IP_ADDRESSES"
+                # Tenta ping no primeiro IP
+                FIRST_IP=$(echo "$IP_ADDRESSES" | head -1)
+                ping -c 2 $FIRST_IP || echo "Aviso: Não foi possível pingar o IP do servidor VPN"
+              else
+                echo "Aviso: Não foi possível resolver o domínio $VPN_SERVER"
+              fi
+            else
+              # Já é um IP, tenta ping direto
+              ping -c 2 $VPN_SERVER || echo "Aviso: Não foi possível pingar o servidor VPN"
+            fi
+            
+            # Tenta verificar a porta se disponível (usando netcat)
+            if [ -n "$VPN_PORT" ] && [ -n "$(which nc)" ]; then
+              echo "Verificando se porta $VPN_PORT está aberta em $VPN_SERVER..."
+              nc -z -v -w 5 $VPN_SERVER $VPN_PORT || echo "Aviso: Não foi possível conectar à porta $VPN_PORT"
+            fi
+          else
+            echo "Aviso: Não foi possível extrair o servidor VPN do arquivo de configuração"
           fi
 
           # Tenta conectar até 3 vezes
