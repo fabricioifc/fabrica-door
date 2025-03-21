@@ -53,7 +53,7 @@ jobs:
 
           # Tenta conectar à VPN com logs no diretório atual
           echo "Tentando conectar à VPN..."
-          openvpn --config vpn-config.ovpn --auth-user-pass auth.txt --verbose --log vpn.log --daemon
+          openvpn --config vpn-config.ovpn --auth-user-pass auth.txt --log vpn.log --daemon
 
           # Aguarda até a conexão ou falha
           timeout 30s bash -c "until grep -q 'Initialization Sequence Completed' vpn.log 2>/dev/null; do sleep 1; done" || {
