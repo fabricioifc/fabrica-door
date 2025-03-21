@@ -668,9 +668,9 @@ footer {
   justify-content: space-between;
 }
 
-.project-card:hover {
+/* .project-card:hover {
   transform: translateY(-5px);
-}
+} */
 
 .project-image img {
   width: 100%;

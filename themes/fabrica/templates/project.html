@@ -5,14 +5,15 @@ endif %}{{ SITENAME }} {% endblock %} {% block content %} {% if page %}
     <h1 class="project-title">{{ page.title }}</h1>
     <div class="project-meta">
       <span
-        class="project-status {% if page.situacao == 'Em Andamento' %}situacao-ongoing{% elif page.situacao == 'Concluído' %}situacao-completed{% elif page.situacao == 'Planejado' %}situacao-planned{% endif %}"
+        class="project-status {% if page.situacao == 'Em Andamento' %}status-ongoing{% endif %} {% if page.situacao == 'Concluído' %}status-completed{% endif %} {% if page.situacao == 'Em Planejamento' %}status-planned{% endif %}"
       >
         {{ page.situacao }}
       </span>
       <span class="project-dates">
         <i class="fas fa-calendar-alt"></i>
-        Início: {{ page.start_date }} {% if page.end_date %} | Conclusão: {{
-        page.end_date }}{% endif %}
+        Início: {{ page.start_date }} {% if page.end_date %}
+        <span class="project-end-date"> | Conclusão: {{ page.end_date }}</span>
+        {% endif %}
       </span>
     </div>
   </header>

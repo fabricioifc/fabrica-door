@@ -1,8 +1,8 @@
-Title: Fabrica de Software - IFC Videira
-Slug: fabrica
+Title: Cogercon
+Slug: cogercon
 Template: project
 Status: published
-Situacao: Concluído
+Situacao: Em Andamento
 Start_Date: Março 2025
 End_Date: Março 2025
 Gallery: images/projects/fabrica/logo.svg, images/projects/fabrica/logo.svg
@@ -10,16 +10,16 @@ GitHub_URL: https://github.com/fabricioifc/fabrica-door
 Technologies: HTML, CSS, JavaScript, Python/Pelican
 Members: Fabricio Bizotto (Professor)
 Key_Features: Divulgação de projetos, Portfólio da equipe, Blog, Contato
-URL: projetos/fabrica
-save_as: projetos/fabrica/index.html
+URL: projetos/cogercon/
+save_as: projetos/cogercon/index.html
 
-# Fabrica de Software - IFC Videira
+# Cogercon
 
-A Fábrica de Software é um ambiente de desenvolvimento de software criado para auxiliar professores e alunos na execução de projetos de software. Este projeto foi criado para divulgar o trabalho da nossa equipe e incentivar a criação de novos projetos.
+lorem ipsum
 
 ## Objetivo
 
-O principal objetivo deste projeto é criar uma presença online para a Fábrica de Software do IFC Campus Videira, apresentando nossos projetos, equipe e capacidades para a comunidade acadêmica e profissional.
+asd
 
 ## Público-alvo
 
