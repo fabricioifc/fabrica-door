@@ -33,21 +33,41 @@ jobs:
 
       # 5. Conecta à VPN
       - name: Connect to VPN
+        run: |
+          # Instala o OpenVPN
+          sudo apt-get update
+          sudo apt-get install -y openvpn
+
+          # Escreve o arquivo de configuração da VPN
+          echo "$VPN_CONFIG" > vpn-config.ovpn
+
+          # Escreve as credenciais no arquivo auth.txt
+          echo "$VPN_USERNAME" > auth.txt
+          echo "$VPN_PASSWORD" >> auth.txt
+
+          # Verifica os arquivos
+          if [ ! -s vpn-config.ovpn ] || [ ! -s auth.txt ]; then
+            echo "Erro: Arquivos de configuração ou autenticação estão vazios!"
+            exit 1
+          fi
+
+          # Tenta conectar à VPN com logs no diretório atual
+          echo "Tentando conectar à VPN..."
+          openvpn --config vpn-config.ovpn --auth-user-pass auth.txt --verbose --log vpn.log --daemon
+
+          # Aguarda até a conexão ou falha
+          timeout 30s bash -c "until grep -q 'Initialization Sequence Completed' vpn.log 2>/dev/null; do sleep 1; done" || {
+            echo "Erro: Falha ao conectar à VPN. Aqui estão os logs:"
+            cat vpn.log || echo "Erro: Nenhum log encontrado em vpn.log!"
+            exit 1
+          }
+
+          echo "VPN conectada com sucesso!"
+          cat vpn.log  # Mostra os logs em caso de sucesso
         env:
           VPN_USERNAME: ${{ secrets.VPN_USERNAME }}
           VPN_PASSWORD: ${{ secrets.VPN_PASSWORD }}
-          VPN_CONFIG: ${{ secrets.VPN_CONFIG }} # Conteúdo do arquivo .ovpn
-        run: |
-          echo "$VPN_CONFIG" > vpn-config.ovpn  # Arquivo de configuração da VPN
-          echo "$VPN_USERNAME" > auth.txt
-          echo "$VPN_PASSWORD" >> auth.txt
-          sudo openvpn --config vpn-config.ovpn --auth-user-pass auth.txt --daemon --log /tmp/vpn.log
-          sleep 10  # Aguarda a conexão estabilizar
-
-      # New Step: Check VPN Logs if Connection Fails
-      - name: Check VPN Logs
-        if: failure()
-        run: cat /tmp/vpn.log
+          VPN_CONFIG: ${{ secrets.VPN_CONFIG }}
 
       # 6. Implanta no servidor via SSH
       - name: Deploy to Server
