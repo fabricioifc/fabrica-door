@@ -25,143 +25,46 @@ jobs:
           echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
           docker push fabricioifc/fabrica-door:${{ github.sha }}
 
-      # 4. Prepara ambiente para OpenVPN melhorado
-      - name: Setup OpenVPN Environment
+      # 4. Configurar resolução DNS e VPN
+      - name: Setup DNS and VPN
         run: |
-          # Instala o OpenVPN e ferramentas de rede para diagnóstico
+          # Instala o OpenVPN
           sudo apt-get update
-          sudo apt-get install -y openvpn net-tools iputils-ping dnsutils
+          sudo apt-get install -y openvpn
 
-          # Cria diretório para OpenVPN
-          mkdir -p ~/openvpn-client
-          cd ~/openvpn-client
+          # Adiciona entrada DNS manual no /etc/hosts
+          echo "${{ secrets.VPN_SERVER_IP }} fsw-ifc.brdrive.net" | sudo tee -a /etc/hosts
 
-          # Decodifica e salva arquivo de configuração OpenVPN em base64
-          # (isso ajuda a preservar quebras de linha e caracteres especiais)
-          echo "${{ secrets.VPN_CONFIG_BASE64 }}" | base64 -d > client.ovpn
+          # Verifica se a resolução do domínio funciona
+          ping -c 2 fsw-ifc.brdrive.net
 
-          # Verifica se o arquivo foi criado corretamente
-          if [ ! -s client.ovpn ]; then
-            echo "ERRO: Arquivo de configuração VPN vazio ou não criado."
-            exit 1
-          fi
-
-          # Mostra algumas informações do arquivo (sem expor dados sensíveis)
-          echo "Arquivo de configuração VPN criado com $(wc -l < client.ovpn) linhas."
-
-          # Cria arquivo de credenciais para autenticação
+          # Cria arquivos de configuração VPN
+          echo "${{ secrets.VPN_CONFIG }}" > vpn-config.ovpn
           echo "${{ secrets.VPN_USERNAME }}" > auth.txt
           echo "${{ secrets.VPN_PASSWORD }}" >> auth.txt
-          chmod 600 auth.txt
 
-      # 5. Conexão VPN melhorada com timeout e retentativas
-      - name: Connect to VPN with Retry Logic
-        run: |
-          cd ~/openvpn-client
+          # Inicia OpenVPN e aguarda pela conexão
+          sudo openvpn --config vpn-config.ovpn --auth-user-pass auth.txt --daemon --log /tmp/vpn.log
 
-          # Função para verificar se a VPN está conectada
-          check_vpn_connection() {
-            # Verifica se existe interface tun/tap
+          # Aguarda até 30 segundos pela conexão
+          echo "Aguardando conexão VPN..."
+          for i in {1..30}; do
             if ip addr | grep -q "tun[0-9]\|tap[0-9]"; then
-              # Verifica se há rotas através da interface VPN
-              if ip route | grep -q "tun[0-9]\|tap[0-9]"; then
-                return 0  # Conectado
-              fi
+              echo "VPN conectada após $i segundos!"
+              break
             fi
-            return 1  # Não conectado
-          }
-
-          # Extrai o servidor VPN do arquivo config para diagnóstico
-          VPN_SERVER=$(grep -E '^remote\s+' client.ovpn | head -1 | awk '{print $2}')
-          VPN_PORT=$(grep -E '^remote\s+' client.ovpn | head -1 | awk '{print $3}')
-
-          # Modifique a parte de verificação do servidor VPN para:
-          if [ -n "$VPN_SERVER" ]; then
-            echo "Servidor VPN identificado: $VPN_SERVER"
-            
-            # Tenta resolver o nome se for um domínio
-            if [[ $VPN_SERVER =~ ^[a-zA-Z] ]]; then
-              echo "Resolvendo DNS para $VPN_SERVER..."
-              IP_ADDRESSES=$(dig +short $VPN_SERVER)
-              if [ -n "$IP_ADDRESSES" ]; then
-                echo "IP(s) resolvido(s): $IP_ADDRESSES"
-                # Tenta ping no primeiro IP
-                FIRST_IP=$(echo "$IP_ADDRESSES" | head -1)
-                ping -c 2 $FIRST_IP || echo "Aviso: Não foi possível pingar o IP do servidor VPN"
-              else
-                echo "Aviso: Não foi possível resolver o domínio $VPN_SERVER"
-              fi
-            else
-              # Já é um IP, tenta ping direto
-              ping -c 2 $VPN_SERVER || echo "Aviso: Não foi possível pingar o servidor VPN"
-            fi
-            
-            # Tenta verificar a porta se disponível (usando netcat)
-            if [ -n "$VPN_PORT" ] && [ -n "$(which nc)" ]; then
-              echo "Verificando se porta $VPN_PORT está aberta em $VPN_SERVER..."
-              nc -z -v -w 5 $VPN_SERVER $VPN_PORT || echo "Aviso: Não foi possível conectar à porta $VPN_PORT"
-            fi
-          else
-            echo "Aviso: Não foi possível extrair o servidor VPN do arquivo de configuração"
-          fi
-
-          # Tenta conectar até 3 vezes
-          MAX_ATTEMPTS=3
-          for ATTEMPT in $(seq 1 $MAX_ATTEMPTS); do
-            echo "Tentativa $ATTEMPT de $MAX_ATTEMPTS de conexão VPN..."
-            
-            # Mata qualquer processo OpenVPN existente
-            sudo killall openvpn 2>/dev/null || true
-            
-            # Inicia OpenVPN como daemon
-            sudo openvpn --config client.ovpn --auth-user-pass auth.txt --daemon --log-append /tmp/openvpn.log --verb 4
-            
-            # Aguarda até 30 segundos pela conexão
-            TIMEOUT=30
-            echo "Aguardando conexão VPN (timeout: ${TIMEOUT}s)..."
-            for i in $(seq 1 $TIMEOUT); do
-              if check_vpn_connection; then
-                echo "VPN conectada com sucesso após ${i} segundos!"
-                # Mostra interfaces e rotas para confirmar
-                echo "Interfaces de rede:"
-                ip addr | grep -E "inet |tun|tap"
-                echo "Tabela de rotas:"
-                ip route
-                break 2  # Sai de ambos os loops
-              fi
-              echo -n "."
-              sleep 1
-            done
-            
-            echo "Falha na tentativa $ATTEMPT. Log da conexão:"
-            sudo cat /tmp/openvpn.log | tail -n 50
-            
-            if [ $ATTEMPT -lt $MAX_ATTEMPTS ]; then
-              echo "Aguardando 10s antes da próxima tentativa..."
-              sleep 10
-            fi
+            sleep 1
+            echo -n "."
           done
 
           # Verifica se a VPN está conectada
-          if check_vpn_connection; then
-            echo "✅ Conexão VPN estabelecida com sucesso!"
-          else
-            echo "❌ Falha ao conectar à VPN após $MAX_ATTEMPTS tentativas."
-            echo "Log completo:"
-            sudo cat /tmp/openvpn.log
+          if ! ip addr | grep -q "tun[0-9]\|tap[0-9]"; then
+            echo "Falha ao conectar VPN. Log:"
+            cat /tmp/vpn.log
             exit 1
           fi
 
-          # Verifica conectividade através da VPN com o servidor de destino
-          echo "Testando conexão com o servidor de destino via VPN..."
-          if ping -c 2 ${{ secrets.SSH_HOST }}; then
-            echo "✅ Servidor de destino acessível pela VPN!"
-          else
-            echo "⚠️ Aviso: Não foi possível pingar o servidor de destino."
-            echo "Continuando mesmo assim, pois pode haver regras de firewall bloqueando ICMP..."
-          fi
-
-      # 6. Implanta no servidor via SSH (com a VPN conectada)
+      # 5. Implanta no servidor via SSH
       - name: Deploy to Server
         uses: appleboy/ssh-action@v1.0.3
         with:
