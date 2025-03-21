@@ -1,6 +1,7 @@
 services:
   pelican:
     build: .
+    container_name: fabrica-prod-door
     volumes:
       - .:/app
     ports:
