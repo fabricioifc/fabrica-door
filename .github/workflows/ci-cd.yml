@@ -32,48 +32,101 @@ jobs:
           sudo apt-get install -y openvpn
 
       # 5. Conecta à VPN
-      - name: Connect to VPN
+      - name: Connect to VPN with Detailed Diagnostics
         run: |
-          # Instala o OpenVPN
+          # Instala o OpenVPN e ferramentas de rede para diagnóstico
           sudo apt-get update
-          sudo apt-get install -y openvpn
+          sudo apt-get install -y openvpn net-tools tcpdump
+
+          # Mostra interfaces de rede antes da conexão
+          echo "==== Interfaces de rede antes da conexão ===="
+          ip addr
+          echo "============================================="
 
           # Escreve o arquivo de configuração da VPN
           echo "$VPN_CONFIG" > vpn-config.ovpn
+          chmod 600 vpn-config.ovpn
 
-          # Escreve as credenciais no arquivo auth.txt
+          # Valida o formato do arquivo de configuração
+          echo "==== Validando arquivo de configuração VPN ===="
+          openvpn --config vpn-config.ovpn --show-configs || echo "Erro na configuração da VPN"
+
+          # Verifica se servidor VPN está acessível
+          echo "==== Testando conectividade com servidor VPN ===="
+          # Extrai o servidor do arquivo config (isso pode variar dependendo do formato do arquivo)
+          VPN_SERVER=$(grep -E '^remote\s+' vpn-config.ovpn | head -1 | awk '{print $2}')
+          VPN_PORT=$(grep -E '^remote\s+' vpn-config.ovpn | head -1 | awk '{print $3}')
+
+          if [ -n "$VPN_SERVER" ]; then
+            echo "Servidor VPN: $VPN_SERVER"
+            echo "Testando ping para $VPN_SERVER:"
+            ping -c 4 $VPN_SERVER || echo "Não foi possível fazer ping no servidor VPN"
+            
+            if [ -n "$VPN_PORT" ]; then
+              echo "Porta VPN: $VPN_PORT"
+              echo "Testando conexão TCP para $VPN_SERVER:$VPN_PORT:"
+              nc -zvw3 $VPN_SERVER $VPN_PORT || echo "Não foi possível conectar à porta do servidor VPN"
+            fi
+          else
+            echo "Não foi possível extrair o servidor VPN do arquivo de configuração"
+          fi
+
+          # Escreve credenciais
           echo "$VPN_USERNAME" > auth.txt
           echo "$VPN_PASSWORD" >> auth.txt
+          chmod 600 auth.txt
 
-          # Verifica os arquivos
-          if [ ! -s vpn-config.ovpn ] || [ ! -s auth.txt ]; then
-            echo "Erro: Arquivos de configuração ou autenticação estão vazios!"
-            exit 1
-          fi
+          # Tenta conectar com log verboso
+          echo "==== Tentando conexão VPN (modo de teste) ===="
+          sudo openvpn --config vpn-config.ovpn --auth-user-pass auth.txt --verb 5 --dev tun0 --cd /tmp --log vpn-test.log --test-crypto
 
-          # Mostra o conteúdo dos arquivos para debug (opcional, remova se sensível)
-          echo "Conteúdo de vpn-config.ovpn (primeiras 5 linhas):"
-          head -n 5 vpn-config.ovpn
-          echo "Conteúdo de auth.txt:"
-          cat auth.txt
-
-          # Tenta conectar à VPN sem daemon para capturar erros diretamente
-          echo "Tentando conectar à VPN..."
-          openvpn --config vpn-config.ovpn --auth-user-pass auth.txt --verbose > vpn.log 2>&1
-
-          # Verifica se houve erro na execução
-          if [ $? -ne 0 ]; then
-            echo "Erro: O comando openvpn falhou. Aqui estão os logs:"
-            cat vpn.log || echo "Erro: Nenhum log gerado!"
-            exit 1
-          fi
-
-          # Se chegou aqui, verifica se a conexão foi bem-sucedida
-          if grep -q "Initialization Sequence Completed" vpn.log; then
-            echo "VPN conectada com sucesso!"
+          if [ $? -eq 0 ]; then
+            echo "Teste de criptografia passou com sucesso"
           else
-            echo "Erro: VPN não conectou. Aqui estão os logs:"
-            cat vpn.log
+            echo "ERRO: Teste de criptografia falhou"
+            cat /tmp/vpn-test.log
+          fi
+
+          # Tenta conexão real com timeout
+          echo "==== Iniciando conexão VPN real ===="
+          sudo openvpn --config vpn-config.ovpn --auth-user-pass auth.txt --daemon --log /tmp/vpn.log --verb 5
+
+          # Aguarda e verifica (timeout de 30 segundos)
+          echo "Aguardando conexão VPN (30s timeout)..."
+          for i in {1..30}; do
+            if ip addr | grep -q tun0; then
+              echo "Interface tun0 detectada!"
+              break
+            fi
+            sleep 1
+            echo -n "."
+            # A cada 5 segundos, verifica o status do processo e logs
+            if [ $((i % 5)) -eq 0 ]; then
+              echo ""
+              echo "Status do processo OpenVPN após ${i}s:"
+              sudo ps aux | grep openvpn | grep -v grep
+              echo "Últimas 10 linhas do log:"
+              sudo tail -10 /tmp/vpn.log
+            fi
+          done
+
+          # Verifica resultado final
+          echo "==== Status final da conexão VPN ===="
+          if ip addr | grep -q tun0; then
+            echo "SUCESSO: VPN conectada! Interface tun0 criada."
+            ip addr show tun0
+            echo "Novas rotas adicionadas:"
+            ip route | grep tun0
+            echo "Teste de conectividade através da VPN:"
+            ping -c 2 -I tun0 8.8.8.8 || echo "Não foi possível fazer ping através da VPN"
+          else
+            echo "FALHA: VPN não conectou após 30s de espera"
+            echo "Log completo da tentativa de conexão:"
+            sudo cat /tmp/vpn.log
+            echo "Processos OpenVPN em execução:"
+            sudo ps aux | grep openvpn | grep -v grep
+            echo "Status do serviço OpenVPN:"
+            sudo systemctl status openvpn* || echo "Não foi possível obter status do serviço"
             exit 1
           fi
         env:
