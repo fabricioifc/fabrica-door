@@ -51,19 +51,31 @@ jobs:
             exit 1
           fi
 
-          # Tenta conectar à VPN com logs no diretório atual
+          # Mostra o conteúdo dos arquivos para debug (opcional, remova se sensível)
+          echo "Conteúdo de vpn-config.ovpn (primeiras 5 linhas):"
+          head -n 5 vpn-config.ovpn
+          echo "Conteúdo de auth.txt:"
+          cat auth.txt
+
+          # Tenta conectar à VPN sem daemon para capturar erros diretamente
           echo "Tentando conectar à VPN..."
-          openvpn --config vpn-config.ovpn --auth-user-pass auth.txt --log vpn.log --daemon
+          openvpn --config vpn-config.ovpn --auth-user-pass auth.txt --verbose > vpn.log 2>&1
 
-          # Aguarda até a conexão ou falha
-          timeout 30s bash -c "until grep -q 'Initialization Sequence Completed' vpn.log 2>/dev/null; do sleep 1; done" || {
-            echo "Erro: Falha ao conectar à VPN. Aqui estão os logs:"
-            cat vpn.log || echo "Erro: Nenhum log encontrado em vpn.log!"
+          # Verifica se houve erro na execução
+          if [ $? -ne 0 ]; then
+            echo "Erro: O comando openvpn falhou. Aqui estão os logs:"
+            cat vpn.log || echo "Erro: Nenhum log gerado!"
             exit 1
-          }
+          fi
 
-          echo "VPN conectada com sucesso!"
-          cat vpn.log  # Mostra os logs em caso de sucesso
+          # Se chegou aqui, verifica se a conexão foi bem-sucedida
+          if grep -q "Initialization Sequence Completed" vpn.log; then
+            echo "VPN conectada com sucesso!"
+          else
+            echo "Erro: VPN não conectou. Aqui estão os logs:"
+            cat vpn.log
+            exit 1
+          fi
         env:
           VPN_USERNAME: ${{ secrets.VPN_USERNAME }}
           VPN_PASSWORD: ${{ secrets.VPN_PASSWORD }}
