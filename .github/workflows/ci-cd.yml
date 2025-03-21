@@ -51,7 +51,7 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
             docker pull ${{ secrets.DOCKER_USERNAME }}/fabrica-door:latest
-            cd /caminho/para/o/projeto/no/servidor
+            cd /opt/fabrica-door-docker
             docker-compose down
             docker-compose up -d
           "
