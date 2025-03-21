@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: CI/CD Pipeline with VPN
 
 on:
   push:
@@ -10,11 +10,14 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
+      # 1. Baixa o código do repositório
       - uses: actions/checkout@v3
 
+      # 2. Configura o Docker Buildx
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
+      # 3. Constrói e publica a imagem Docker
       - name: Build and Push Docker Image
         run: |
           docker build -t fabrica-door:latest .
@@ -22,10 +25,36 @@ jobs:
           echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
           docker push fabricioifc/fabrica-door:${{ github.sha }}
 
-      - name: Deploy to Server
+      # 4. Instala o OpenVPN e dependências
+      - name: Install OpenVPN
         run: |
-          ssh -p ${SSH_PORT} ${SSH_USER}@${SSH_HOST} "docker pull fabricioifc/fabrica-door:${{ github.sha }} && docker-compose up -d"
+          sudo apt-get update
+          sudo apt-get install -y openvpn openssh-client
+
+      # 5. Configura a VPN
+      - name: Set up VPN
         env:
-          SSH_PORT: ${{ secrets.SSH_PORT }}
+          VPN_CONFIG: ${{ secrets.VPN_CONFIG }} # Conteúdo do .ovpn
+          VPN_CERT: ${{ secrets.VPN_CERT }} # Conteúdo do .crt
+        run: |
+          echo "$VPN_CONFIG" > vpn-config.ovpn
+          echo "$VPN_CERT" > vpn-cert.crt
+          # Se o .ovpn referencia o .crt, ajuste o caminho no .ovpn ou coloque inline
+          sudo openvpn --config vpn-config.ovpn --daemon  # Inicia a VPN em background
+          sleep 10  # Aguarda a conexão estabilizar
+
+      # 6. Implanta no servidor via SSH através da VPN
+      - name: Deploy to Server
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }} # IP interno da VPS na VPN
           SSH_USER: ${{ secrets.SSH_USER }}
-          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_PORT: ${{ secrets.SSH_PORT }} # Porta SSH, se diferente de 22
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh -o StrictHostKeyChecking=no -p ${SSH_PORT:-22} ${SSH_USER}@${SSH_HOST} "
+            docker pull fabricioifc/fabrica-door:${{ github.sha }} &&
+            docker-compose up -d
+          "
