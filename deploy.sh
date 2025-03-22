@@ -1,8 +1,11 @@
 #!/bin/bash
 
-# Carregar variáveis do .env
+# Carregar variáveis do .env de forma segura
 if [ -f .env ]; then
-    export $(grep -v '^#' .env | xargs)
+    set -a  # Automaticamente exporta todas as variáveis
+    # shellcheck disable=SC1091
+    source .env
+    set +a  # Desativa o modo de exportação automática
 else
     echo "Erro: Arquivo .env não encontrado"
     exit 1
@@ -25,6 +28,7 @@ error_exit() {
 command -v git >/dev/null 2>&1 || error_exit "Git não está instalado"
 command -v docker >/dev/null 2>&1 || error_exit "Docker não está instalado"
 command -v docker compose >/dev/null 2>&1 || error_exit "Docker Compose não está instalado"
+command -v dotenv >/dev/null 2>&1 || error_exit "O comando 'dotenv' não está instalado"
 
 # Verificar se o branch existe no repositório remoto
 log "Verificando branch '$BRANCH' no GitHub..."
@@ -36,7 +40,7 @@ fi
 log "Parando containers..."
 docker compose down || error_exit "Não foi possível parar os containers"
 
-# Puxar mudanças do GitHub if production
+# Puxar mudanças do GitHub se production
 if [ "$ENVIRONMENT" = "production" ]; then
     log "Puxando mudanças do branch $BRANCH..."
     git fetch origin && git reset --hard "origin/$BRANCH" || error_exit "Falha ao atualizar o repositório"
