@@ -1,52 +1,69 @@
 #!/bin/bash
 
-# Parâmetros
-GITHUB_URL=https://github.com/fabricioifc/fabrica-door.git
-PROJECT_NAME=fabrica-prod-door
-NETWORK_NAME=fabrica-door-network
-NETWORK_NAME_NGINX=fabrica-nginx-proxy-network
-DOCKER_COMPOSE_FILE=docker-compose.yml
-DOCKER_COMPOSE_BUILD=true
-BRANCH=main
+# Carregar variáveis do .env
+if [ -f .env ]; then
+    export $(grep -v '^#' .env | xargs)
+else
+    echo "Erro: Arquivo .env não encontrado"
+    exit 1
+fi
 
-# Função para exibir mensagens de erro e sair
+# Função para exibir mensagens e logar
+log() {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" | tee -a "$LOG_FILE"
+}
+
+# Função para erro e rollback
 error_exit() {
-    echo "Erro: $1"
+    log "Erro: $1"
+    log "Iniciando rollback..."
+    docker compose down || log "Falha ao executar rollback"
     exit 1
 }
 
-# Verificar se o branch existe no repositório remoto do GitHub antes de fazer o deploy
-echo "Verificando se o branch '$BRANCH' existe no repositório remoto do GitHub..."
-if [ ! "$(git ls-remote --heads $GITHUB_URL $BRANCH)" ]; then
-    error_exit "O branch $BRANCH não existe no repositório remoto do GitHub"
+# Verificar pré-requisitos
+command -v git >/dev/null 2>&1 || error_exit "Git não está instalado"
+command -v docker >/dev/null 2>&1 || error_exit "Docker não está instalado"
+command -v docker compose >/dev/null 2>&1 || error_exit "Docker Compose não está instalado"
+
+# Verificar se o branch existe no repositório remoto
+log "Verificando branch '$BRANCH' no GitHub..."
+if ! git ls-remote --heads "$GITHUB_URL" "$BRANCH" >/dev/null; then
+    error_exit "O branch $BRANCH não existe no repositório remoto"
 fi
 
-# Parar os containers em execução
-echo "Parando os containers..."
+# Parar os containers atuais
+log "Parando containers..."
 docker compose down || error_exit "Não foi possível parar os containers"
 
-# Puxar as últimas mudanças do GitHub
-echo "Puxando as últimas mudanças do GitHub..."
-git pull origin $BRANCH || error_exit "Não foi possível puxar as últimas mudanças do GitHub ($BRANCH)"
-
-#Criar a rede NETWORK_NAME se ela não existir.
-if [ ! "$(docker network ls --format '{{.Name}}' | grep $NETWORK_NAME)" ]; then
-    echo "Criando a rede $NETWORK_NAME..."
-    docker network create $NETWORK_NAME || error_exit "Não foi possível criar a rede $NETWORK_NAME"
+# Puxar mudanças do GitHub if production
+if [ "$ENV" = "production" ]; then
+    log "Puxando mudanças do branch $BRANCH..."
+    git fetch origin && git reset --hard "origin/$BRANCH" || error_exit "Falha ao atualizar o repositório"
 fi
 
-# Subir os containers novamente com as novas mudanças
-echo "Subindo os containers..."
-if [ "$DOCKER_COMPOSE_BUILD" = true ]; then
-    docker compose -f $DOCKER_COMPOSE_FILE up -d --build || error_exit "Não foi possível subir os containers"
+# Criar rede se não existir
+if [ "$ENV" = "production" ]; then
+    if ! docker network ls --format '{{.Name}}' | grep -q "$NETWORK_NAME"; then
+        log "Criando rede $NETWORK_NAME..."
+        docker network create "$NETWORK_NAME" || error_exit "Falha ao criar rede $NETWORK_NAME"
+    fi
+fi
+
+# Build e deploy
+log "Subindo containers..."
+if [ "$DOCKER_COMPOSE_BUILD" = "true" ]; then
+    docker compose -f "$DOCKER_COMPOSE_FILE" up -d --build || error_exit "Falha ao subir containers"
 else
-    docker compose -f $DOCKER_COMPOSE_FILE up -d || error_exit "Não foi possível subir os containers"
+    docker compose -f "$DOCKER_COMPOSE_FILE" up -d || error_exit "Falha ao subir containers"
 fi
 
-#Verificar se a rede NETWORK_NAME_NGINX está conectada ao container fabrica-prod-web
-if [ ! "$(docker network inspect -f '{{range .Containers}}{{.Name}}{{end}}' $NETWORK_NAME_NGINX | grep $PROJECT_NAME)" ]; then
-    echo "Conectando a rede $NETWORK_NAME_NGINX ao container $PROJECT_NAME"
-    docker network connect $NETWORK_NAME_NGINX ${PROJECT_NAME} || error_exit "Não foi possível conectar a rede $NETWORK_NAME_NGINX ao container $NETWORK_NAME"
+# Conectar à rede NGINX se necessário
+if [ "$ENV" = "production" ]; then
+    if ! docker network inspect -f '{{range .Containers}}{{.Name}}{{end}}' "$NETWORK_NAME_NGINX" | grep -q "$PROJECT_NAME"; then
+        log "Conectando $PROJECT_NAME à rede $NETWORK_NAME_NGINX..."
+        docker network connect "$NETWORK_NAME_NGINX" "$PROJECT_NAME" || error_exit "Falha ao conectar à rede NGINX"
+    fi
 fi
 
-echo "Deploy finalizado com sucesso!"
+log "Deploy finalizado com sucesso!"

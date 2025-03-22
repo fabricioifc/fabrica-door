@@ -2,14 +2,18 @@ services:
   pelican:
     build: .
     container_name: fabrica-prod-door
-    volumes:
-      - .:/app
     ports:
       - "${PORT}:${PORT}"
     env_file:
       - .env
     networks:
       - fabrica-door-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:${PORT}"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
 
 networks:
   fabrica-door-network:
