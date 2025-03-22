@@ -37,13 +37,13 @@ log "Parando containers..."
 docker compose down || error_exit "Não foi possível parar os containers"
 
 # Puxar mudanças do GitHub if production
-if [ "$ENV" = "production" ]; then
+if [ "$ENVIRONMENT" = "production" ]; then
     log "Puxando mudanças do branch $BRANCH..."
     git fetch origin && git reset --hard "origin/$BRANCH" || error_exit "Falha ao atualizar o repositório"
 fi
 
 # Criar rede se não existir
-if [ "$ENV" = "production" ]; then
+if [ "$ENVIRONMENT" = "production" ]; then
     if ! docker network ls --format '{{.Name}}' | grep -q "$NETWORK_NAME"; then
         log "Criando rede $NETWORK_NAME..."
         docker network create "$NETWORK_NAME" || error_exit "Falha ao criar rede $NETWORK_NAME"
@@ -59,7 +59,7 @@ else
 fi
 
 # Conectar à rede NGINX se necessário
-if [ "$ENV" = "production" ]; then
+if [ "$ENVIRONMENT" = "production" ]; then
     if ! docker network inspect -f '{{range .Containers}}{{.Name}}{{end}}' "$NETWORK_NAME_NGINX" | grep -q "$PROJECT_NAME"; then
         log "Conectando $PROJECT_NAME à rede $NETWORK_NAME_NGINX..."
         docker network connect "$NETWORK_NAME_NGINX" "$PROJECT_NAME" || error_exit "Falha ao conectar à rede NGINX"
