@@ -30,4 +30,3 @@ services:
 networks:
   fabrica-door-network:
     driver: bridge
-    name: fabrica-door-network
