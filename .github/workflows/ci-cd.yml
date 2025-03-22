@@ -96,7 +96,5 @@ jobs:
           # Se a conexão for bem-sucedida, continuar com o deploy
           echo "Executando comandos de deployment:"
           ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
-            cd /caminho/do/seu/projeto
-            docker pull ${{ secrets.DOCKER_USERNAME }}/fabrica-prod-door:latest
-            docker-compose up -d --force-recreate
+            whoami
           EOF
