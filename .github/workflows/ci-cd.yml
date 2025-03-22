@@ -47,12 +47,16 @@ jobs:
       - name: Setup VPN configuration
         run: |
           echo "${{ secrets.VPN_CONFIG }}" > config.ovpn
-          sudo chmod 600 config.ovpn
+
+          # Criar arquivo de credenciais para a VPN
+          echo "${{ secrets.VPN_USERNAME }}" > vpn-credentials.txt
+          echo "${{ secrets.VPN_PASSWORD }}" >> vpn-credentials.txt
+          sudo chmod 600 config.ovpn vpn-credentials.txt
 
       - name: Connect to VPN & Deploy
         run: |
-          # Iniciar OpenVPN em segundo plano
-          sudo openvpn --config config.ovpn --daemon
+          # Iniciar OpenVPN em segundo plano com arquivo de autenticação
+          sudo openvpn --config config.ovpn --auth-user-pass vpn-credentials.txt --daemon
 
           # Aguardar a VPN conectar
           echo "Aguardando conexão VPN..."
@@ -74,3 +78,9 @@ jobs:
             echo 'Conexão SSH bem-sucedida!' && 
             pwd
           "
+
+      # Opcional: desconectar VPN no final (para garantir limpeza)
+      - name: Disconnect VPN
+        if: always()
+        run: |
+          sudo killall openvpn || true
