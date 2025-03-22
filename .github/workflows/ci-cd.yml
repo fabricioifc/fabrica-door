@@ -30,42 +30,21 @@ jobs:
       - name: Install OpenVPN
         run: |
           sudo apt-get update
-          sudo apt-get install -y openvpn openvpn-systemd-resolved
+          sudo apt-get install -y openvpn #openvpn-systemd-resolved
 
-      - name: Setup VPN with certificate
-        run: |
-          # Criar arquivos de configuração
-          echo "${{ secrets.VPN_CONFIG }}" > vpn.conf
-          echo "${{ secrets.VPN_CERT }}" > cert_export_CA.crt
-
-          # Verificar permissões
-          chmod 600 vpn.conf cert_export_CA.crt
-
-          # Iniciar VPN com credenciais
-          sudo openvpn --config vpn.conf --auth-user-pass <(echo -e "${{ secrets.VPN_USERNAME }}\n${{ secrets.VPN_PASSWORD }}") --daemon
-
-          # Aguardar conexão e verificar status
-          echo "Aguardando conexão VPN estabelecer..."
-          sleep 10
-
-          # Verificar interfaces
-          echo "Interfaces de rede após conexão VPN:"
-          ip addr | grep -E 'tun|tap' || echo "Nenhuma interface tun/tap encontrada"
-
-          # Verificar rotas
-          echo "Tabela de roteamento:"
-          ip route
-
-          # Verificar processos OpenVPN
-          echo "Processos OpenVPN em execução:"
-          ps aux | grep openvpn
-
-          # Esperar mais um pouco para estabilizar
-          sleep 5
-
-          # Testar conectividade
-          echo "Testando conectividade com o host de destino:"
-          ping -c 2 ${{ secrets.SSH_HOST }} || echo "Ping falhou, mas pode ser normal"
+      - name: Setup and Connect to VPN
+        uses: kota65535/github-openvpn-connect-action@v2
+        with:
+          config_file_contents: ${{ secrets.VPN_CONFIG }}
+          username: ${{ secrets.VPN_USERNAME }}
+          password: ${{ secrets.VPN_PASSWORD }}
+          extra_files: |
+            [
+              {
+                "path": "cert_export_CA.crt",
+                "contents": "${{ secrets.VPN_CA_CERT }}"
+              }
+            ]
 
       # Configurar SSH
       - name: Setup SSH
