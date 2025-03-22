@@ -56,7 +56,7 @@ jobs:
       - name: Connect to VPN & Deploy
         run: |
           # Iniciar OpenVPN em segundo plano com arquivo de autenticação
-          sudo openvpn --config config.ovpn --auth-user-pass vpn-credentials.txt --daemon
+          openvpn --config config.ovpn --auth-user-pass vpn-credentials.txt --daemon
 
           # Aguardar a VPN conectar
           echo "Aguardando conexão VPN..."
