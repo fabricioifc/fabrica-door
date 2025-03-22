@@ -1,36 +1,102 @@
-name: GitHub Action
+name: CI/CD Pipeline
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      # Checkout do código
+      - name: Checkout repository
         uses: actions/checkout@v4
 
+      # # Login no Docker Hub
+      # - name: Login to Docker Hub
+      #   uses: docker/login-action@v2
+      #   with:
+      #     username: ${{ secrets.DOCKER_USERNAME }}
+      #     password: ${{ secrets.DOCKER_PASSWORD }}
+
+      # # Build e push da imagem Docker
+      # - name: Build and push Docker image
+      #   run: |
+      #     docker build -t ${{ secrets.DOCKER_USERNAME }}/my-app:latest .
+      #     docker push ${{ secrets.DOCKER_USERNAME }}/my-app:latest
+
+      # Opcional: Configuração VPN (descomente se necessário)
       - name: Install OpenVPN
         run: |
-          sudo apt update
-          sudo apt install -y openvpn openvpn-systemd-resolved
+          sudo apt-get update
+          sudo apt-get install -y openvpn openvpn-systemd-resolved
 
-      - name: Connect to VPN
-        uses: "kota65535/github-openvpn-connect-action@v2"
-        with:
-          config_file: .github/workflows/client.ovpn
-          username: ${{ secrets.VPN_USERNAME }}
-          password: ${{ secrets.VPN_PASSWORD }}
-          client_key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Setup VPN with certificate
+        run: |
+          # Criar arquivos de configuração
+          echo "${{ secrets.VPN_CONFIG }}" > vpn.conf
+          echo "${{ secrets.VPN_CRT }}" > cert_export_CA.crt
 
-      - name: Use SSH
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
+          # Verificar permissões
+          chmod 600 vpn.conf cert_export_CA.crt
+
+          # Verificar se o arquivo de configuração faz referência ao certificado
+          echo "Verificando referências ao certificado:"
+          grep -i "ca\|cert" vpn.conf || echo "Nenhuma referência a certificado encontrada no arquivo de configuração"
+
+          # Iniciar VPN com credenciais
+          sudo openvpn --config vpn.conf --auth-user-pass <(echo -e "${{ secrets.VPN_USERNAME }}\n${{ secrets.VPN_PASSWORD }}") --daemon
+
+          # Aguardar conexão e verificar status
+          echo "Aguardando conexão VPN estabelecer..."
+          sleep 10
+
+          # Verificar interfaces
+          echo "Interfaces de rede após conexão VPN:"
+          ip addr | grep -E 'tun|tap' || echo "Nenhuma interface tun/tap encontrada"
+
+          # Verificar rotas
+          echo "Tabela de roteamento:"
+          ip route
+
+          # Verificar processos OpenVPN
+          echo "Processos OpenVPN em execução:"
+          ps aux | grep openvpn
+
+          # Esperar mais um pouco para estabilizar
+          sleep 5
+
+          # Testar conectividade
+          echo "Testando conectividade com o host de destino:"
+          ping -c 2 ${{ secrets.SSH_HOST }} || echo "Ping falhou, mas pode ser normal"
+
+      # Configurar SSH
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+          # Verificar configuração SSH
+          echo "Conteúdo do diretório ~/.ssh:"
+          ls -la ~/.ssh/
+
+      # Deploy no VPS via SSH com modo verboso para diagnóstico
+      - name: Deploy to VPS
+        run: |
+          echo "Tentando conexão SSH com modo verboso:"
+          ssh -v -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
             whoami
+            echo "Conexão SSH estabelecida com sucesso!"
+            pwd
+          EOF
+
+          # Se a conexão for bem-sucedida, continuar com o deploy
+          echo "Executando comandos de deployment:"
+          ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+            cd /caminho/do/seu/projeto
+            docker pull ${{ secrets.DOCKER_USERNAME }}/fabrica-prod-door:latest
+            docker-compose up -d --force-recreate
+          EOF
