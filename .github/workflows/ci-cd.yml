@@ -13,32 +13,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # - name: Login to DockerHub
-      #   uses: docker/login-action@v2
-      #   with:
-      #     username: ${{ secrets.DOCKER_USERNAME }}
-      #     password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # - name: Build and push Docker image
-      #   uses: docker/build-push-action@v4
-      #   with:
-      #     context: .
-      #     push: true
-      #     tags: ${{ secrets.DOCKER_USERNAME }}/fabrica-prod-door:latest
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/fabrica-prod-door:latest
 
-      # - name: Deploy to VPS
-      #   uses: appleboy/ssh-action@master
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.PERSONAL_GITHUB_TOKEN  }}
-      #   with:
-      #     host: ${{ secrets.SSH_HOST }}
-      #     port: ${{ secrets.SSH_PORT }}
-      #     username: ${{ secrets.SSH_USER }}
-      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
-      #     script: |
-      #       whoami
-      #       echo "Conexão SSH bem-sucedida!"
-      #       pwd
       - name: Install OpenVPN
         run: |
           sudo apt-get update
@@ -47,40 +34,74 @@ jobs:
       - name: Setup VPN configuration
         run: |
           echo "${{ secrets.VPN_CONFIG }}" > config.ovpn
+          cat config.ovpn | grep -v "^#" | head -n 10
 
           # Criar arquivo de credenciais para a VPN
           echo "${{ secrets.VPN_USERNAME }}" > vpn-credentials.txt
           echo "${{ secrets.VPN_PASSWORD }}" >> vpn-credentials.txt
           sudo chmod 600 config.ovpn vpn-credentials.txt
+          echo "Arquivos de configuração preparados."
 
-      - name: Connect to VPN & Deploy
+      - name: Start VPN Connection
         run: |
-          # Iniciar OpenVPN em segundo plano com arquivo de autenticação
-          openvpn --config config.ovpn --auth-user-pass vpn-credentials.txt --daemon
+          # Iniciar OpenVPN com log detalhado
+          sudo openvpn --config config.ovpn --auth-user-pass vpn-credentials.txt --daemon --log vpn.log --verb 4
+          echo "Iniciando OpenVPN..."
 
           # Aguardar a VPN conectar
           echo "Aguardando conexão VPN..."
-          sleep 30
+          sleep 10
+          echo "Verificando log da VPN:"
+          cat vpn.log || echo "Arquivo de log não encontrado"
 
-          # Verificar conexão
-          echo "Verificando conexão de rede..."
+          # Verificar interfaces de rede
+          echo "Interfaces de rede após 10 segundos:"
           ip addr
 
-          # Configurar SSH
+          # Esperar mais tempo
+          sleep 20
+          echo "Interfaces de rede após 30 segundos:"
+          ip addr
+
+      - name: Test Network Connection
+        run: |
+          echo "Tentando ping para o host SSH:"
+          ping -c 4 ${{ secrets.SSH_HOST }} || echo "Ping falhou, mas isso pode ser normal se o host não responde a ICMP"
+
+          echo "Verificando porta SSH com netcat:"
+          nc -zv ${{ secrets.SSH_HOST }} ${{ secrets.SSH_PORT }} -w 5 || echo "Teste de netcat falhou"
+
+      - name: Setup SSH
+        run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+          echo "Configuração SSH concluída."
+          ls -la ~/.ssh
 
-          # Executar deploy via SSH diretamente
+      - name: Deploy via SSH
+        run: |
+          # Executar SSH com modo verboso para ver detalhes da conexão
           ssh -v ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -p ${{ secrets.SSH_PORT }} "
             whoami && 
-            echo 'Conexão SSH bem-sucedida!' && 
-            pwd
+            echo 'Conexão SSH bem-sucedida!'
+          "
+
+      - name: Run Deployment Commands
+        if: success()
+        run: |
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -p ${{ secrets.SSH_PORT }} "
+            cd /caminho/do/seu/projeto &&
+            docker pull ${{ secrets.DOCKER_USERNAME }}/fabrica-prod-door:latest &&
+            docker-compose up -d --force-recreate
           "
 
       # Opcional: desconectar VPN no final (para garantir limpeza)
       - name: Disconnect VPN
         if: always()
         run: |
-          sudo killall openvpn || true
+          echo "Desconectando VPN..."
+          sudo killall openvpn || echo "Nenhum processo OpenVPN encontrado para encerrar"
+          echo "Logs finais da VPN:"
+          cat vpn.log || echo "Arquivo de log não encontrado"
