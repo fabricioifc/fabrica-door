@@ -28,7 +28,6 @@ error_exit() {
 command -v git >/dev/null 2>&1 || error_exit "Git não está instalado"
 command -v docker >/dev/null 2>&1 || error_exit "Docker não está instalado"
 command -v docker compose >/dev/null 2>&1 || error_exit "Docker Compose não está instalado"
-command -v dotenv >/dev/null 2>&1 || error_exit "O comando 'dotenv' não está instalado"
 
 # Verificar se o branch existe no repositório remoto
 log "Verificando branch '$BRANCH' no GitHub..."
@@ -40,7 +39,7 @@ fi
 log "Parando containers..."
 docker compose down || error_exit "Não foi possível parar os containers"
 
-# Puxar mudanças do GitHub se production
+# Puxar mudanças do GitHub if production
 if [ "$ENVIRONMENT" = "production" ]; then
     log "Puxando mudanças do branch $BRANCH..."
     git fetch origin && git reset --hard "origin/$BRANCH" || error_exit "Falha ao atualizar o repositório"
