@@ -1,16 +1,33 @@
 services:
   pelican:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: fabrica-prod-door
+    restart: unless-stopped
     volumes:
-      - .:/app
+      - ./content:/app/content
+      - ./output:/app/output
+      - ./themes:/app/themes # Adicionando volume para os temas
     ports:
       - "${PORT}:${PORT}"
     env_file:
       - .env
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://0.0.0.0:${PORT}"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
     networks:
       - fabrica-door-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
 networks:
   fabrica-door-network:
     driver: bridge
+    name: fabrica-door-network
