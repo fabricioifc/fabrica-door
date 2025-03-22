@@ -26,19 +26,6 @@ jobs:
       #     push: true
       #     tags: ${{ secrets.DOCKER_USERNAME }}/fabrica-prod-door:latest
 
-      - name: Deploy to VPS
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          port: ${{ secrets.SSH_PORT }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          timeout: 60s # Aumentar o timeout para 60 segundos
-          debug: true # Habilitar modo de debug
-          script: |
-            whoami
-            echo "Conexão SSH bem-sucedida!"
-            pwd
       # - name: Deploy to VPS
       #   uses: appleboy/ssh-action@master
       #   env:
@@ -52,3 +39,38 @@ jobs:
       #       whoami
       #       echo "Conexão SSH bem-sucedida!"
       #       pwd
+      - name: Install OpenVPN
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y openvpn
+
+      - name: Setup VPN configuration
+        run: |
+          echo "${{ secrets.VPN_CONFIG }}" > config.ovpn
+          sudo chmod 600 config.ovpn
+
+      - name: Connect to VPN & Deploy
+        run: |
+          # Iniciar OpenVPN em segundo plano
+          sudo openvpn --config config.ovpn --daemon
+
+          # Aguardar a VPN conectar
+          echo "Aguardando conexão VPN..."
+          sleep 30
+
+          # Verificar conexão
+          echo "Verificando conexão de rede..."
+          ip addr
+
+          # Configurar SSH
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+          # Executar deploy via SSH diretamente
+          ssh -v ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -p ${{ secrets.SSH_PORT }} "
+            whoami && 
+            echo 'Conexão SSH bem-sucedida!' && 
+            pwd
+          "
