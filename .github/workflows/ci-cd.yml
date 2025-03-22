@@ -33,13 +33,20 @@ jobs:
           sudo openvpn --config vpn.conf --auth-user-pass <(echo -e "${{ secrets.VPN_USERNAME }}\n${{ secrets.VPN_PASSWORD }}") &
           sleep 5 # Aguarda conexão VPN estabelecer
 
-      # Configurar SSH
-      - name: Setup SSH
+      # Configuração SSH com debug
+      - name: Setup SSH with Debug
         run: |
           mkdir -p ~/.ssh/
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+          echo "SSH Key contents (sanitized):"
+          head -n 2 ~/.ssh/id_rsa
+          echo "Trying to scan host ${{ secrets.SSH_HOST }} on port ${{ secrets.SSH_PORT }}"
+          ssh-keyscan -p ${{ secrets.SSH_PORT }} -v ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts 2>&1 || echo "Keyscan failed"
+          echo "Known hosts contents:"
+          cat ~/.ssh/known_hosts
+          echo "Testing SSH connection..."
+          ssh -v -p ${{ secrets.SSH_PORT }} -i ~/.ssh/id_rsa ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "echo SSH test successful" || echo "SSH connection failed"
 
       # Deploy no VPS via SSH
       - name: Deploy to VPS
