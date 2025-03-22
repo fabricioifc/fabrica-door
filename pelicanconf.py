@@ -7,10 +7,7 @@ SITENAME = os.getenv("SITE_NAME", "Fábrica de Software - IFC Videira")
 SITEURL = os.getenv("SITE_URL", "http://localhost:8000")
 PATH = os.getenv("CONTENT_PATH", "content")
 OUTPUT_PATH = os.getenv("OUTPUT_PATH", "output")
-
-# Permitir especificar o tema via variável de ambiente ou usar o padrão "fabrica"
-THEME_NAME = os.getenv("THEME_NAME", "fabrica")
-THEME = os.path.join("themes", THEME_NAME)
+THEME = "themes/fabrica"
 
 STATIC_PATHS = ['images']
 PAGE_PATHS = ['pages', 'projetos']  # Subdiretórios para páginas e projetos
