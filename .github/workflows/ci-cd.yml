@@ -88,14 +88,14 @@ jobs:
             echo 'Conexão SSH bem-sucedida!'
           "
 
-      - name: Run Deployment Commands
-        if: success()
-        run: |
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -p ${{ secrets.SSH_PORT }} "
-            cd /caminho/do/seu/projeto &&
-            docker pull ${{ secrets.DOCKER_USERNAME }}/fabrica-prod-door:latest &&
-            docker-compose up -d --force-recreate
-          "
+      # - name: Run Deployment Commands
+      #   if: success()
+      #   run: |
+      #     ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -p ${{ secrets.SSH_PORT }} "
+      #       cd /caminho/do/seu/projeto &&
+      #       docker pull ${{ secrets.DOCKER_USERNAME }}/fabrica-prod-door:latest &&
+      #       docker-compose up -d --force-recreate
+      #     "
 
       # Opcional: desconectar VPN no final (para garantir limpeza)
       - name: Disconnect VPN
