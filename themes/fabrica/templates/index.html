@@ -3,8 +3,311 @@
   name="description"
   content="Fábrica de Software - Desenvolvendo soluções tecnológicas para transformar a educação"
 />
+<style>
+  .scroll-hint {
+    position: absolute;
+    bottom: 20px; /* Aumentado para dar mais espaço acima */
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 2rem;
+    color: white;
+    z-index: 10;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    background: transparent;
+    border: none;
+    outline: none;
+  }
+
+  .scroll-arrow {
+    display: inline-block;
+    animation: bounce 1.5s infinite;
+  }
+
+  @keyframes bounce {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(5px);
+    }
+  }
+
+  .scroll-hint.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Ajuste para garantir que o botão não sobreponha os botões do hero */
+  .hero-buttons {
+    margin-bottom: 60px; /* Adiciona espaço abaixo dos botões do hero */
+  }
+
+  /* Responsividade */
+  @media (max-width: 768px) {
+    .hero-overlay {
+      padding: 20px; /* Espaçamento menor */
+      margin: 0 20px;
+    }
+
+    .scroll-hint {
+      padding: 8px 15px;
+      font-size: 0.9rem;
+    }
+
+    .hero-buttons {
+      margin-bottom: 40px; /* Menos espaço em mobile */
+    }
+
+    .hero-buttons a {
+      font-size: 0.9rem; /* Tamanho de fonte menor */
+      padding: 10px 15px; /* Espaçamento menor */
+    }
+  }
+
+  /* Adicionar estas animações ao CSS existente */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes float {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+
+  /* Estilos atualizados para a seção Hero com vídeo */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0;
+    overflow: hidden;
+    color: white; /* Texto branco para contraste com o vídeo */
+    animation: fadeInUp 1s ease-out;
+    scroll-snap-align: start;
+  }
+
+  .hero-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Garante que o vídeo cubra toda a área */
+    z-index: -1;
+    filter: brightness(
+      70%
+    ); /* Reduz o brilho para melhor legibilidade do texto */
+  }
+
+  .hero-overlay {
+    position: relative;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.5); /* Overlay escurecido */
+    padding: 40px;
+    border-radius: 8px;
+    text-align: center;
+    animation: fadeInUp 1s ease-out 0.3s both;
+    max-width: 800px; /* Limita a largura do conteúdo */
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+
+  .hero p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+  }
+
+  .hero-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+
+  /* Ajustes para tela inteira */
+  section.hero,
+  section.features,
+  section.video-section,
+  section.featured-projects,
+  section.cta {
+    min-height: calc(
+      100vh - var(--header-height)
+    ); /* Tela inteira menos o cabeçalho */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centraliza o conteúdo verticalmente */
+    scroll-snap-align: start; /* Opcional: para um efeito de snap ao rolar */
+  }
+
+  body {
+    scroll-snap-type: y mandatory; /* Opcional: ativa o scroll snapping */
+  }
+
+  /* Estilos atualizados para seções */
+  .hero {
+    animation: fadeInUp 1s ease-out;
+    background-attachment: fixed; /* Efeito parallax opcional */
+  }
+
+  .hero-content {
+    animation: fadeInUp 1s ease-out 0.3s both;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    max-height: 80vh; /* Limita a altura do grid para caber na tela */
+    overflow-y: auto; /* Permite rolagem interna se necessário */
+  }
+
+  .feature-item {
+    animation: scaleIn 0.5s ease-out;
+  }
+
+  .feature-item:hover {
+    transform: translateY(-5px) scale(1.02);
+  }
+
+  .project-showcase {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    max-height: 80vh; /* Limita a altura para caber na tela */
+    overflow-y: auto; /* Rolagem interna se necessário */
+  }
+
+  .project-card {
+    animation: fadeInUp 0.6s ease-out;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary:hover,
+  .btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Estilos para a seção de vídeo */
+  .video-section {
+    position: relative;
+    overflow: hidden;
+    color: white;
+  }
+
+  .video-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    filter: brightness(60%);
+  }
+
+  .video-overlay {
+    position: relative;
+    padding: 40px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    animation: fadeInUp 1s ease-out;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+  }
+
+  /* Ajustes para a seção CTA */
+  .cta-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Responsividade */
+  @media (max-width: 768px) {
+    section.hero,
+    section.features,
+    section.video-section,
+    section.featured-projects,
+    section.cta {
+      min-height: 100vh; /* Mantém tela inteira em mobile */
+      padding: 20px 0;
+    }
+
+    section.video-section {
+      padding: 0; /* Remove o espaçamento */
+    }
+
+    .features-grid,
+    .project-showcase {
+      grid-template-columns: 1fr; /* Uma coluna em mobile */
+      max-height: none; /* Remove limite em mobile */
+      overflow-y: visible;
+    }
+  }
+</style>
 {% endblock %} {% block content %}
-<section class="hero">
+<!-- <section class="hero">
   <div class="container">
     <div class="hero-content">
       <h1>Transformamos ideias em soluções para a comunidade</h1>
@@ -14,6 +317,31 @@
         <a href="{{ SITEURL }}/contato" class="btn-secondary">Fale Conosco</a>
       </div>
     </div>
+  </div>
+</section> -->
+<section class="hero">
+  <video class="hero-video" autoplay loop muted playsinline>
+    <source
+      src="{{ SITEURL }}/images/videos/video-hero-background.mp4"
+      type="video/mp4"
+    />
+    Seu navegador não suporta vídeo HTML5.
+  </video>
+  <div class="hero-overlay">
+    <div class="hero-content">
+      <h1>Transformamos ideias em soluções para a comunidade</h1>
+      <p>Conhecimento em prática, tecnologia para todos!</p>
+      <div class="hero-buttons">
+        <a href="{{ SITEURL }}/sobre" class="btn-primary">Conheça-nos</a>
+        <a href="{{ SITEURL }}/contato" class="btn-secondary">Fale Conosco</a>
+      </div>
+    </div>
+    <button
+      class="scroll-hint"
+      aria-label="Role para baixo ou use as setas do teclado"
+    >
+      <span class="scroll-arrow">↓</span>
+    </button>
   </div>
 </section>
 
@@ -110,7 +438,23 @@
   </div>
 </section>
 
-<section class="cta">
+<!-- Seção com vídeo de fundo -->
+<section class="video-section">
+  <video class="video-background" autoplay loop muted playsinline>
+    <source src="{{ SITEURL }}/images/videos/background.mp4" type="video/mp4" />
+    Seu navegador não suporta vídeo HTML5.
+  </video>
+  <div class="video-overlay">
+    <h2>Vamos transformar a educação juntos?</h2>
+    <p>
+      Tem uma ideia? Quer desenvolver um projeto de software? Fale conosco e
+      descubra como podemos ajudar você a transformar a sua ideia em realidade.
+    </p>
+    <a href="{{ SITEURL }}/contato" class="btn-primary">Quero Fazer Parte</a>
+  </div>
+</section>
+
+<!-- <section class="cta">
   <div class="container">
     <div class="cta-content">
       <h2>Vamos transformar a educação juntos?</h2>
@@ -122,6 +466,6 @@
       <a href="{{ SITEURL }}/contato" class="btn-primary">Quero Fazer Parte</a>
     </div>
   </div>
-</section>
+</section> -->
 
 {% if page %} {{ page.content }} {% endif %} {% endblock %}
