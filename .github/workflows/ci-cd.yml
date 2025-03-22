@@ -41,10 +41,6 @@ jobs:
           # Verificar permissões
           chmod 600 vpn.conf cert_export_CA.crt
 
-          # Verificar se o arquivo de configuração faz referência ao certificado
-          echo "Verificando referências ao certificado:"
-          grep -i "ca\|cert" vpn.conf || echo "Nenhuma referência a certificado encontrada no arquivo de configuração"
-
           # Iniciar VPN com credenciais
           sudo openvpn --config vpn.conf --auth-user-pass <(echo -e "${{ secrets.VPN_USERNAME }}\n${{ secrets.VPN_PASSWORD }}") --daemon
 
