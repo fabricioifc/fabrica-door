@@ -24,7 +24,7 @@ jobs:
           config_file: .github/workflows/client.ovpn
           username: ${{ secrets.VPN_USERNAME }}
           password: ${{ secrets.VPN_PASSWORD }}
-          client_key: ${{ secrets.VPN_CRT }}
+          client_key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Use SSH
         uses: appleboy/ssh-action@master
