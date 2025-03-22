@@ -36,7 +36,7 @@ jobs:
         run: |
           # Criar arquivos de configuração
           echo "${{ secrets.VPN_CONFIG }}" > vpn.conf
-          echo "${{ secrets.VPN_CRT }}" > cert_export_CA.crt
+          echo "${{ secrets.VPN_CERT }}" > cert_export_CA.crt
 
           # Verificar permissões
           chmod 600 vpn.conf cert_export_CA.crt
