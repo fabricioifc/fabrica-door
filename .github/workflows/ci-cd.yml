@@ -26,16 +26,27 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/fabrica-prod-door:latest
 
-      - name: Deploy to VPS
-        uses: appleboy/ssh-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_GITHUB_TOKEN  }}
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          port: ${{ secrets.SSH_PORT }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            whoami
-            echo "Conexão SSH bem-sucedida!"
-            pwd
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy via SSH
+        run: |
+          ssh -v ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -p ${{ secrets.SSH_PORT }} "whoami && echo 'Conexão bem-sucedida!' && pwd"
+
+      # - name: Deploy to VPS
+      #   uses: appleboy/ssh-action@master
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.PERSONAL_GITHUB_TOKEN  }}
+      #   with:
+      #     host: ${{ secrets.SSH_HOST }}
+      #     port: ${{ secrets.SSH_PORT }}
+      #     username: ${{ secrets.SSH_USER }}
+      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     script: |
+      #       whoami
+      #       echo "Conexão SSH bem-sucedida!"
+      #       pwd
