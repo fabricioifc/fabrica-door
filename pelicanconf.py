@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- #
 import os
+from dotenv import load_dotenv
+
+load_dotenv()  # Carrega as variáveis do .env
 
 AUTHOR = 'Fábrica de Software'
 SITENAME = os.getenv("SITE_NAME", "Fábrica de Software - IFC Videira")
