@@ -7,14 +7,12 @@ Start_Date: Março 2024
 End_Date: Dezembro 2024
 Gallery: images/projects/fabrica/logo.svg, images/projects/fabrica/logo.svg
 GitHub_URL: https://github.com/fabricaSoftwareVideira/Cogercon
-Technologies: HTML, CSS, JavaScript, Python, Django, Tailwind CSS, Docker, PostgreSQL, Git
+Technologies: HTML, CSS, JavaScript, Python, Django, Tailwind CSS, Docker, PostgreSQL, Git, Gunicorn, Nginx
 Members: Fabricio Bizotto (Professor), Tiago Lopes Gonçalves (Professor), Gabriel Sousa (Estudante), Paulo Sergio Pierdona (Estudante), Helder Martins (Estudante)
 Key_Features: Cadastro de associados, cadastro de usinas de geração de energia, cobrança de mensalidade e custos de manutenção das usinas, geração de relatórios de faturamento
 Short_Description: Sistema de gestão de cooperativas de energia
 URL: projetos/cogercon/
 save_as: projetos/cogercon/index.html
-
-<!-- # SGCE - Sistema de Gestão de Cooperativas de Energia -->
 
 # Sobre o Projeto
 
