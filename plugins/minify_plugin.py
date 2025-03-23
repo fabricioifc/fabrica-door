@@ -3,6 +3,7 @@ import minify_html
 from cssmin import cssmin
 from jsmin import jsmin
 import os
+import re
 
 def minify_output(generator):
     output_dir = generator.output_path
@@ -10,7 +11,6 @@ def minify_output(generator):
         for file in files:
             file_path = os.path.join(root, file)
 
-            # Minificar HTML
             if file.endswith('.html'):
                 try:
                     with open(file_path, 'r', encoding='utf-8') as f:
@@ -18,6 +18,12 @@ def minify_output(generator):
                     minified_content = minify_html.minify(
                         content,
                         remove_processing_instructions=True
+                    )
+                    # Restaurar type="submit" em botões sem type dentro de formulários
+                    minified_content = re.sub(
+                        r'<button(?![^>]*type=)([^>]*)>',
+                        r'<button type="submit"\1>',
+                        minified_content
                     )
                     with open(file_path, 'w', encoding='utf-8') as f:
                         f.write(minified_content)
