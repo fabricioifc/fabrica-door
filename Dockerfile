@@ -4,6 +4,9 @@ WORKDIR /app
 
 # Copiar apenas requirements para aproveitar cache
 COPY requirements.txt .
+# upgrade pip
+RUN pip install --no-cache-dir --upgrade pip
+# Instalar dependências
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copiar todo o projeto para o builder
