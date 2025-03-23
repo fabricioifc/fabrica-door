@@ -1,39 +1,39 @@
-Title: Fabrica de Software - IFC Videira
+Title: E-Stagio
 Slug: estagio
 Template: project
 Status: published
-Situacao: Em Andamento
-Start_Date: Março 2025
-End_Date: Março 2025
+Situacao: Concluído
+Start_Date: Março 2024
+End_Date: Dezembro 2024
 Gallery: images/projects/fabrica/logo.svg, images/projects/fabrica/logo.svg
-GitHub_URL: https://github.com/fabricioifc/fabrica-door
-Technologies: HTML, CSS, JavaScript, Python/Pelican
-Members: Fabricio Bizotto (Professor)
-Key_Features: Divulgação de projetos, Portfólio da equipe, Blog, Contato
+GitHub_URL: https://github.com/wanderson-rigo/e-stagio
+Technologies: HTML, CSS, JavaScript, Python, Flask, Bootstrap, SQLite
+Members: Wanderson Rigo (Professor), Bruno Pergher (Estudante)
+Key_Features: Cadastro de empresas, Cadastro de orientadores, Cadastro de estágios, Gerenciamento de estágios, Relatórios
 URL: projetos/estagio/
 save_as: projetos/estagio/index.html
 
-# Fabrica de Software - IFC Videira
+# E-Stagio
 
-A Fábrica de Software é um ambiente de desenvolvimento de software criado para auxiliar professores e alunos na execução de projetos de software. Este projeto foi criado para divulgar o trabalho da nossa equipe e incentivar a criação de novos projetos.
+Em breve...
 
 ## Objetivo
 
-O principal objetivo deste projeto é criar uma presença online para a Fábrica de Software do IFC Campus Videira, apresentando nossos projetos, equipe e capacidades para a comunidade acadêmica e profissional.
+Em breve...
 
 ## Público-alvo
 
-- Professores e alunos do IFC Campus Videira
-- Comunidade em geral
-- Potenciais parceiros para projetos
+- Em breve...
+- Em breve...
+- Em breve...
 
 ## Processo de Desenvolvimento
 
-O site foi desenvolvido utilizando o gerador de sites estáticos Pelican, que permite uma fácil manutenção e publicação de conteúdo. O design foi criado pensando na identidade visual do IFC e com foco em uma experiência de usuário intuitiva.
+Em breve...
 
 ## Benefícios
 
-- Maior visibilidade dos projetos desenvolvidos pela Fábrica de Software
-- Facilidade para interessados entrarem em contato com a equipe
-- Documentação e showcasing dos trabalhos realizados
-- Plataforma para compartilhamento de conhecimento através do blog
+- Em breve...
+- Em breve...
+- Em breve...
+- Em breve...

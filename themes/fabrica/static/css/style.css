@@ -448,44 +448,6 @@ footer {
   color: var(--secondary-hover-text);
 }
 
-/* Features */
-.features {
-  padding: 40px 0;
-  text-align: center;
-}
-
-.features h2 {
-  margin-bottom: 50px;
-  font-size: 2rem;
-}
-
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
-}
-
-.feature-item {
-  background-color: var(--secondary-color);
-  padding: 30px;
-  border-radius: var(--border-radius);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s;
-}
-
-.feature-item:hover {
-  transform: translateY(-5px);
-}
-
-.feature-icon {
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-}
-
-.feature-item h3 {
-  margin-bottom: 15px;
-}
-
 /* Page Header */
 .page-header {
   background: linear-gradient(

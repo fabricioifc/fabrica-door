@@ -86,7 +86,8 @@
   box-shadow: 0 2px 4px var(--header-shadow);
 }
 
-.project-description ul {
+.project-description ul,
+.project-description ol {
   list-style-position: inside;
   padding-left: 1.2rem;
 }
@@ -95,6 +96,12 @@
   margin-bottom: 0.5rem;
   display: list-item;
   list-style-type: square;
+}
+
+.project-description ol li {
+  margin-bottom: 0.5rem;
+  display: list-item;
+  list-style-type: decimal;
 }
 
 .project-gallery {
