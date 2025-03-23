@@ -4,7 +4,6 @@ cssmin==0.2.0
 docutils==0.21.2
 dotenv==0.9.9
 feedgenerator==2.1.0
-htmlmin==0.1.12
 idna==3.10
 Jinja2==3.1.6
 jsmin==3.0.1

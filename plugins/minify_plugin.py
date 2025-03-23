@@ -1,5 +1,5 @@
 from pelican import signals
-from htmlmin import minify as minify_html
+import minify_html
 from cssmin import cssmin
 from jsmin import jsmin
 import os
@@ -15,7 +15,10 @@ def minify_output(generator):
                 try:
                     with open(file_path, 'r', encoding='utf-8') as f:
                         content = f.read()
-                    minified_content = minify_html(content, remove_comments=True, remove_empty_space=True)
+                    minified_content = minify_html.minify(
+                        content,
+                        remove_processing_instructions=True
+                    )
                     with open(file_path, 'w', encoding='utf-8') as f:
                         f.write(minified_content)
                 except Exception as e:
