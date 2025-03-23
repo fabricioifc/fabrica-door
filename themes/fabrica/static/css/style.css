@@ -16,11 +16,12 @@
   --gray-light: #ddd;
 
   /* Tamanhos */
-  --border-radius: 4px;
-  --btn-padding: 12px 30px;
+  --border-radius: 0px;
+  --btn-padding: 6px 6px;
   --btn-font-size: 1rem;
   --container-width: 1200px;
-  --header-height: 40px; /* Ajuste conforme a altura real do header */
+  --header-height: 40px;
+  --link-transition: all 0.3s ease; /* Transição padrão para links */
 }
 
 /* Reset e estilos básicos */
@@ -51,8 +52,19 @@ body {
   padding: 0 20px;
 }
 
-/* Componentes Comuns */
-/* ================= */
+/* Estilo base para todos os links */
+a {
+  color: var(--primary-color);
+  text-decoration: none; /* Remove sublinhado padrão */
+  transition: var(--link-transition);
+  position: relative; /* Para efeitos como sublinhado animado */
+}
+
+/* Foco visível para acessibilidade */
+a:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
 
 /* Botões */
 .btn-primary,
@@ -88,6 +100,12 @@ body {
 .btn-secondary:hover {
   background-color: var(--secondary-hover-bg);
   color: var(--secondary-hover-text);
+}
+
+.btn-primary:disabled,
+.btn-secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 /* Cabeçalho & Navegação */
@@ -144,10 +162,6 @@ header .container {
 }
 
 /* Navegação */
-nav {
-  transition: all 0.3s ease;
-}
-
 nav ul {
   display: flex;
   list-style: none;
@@ -161,52 +175,68 @@ nav li {
 }
 
 nav a {
-  text-decoration: none;
   color: var(--text-color);
   font-weight: 500;
   padding: 8px 12px;
-  transition: all 0.3s ease;
-  position: relative;
   display: block;
-  scroll-margin-top: 80px;
+  transition: var(
+    --link-transition
+  ); /* Transição para hover e outras interações */
+  text-decoration: none;
+  position: relative;
+  outline: none; /* Remove outline padrão */
 }
 
+/* Efeito de sublinhado animado */
 nav a::after {
   content: "";
   position: absolute;
   width: 0;
   height: 2px;
-  bottom: 0;
+  bottom: 4px;
   left: 50%;
   background-color: var(--primary-color);
-  transition: all 0.3s ease;
+  transition: width 0.3s ease, left 0.3s ease;
   transform: translateX(-50%);
 }
 
+/* Hover */
 nav a:hover::after {
-  width: 100%;
+  width: 80%;
+  left: 50%;
 }
 
 nav a:hover {
   color: var(--primary-color);
-  transform: translateY(-2px);
 }
 
+/* Active (página atual) */
 nav a.active {
   color: var(--primary-color);
   font-weight: 600;
 }
 
 nav a.active::after {
-  width: 100%;
+  width: 80%;
 }
 
-nav a:focus,
-.btn-primary:focus,
-.btn-secondary:focus,
-.footer-social a:focus {
-  outline: 2px solid var(--primary-color);
-  outline-offset: 2px;
+/* Foco (navegação por teclado) */
+nav a:focus {
+  outline: none; /* Sem borda ao focar */
+  box-shadow: none; /* Sem sombra */
+}
+
+/* Estado ao clicar (active) */
+nav a:active {
+  outline: none; /* Sem borda */
+  box-shadow: none; /* Sem sombra */
+  transform: none; /* Remove qualquer movimento */
+  color: var(--text-color); /* Mantém a cor original, sem mudança */
+  transition: none; /* Desativa transições no clique */
+}
+
+nav a:active::after {
+  transition: none; /* Desativa a animação do sublinhado no clique */
 }
 
 header.scrolled {
@@ -365,15 +395,51 @@ footer {
   line-height: 1.5;
 }
 
+/* Links no Footer (contato e social) */
 .footer-contact a {
   color: var(--primary-color);
-  text-decoration: none;
-  transition: color 0.3s ease;
+  font-weight: 500;
+  padding-bottom: 2px; /* Espaço para o sublinhado */
+}
+
+.footer-contact a::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--primary-color-hover);
+  transition: width 0.3s ease;
+}
+
+.footer-contact a:hover::after,
+.footer-contact a:focus::after {
+  width: 100%;
 }
 
 .footer-contact a:hover {
   color: var(--primary-color-hover);
-  text-decoration: underline;
+  text-decoration: none; /* Remove sublinhado padrão */
+}
+
+.footer-social a {
+  color: var(--primary-color);
+  font-size: 1.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  transition: var(--link-transition);
+}
+
+.footer-social a:hover,
+.footer-social a:focus {
+  color: var(--primary-color-hover);
+  background-color: rgba(134, 0, 131, 0.05);
+  transform: scale(1.05);
 }
 
 .footer-social ul {
@@ -412,7 +478,7 @@ footer {
   line-height: 1;
 }
 
-/* Botões */
+/* Links nos Botões */
 .btn-primary,
 .btn-secondary {
   display: inline-block;
@@ -421,7 +487,7 @@ footer {
   text-decoration: none;
   font-weight: 500;
   font-size: var(--btn-font-size);
-  transition: all 0.3s;
+  transition: var(--link-transition);
   min-width: 150px;
   text-align: center;
 }
@@ -432,7 +498,8 @@ footer {
   border: 2px solid var(--primary-color);
 }
 
-.btn-primary:hover {
+.btn-primary:hover,
+.btn-primary:focus {
   background-color: var(--primary-color-hover);
   border-color: var(--primary-color-hover);
 }
@@ -443,7 +510,8 @@ footer {
   border: 2px solid var(--border-color);
 }
 
-.btn-secondary:hover {
+.btn-secondary:hover,
+.btn-secondary:focus {
   background-color: var(--secondary-hover-bg);
   color: var(--secondary-hover-text);
 }
@@ -486,6 +554,32 @@ footer {
 .page-content ul {
   margin-bottom: 20px;
   padding-left: 20px;
+}
+
+/* Links no Conteúdo da Página */
+.page-content a {
+  color: var(--primary-color);
+  font-weight: 500;
+}
+
+.page-content a::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--primary-color);
+  transition: width 0.3s ease;
+}
+
+.page-content a:hover::after,
+.page-content a:focus::after {
+  width: 100%;
+}
+
+.page-content a:hover {
+  color: var(--primary-color-hover);
 }
 
 /* Team Section */
@@ -759,6 +853,23 @@ footer {
     z-index: 999; /* Garantir que fique abaixo do logo/hamburger, mas acima de outros elementos */
   }
 
+  nav a {
+    padding: 12px 15px;
+    width: 100%;
+    text-align: left;
+  }
+
+  nav a::after {
+    left: 0;
+    transform: none;
+  }
+
+  nav a:hover::after,
+  nav a:focus::after,
+  nav a.active::after {
+    width: 50px; /* Sublinhado menor em mobile */
+  }
+
   nav.active {
     transform: translateX(0);
     opacity: 1;
@@ -861,4 +972,13 @@ footer {
   .contact-map h2 {
     font-size: 1.3rem;
   }
+}
+
+.form-message {
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+.success {
+  color: #4caf50;
 }

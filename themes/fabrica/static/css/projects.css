@@ -191,7 +191,6 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 2rem;
-  margin-top: 2rem;
 }
 
 .projects-grid .project-card {
@@ -237,18 +236,19 @@
 .btn-details {
   display: inline-block;
   padding: var(--btn-padding);
-  background-color: var(--primary-color);
-  color: var(--secondary-color);
-  border-radius: var(--border-radius);
   text-decoration: none;
-  font-size: var(--btn-font-size);
   font-weight: 500;
+  font-size: var(--btn-font-size);
+  transition: var(--link-transition); /* Usa a transição global */
+  min-width: 150px; /* Consistência com outros botões */
+  position: relative; /* Herda de 'a', mas sem conflito */
   transition: background-color 0.3s ease;
 }
 
-/* .btn-details:hover {
-  background-color: var(--primary-color-hover);
-} */
+/* Evitar conflito com sublinhado animado de links genéricos */
+.btn-details::after {
+  content: none; /* Remove o sublinhado animado dos botões */
+}
 
 /* Responsividade */
 @media (max-width: 768px) {

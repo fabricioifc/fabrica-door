@@ -4,9 +4,28 @@
   content="Fábrica de Software - Desenvolvendo soluções tecnológicas para transformar a educação"
 />
 <style>
+  /* Estilo base para links - removendo outline no clique */
+  a {
+    outline: none; /* Remove outline padrão */
+  }
+
+  /* Garantir que botões e links não mostrem outline ao clicar */
+  a:focus,
+  a:active,
+  .btn-primary:focus,
+  .btn-primary:active,
+  .btn-secondary:focus,
+  .btn-secondary:active,
+  .scroll-hint:focus,
+  .scroll-hint:active {
+    outline: none; /* Remove outline ao focar ou clicar */
+    box-shadow: none; /* Remove qualquer sombra de foco padrão */
+  }
+
+  /* Scroll Hint */
   .scroll-hint {
     position: absolute;
-    bottom: 20px; /* Aumentado para dar mais espaço acima */
+    bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
     padding: 10px 20px;
@@ -20,7 +39,7 @@
     transition: opacity 0.3s ease, transform 0.3s ease;
     background: transparent;
     border: none;
-    outline: none;
+    outline: none; /* Já removido aqui também */
   }
 
   .scroll-arrow {
@@ -43,15 +62,15 @@
     pointer-events: none;
   }
 
-  /* Ajuste para garantir que o botão não sobreponha os botões do hero */
+  /* Hero Buttons */
   .hero-buttons {
-    margin-bottom: 60px; /* Adiciona espaço abaixo dos botões do hero */
+    margin-bottom: 60px;
   }
 
   /* Responsividade */
   @media (max-width: 768px) {
     .hero-overlay {
-      padding: 20px; /* Espaçamento menor */
+      padding: 20px;
       margin: 0 20px;
     }
 
@@ -61,16 +80,16 @@
     }
 
     .hero-buttons {
-      margin-bottom: 40px; /* Menos espaço em mobile */
+      margin-bottom: 40px;
     }
 
     .hero-buttons a {
-      font-size: 0.9rem; /* Tamanho de fonte menor */
-      padding: 10px 15px; /* Espaçamento menor */
+      font-size: 0.9rem;
+      padding: 10px 15px;
     }
   }
 
-  /* Adicionar estas animações ao CSS existente */
+  /* Animações */
   @keyframes fadeInUp {
     from {
       opacity: 0;
@@ -105,7 +124,7 @@
     }
   }
 
-  /* Estilos atualizados para a seção Hero com vídeo */
+  /* Hero */
   .hero {
     position: relative;
     min-height: 100vh;
@@ -115,7 +134,7 @@
     align-items: center;
     padding: 40px 0;
     overflow: hidden;
-    color: white; /* Texto branco para contraste com o vídeo */
+    color: white;
     animation: fadeInUp 1s ease-out;
     scroll-snap-align: start;
   }
@@ -126,22 +145,20 @@
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Garante que o vídeo cubra toda a área */
+    object-fit: cover;
     z-index: -1;
-    filter: brightness(
-      70%
-    ); /* Reduz o brilho para melhor legibilidade do texto */
+    filter: brightness(70%);
   }
 
   .hero-overlay {
     position: relative;
     z-index: 1;
-    background: rgba(0, 0, 0, 0.5); /* Overlay escurecido */
+    background: rgba(0, 0, 0, 0.5);
     padding: 40px;
     border-radius: 8px;
     text-align: center;
     animation: fadeInUp 1s ease-out 0.3s both;
-    max-width: 800px; /* Limita a largura do conteúdo */
+    max-width: 800px;
   }
 
   .hero-content {
@@ -168,28 +185,26 @@
     gap: 20px;
   }
 
-  /* Ajustes para tela inteira */
+  /* Seções em tela inteira */
   section.hero,
   section.features,
   section.video-section,
   section.featured-projects,
   section.cta {
-    min-height: calc(
-      100vh - var(--header-height)
-    ); /* Tela inteira menos o cabeçalho */
+    min-height: calc(100vh - var(--header-height));
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centraliza o conteúdo verticalmente */
-    scroll-snap-align: start; /* Opcional: para um efeito de snap ao rolar */
+    justify-content: center;
+    scroll-snap-align: start;
   }
 
   body {
-    scroll-snap-type: y mandatory; /* Opcional: ativa o scroll snapping */
+    scroll-snap-type: y mandatory;
   }
 
   .hero {
     animation: fadeInUp 1s ease-out;
-    background-attachment: fixed; /* Efeito parallax opcional */
+    background-attachment: fixed;
   }
 
   .hero-content {
@@ -214,13 +229,8 @@
 
   .features-grid {
     display: grid;
-    grid-template-columns: repeat(
-      auto-fit,
-      minmax(250px, 1fr)
-    ); /* Comportamento padrão: ajusta automaticamente */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
-    /* max-height: 80vh;
-    overflow-y: hidden; */
   }
 
   .feature-item {
@@ -245,19 +255,16 @@
     margin-bottom: 15px;
   }
 
-  /* Media Queries para Responsividade */
+  /* Media Queries para Features */
   @media (max-width: 1024px) {
     .features-grid {
-      grid-template-columns: repeat(
-        2,
-        1fr
-      ); /* Duas colunas em telas médias (tablets) */
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 
   @media (max-width: 768px) {
     .features-grid {
-      grid-template-columns: 1fr; /* Uma coluna em telas pequenas (mobile) */
+      grid-template-columns: 1fr;
     }
   }
 
@@ -265,8 +272,8 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
-    max-height: 80vh; /* Limita a altura para caber na tela */
-    overflow-y: auto; /* Rolagem interna se necessário */
+    max-height: 80vh;
+    overflow-y: auto;
   }
 
   .project-card {
@@ -278,13 +285,7 @@
     transition: all 0.3s ease;
   }
 
-  .btn-primary:hover,
-  .btn-secondary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  }
-
-  /* Estilos para a seção de vídeo */
+  /* Video Section */
   .video-section {
     position: relative;
     overflow: hidden;
@@ -317,7 +318,7 @@
     text-align: center;
   }
 
-  /* Ajustes para a seção CTA */
+  /* CTA */
   .cta-content {
     flex-grow: 1;
     display: flex;
@@ -326,25 +327,25 @@
     align-items: center;
   }
 
-  /* Responsividade */
+  /* Responsividade Geral */
   @media (max-width: 768px) {
     section.hero,
     section.features,
     section.video-section,
     section.featured-projects,
     section.cta {
-      min-height: 100vh; /* Mantém tela inteira em mobile */
+      min-height: 100vh;
       padding: 20px 0;
     }
 
     section.video-section {
-      padding: 0; /* Remove o espaçamento */
+      padding: 0;
     }
 
     .features-grid,
     .project-showcase {
-      grid-template-columns: 1fr; /* Uma coluna em mobile */
-      max-height: none; /* Remove limite em mobile */
+      grid-template-columns: 1fr;
+      max-height: none;
       overflow-y: visible;
     }
   }

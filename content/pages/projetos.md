@@ -2,9 +2,9 @@ Title: Nossos Projetos
 Slug: projetos
 Template: page
 
-# Principais Projetos
+<!-- # Principais Projetos -->
 
-Conheça alguns dos projetos desenvolvidos por nossa equipe.
+<!-- Conheça alguns dos projetos desenvolvidos por nossa equipe. -->
 
 <div class="projects-grid">
     <div class="project-card">
@@ -28,7 +28,7 @@ Conheça alguns dos projetos desenvolvidos por nossa equipe.
             <span>Docker</span>
             <span>TailwindCSS</span>
         </div>
-        <a href="/cogercon" class="btn-details">Ver detalhes</a>
+        <a href="/projetos/cogercon" class="btn-details">Ver detalhes</a>
     </div>
     
     <div class="project-card">
@@ -39,6 +39,6 @@ Conheça alguns dos projetos desenvolvidos por nossa equipe.
             <span>Flask</span>
             <span>SQLite</span>
         </div>
-        <a href="/estagio" class="btn-details">Ver detalhes</a>
+        <a href="/projetos/estagio" class="btn-details">Ver detalhes</a>
     </div>
 </div>

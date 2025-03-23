@@ -16,7 +16,7 @@ save_as: projetos/cogercon/index.html
 
 # Sobre o Projeto
 
-A Cogercon é uma cooperativa de energia solar com a finalidade de fornecer energia elétrica para seus cooperados. Para isso, a Cogercon necessita de um sistema de gestão que possibilite o controle de suas atividades, como a gestão de associados, a gestão de usinas de geração de energia, a gestão de contratos de fornecimento de energia, a gestão de faturamento, entre outras atividades.
+A [Cogercon](https://cogercon.coop.br){:target="\_blank"} é uma cooperativa de energia solar com a finalidade de fornecer energia elétrica para seus cooperados. Para isso, a Cogercon necessita de um sistema de gestão que possibilite o controle de suas atividades, como a gestão de associados, a gestão de usinas de geração de energia, a gestão de contratos de fornecimento de energia, a gestão de faturamento, entre outras atividades.
 
 O sistema de gestão de cooperativas de energia (SGCE) é um sistema web que tem como objetivo auxiliar a Cogercon na gestão de suas atividades. O sistema deve permitir o cadastro de associados, o cadastro de usinas de geração de energia, a cobrança da mensalidade e de custos de manutenção das usinas, a geração de relatórios de faturamento, entre outras funcionalidades.
 

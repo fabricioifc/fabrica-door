@@ -158,7 +158,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const formEntries = Object.fromEntries(formData);
 
       const emailData = {
-        destinatario: "fabricio.bizotto@ifc.edu.br",
+        destinatario: "fabricadesoftware.videira@ifc.edu.br",
         assunto: "[Fábrica] Nova mensagem de contato",
         corpo: window.createContactEmailBody(formEntries),
       };
@@ -194,10 +194,8 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("Erro ao enviar o formulário:", error);
         alert("Falha ao enviar a mensagem. Tente novamente mais tarde.");
       } finally {
-        setTimeout(() => {
-          submitButton.disabled = false;
-          submitButton.textContent = originalText;
-        }, 3000);
+        submitButton.disabled = false;
+        submitButton.textContent = originalText;
       }
     });
   }
