@@ -187,7 +187,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Preparar dados sanitizados
         const emailData = {
-          destinatario: "fabricadesoftware.videira@ifc.edu.br",
+          // destinatario: "fabricadesoftware.videira@ifc.edu.br",
+          destinatario: "fabricio.bizotto@ifc.edu.br",
           assunto: "[Fábrica] Nova mensagem de contato",
           corpo: window.createContactEmailBody({
             nome: sanitizeInput(nome),
