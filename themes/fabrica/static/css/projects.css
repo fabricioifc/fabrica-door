@@ -2,7 +2,6 @@
 .project-container {
   max-width: var(--container-width);
   margin: 0 auto;
-  /* padding: 2rem 1rem; */
   margin-top: var(
     --header-height
   ); /* Garante que o conteúdo fique abaixo do header fixo */
@@ -19,7 +18,7 @@
 .project-title {
   font-size: 2.5rem;
   margin-bottom: 0.5rem;
-  color: var(--text-color);
+  color: var(--primary-color);
 }
 
 .project-container p {
@@ -31,7 +30,7 @@
   flex-wrap: wrap;
   gap: 20px;
   font-size: 0.9rem;
-  color: #666; /* Mantido como cor fixa, mas pode ser substituído por var(--text-color) com opacidade */
+  color: #666;
 }
 
 .project-status,
@@ -166,7 +165,7 @@
 
 .technologies-list,
 .members-list,
-.funcionalidade-list {
+.features-list {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -175,7 +174,6 @@
 .technology-item,
 .member-item,
 .funcionalidade-item {
-  /* Corrigido de funcionalidade-item para feature-item */
   padding: 0.5rem 0;
   border-bottom: 1px solid #e0e0e0;
 }
@@ -186,68 +184,19 @@
   border-bottom: none;
 }
 
-/* Estilos para a página índice de projetos */
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
-}
-
-.projects-grid .project-card {
-  background-color: var(--background-color);
-  border-radius: var(--border-radius);
-  padding: 1.5rem;
-  box-shadow: 0 4px 8px var(--header-shadow);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* .projects-grid .project-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-} */
-
-.project-container .project-card h2 {
-  color: var(--text-color);
-  margin: 0 0 1rem;
-  font-size: 1.5rem;
-}
-
-.project-container .project-card p {
-  color: #666;
-  margin-bottom: 1.5rem;
-  line-height: 1.5;
-}
-
-.project-tech {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.project-tech span {
-  background-color: #e9ecef;
-  color: #495057;
-  font-size: 0.8rem;
-  padding: 0.3rem 0.6rem;
-  border-radius: 20px;
-}
-
 .btn-details {
   display: inline-block;
   padding: var(--btn-padding);
   text-decoration: none;
   font-weight: 500;
   font-size: var(--btn-font-size);
-  transition: var(--link-transition); /* Usa a transição global */
-  min-width: 150px; /* Consistência com outros botões */
-  position: relative; /* Herda de 'a', mas sem conflito */
-  transition: background-color 0.3s ease;
+  transition: var(--link-transition);
+  min-width: 150px;
+  position: relative;
 }
 
-/* Evitar conflito com sublinhado animado de links genéricos */
 .btn-details::after {
-  content: none; /* Remove o sublinhado animado dos botões */
+  content: none;
 }
 
 /* Responsividade */
@@ -259,9 +208,5 @@
   .project-meta {
     flex-direction: column;
     gap: 0.5rem;
-  }
-
-  .projects-grid {
-    grid-template-columns: 1fr;
   }
 }

@@ -13,7 +13,7 @@ Key_Features: Divulgação de projetos, Portfólio da equipe, Blog, Contato
 URL: projetos/fabrica
 save_as: projetos/fabrica/index.html
 
-# Fabrica de Software - IFC Videira
+<!-- # Fabrica de Software - IFC Videira -->
 
 A Fábrica de Software é um ambiente de desenvolvimento de software criado para auxiliar professores e alunos na execução de projetos de software. Este projeto foi criado para divulgar o trabalho da nossa equipe e incentivar a criação de novos projetos.
 

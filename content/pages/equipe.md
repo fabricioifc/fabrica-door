@@ -26,7 +26,7 @@ Mestre em Ciência da Computação e professor do IFC Campus Videira
 
 **Professor**
 
-Engenheiro de Software especializado em desenvolvimento web.
+Mestre em Ciência da Computação e professor do IFC Campus Videira
 
 ### Tiago Lopes Gonçalves, MSc.
 
@@ -34,7 +34,7 @@ Engenheiro de Software especializado em desenvolvimento web.
 
 **Professor**
 
-Engenheiro de Software especializado em desenvolvimento web.
+Mestre em Ciência da Computação e professor do IFC Campus Videira
 
 ### Wanderson Rigo, MSc.
 
@@ -42,7 +42,7 @@ Engenheiro de Software especializado em desenvolvimento web.
 
 **Professor**
 
-Engenheiro de Software especializado em desenvolvimento web.
+Mestre em Ciência da Computação e professor do IFC Campus Videira
 
 ## Desenvolvedores
 
