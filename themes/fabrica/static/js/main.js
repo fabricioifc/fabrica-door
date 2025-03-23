@@ -4,6 +4,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const header = document.querySelector("header#header");
   const scrollHint = document.querySelector(".scroll-hint");
 
+  // Para evitar que todas as animações aconteçam de uma vez
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("fade-in");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
+
+  document
+    .querySelectorAll(".page-content, .team-member, .footer-content")
+    .forEach((el) => {
+      observer.observe(el);
+    });
+
   hamburger.addEventListener("click", () => {
     hamburger.classList.toggle("active");
     nav.classList.toggle("active");

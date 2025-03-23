@@ -207,7 +207,7 @@
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 30px;
     max-height: 80vh; /* Limita a altura do grid para caber na tela */
-    overflow-y: auto; /* Permite rolagem interna se necessário */
+    overflow-y: hidden; /* Oculta a rolagem vertical */
   }
 
   .feature-item {
@@ -393,6 +393,7 @@
         <div class="project-image">
           <img
             src="{{ SITEURL }}/images/projects/cogercon/logo.webp"
+            loading="lazy"
             alt="Cogercon - Cooperativa de Energias Renováveis da Região do Contestado"
           />
         </div>
@@ -408,6 +409,7 @@
         <div class="project-image">
           <img
             src="{{ SITEURL }}/images/projects/estagio/logo.png"
+            loading="lazy"
             alt="E-Stagio - Ferramenta para Gerenciamento de Estágios"
           />
         </div>
@@ -423,6 +425,7 @@
         <div class="project-image">
           <img
             src="{{ SITEURL }}/images/projects/fabrica/logo.svg"
+            loading="lazy"
             alt="Fábrica de Software"
           />
         </div>

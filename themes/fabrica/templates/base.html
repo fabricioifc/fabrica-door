@@ -24,10 +24,7 @@
     <title>{% block title %}{{ SITENAME }}{% endblock %}</title>
     <link rel="stylesheet" href="{{ SITEURL }}/theme/css/style.css" />
     <link rel="stylesheet" href="{{ SITEURL }}/theme/css/projects.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" as="style" onload="this.rel='stylesheet'">
     <!-- Adicionando Font Awesome para ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="icon" href="{{ SITEURL }}/images/favicon.svg" />
@@ -48,7 +45,7 @@
       <div class="container">
         <div class="logo">
           <a href="{{ SITEURL }}/">
-            <img src="{{ SITEURL }}/images/logo.svg" alt="{{ SITENAME }}" />
+            <img src="{{ SITEURL }}/images/logo.svg" alt="{{ SITENAME }}" loading="lazy" />
           </a>
         </div>
         <button class="hamburger" aria-label="Toggle menu">
@@ -56,7 +53,7 @@
           <span></span>
           <span></span>
         </button>
-        <nav>
+        <nav role="navigation">
           <ul>
             {% for title, link in MENUITEMS %}
             <li>
@@ -72,7 +69,7 @@
 
     <main>{% block content %}{% endblock %}</main>
 
-    <footer>
+    <footer role="contentinfo">
       <div class="container">
         <div class="footer-content">
           <div class="footer-info">
@@ -109,7 +106,7 @@
     <script src="{{ SITEURL }}/theme/js/main.js"></script>
     {% block extra_scripts %}{% endblock %}
 
-    <div id="cookie-banner" style="display: none; position: fixed; bottom: 0px; left: 0px; right: 0px; background: #222; color: #fff; padding: 15px; text-align: center; z-index: 1000;">
+    <!-- <div id="cookie-banner">
       <p>Este site usa cookies para melhorar sua experiência.</p>
       <button onclick="aceitarCookies()" style="background: #860083; color: white; border: none; padding: 10px 15px; cursor: pointer;">Aceitar</button>
     </div>
@@ -125,7 +122,7 @@
               document.getElementById('cookie-banner').style.display = 'block';
           }
       })();
-    </script>
+    </script> -->
   
   </body>
 </html>

@@ -12,6 +12,8 @@
   --header-bg: white;
   --header-shadow: rgba(0, 0, 0, 0.1);
   --border-color: var(--primary-color);
+  --gray-dark: #555;
+  --gray-light: #ddd;
 
   /* Tamanhos */
   --border-radius: 4px;
@@ -199,6 +201,14 @@ nav a.active::after {
   width: 100%;
 }
 
+nav a:focus,
+.btn-primary:focus,
+.btn-secondary:focus,
+.footer-social a:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
 header.scrolled {
   background-color: rgba(255, 255, 255, 0.95);
   box-shadow: 0 4px 15px var(--header-shadow);
@@ -264,7 +274,7 @@ header.scrolled {
 .form-group textarea {
   width: 100%;
   padding: 12px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--gray-light);
   border-radius: var(--border-radius);
   font-family: "Roboto", sans-serif;
   font-size: 1rem;
@@ -394,48 +404,13 @@ footer {
 
 .footer-social a:hover {
   color: var(--primary-color-hover);
-  background-color: rgba(134, 0, 131, 0.1);
-  transform: scale(1.1);
+  background-color: rgba(134, 0, 131, 0.05);
+  transform: scale(1.05);
 }
 
 .footer-social a i {
   line-height: 1;
 }
-
-/* .hero {
-  background-image: linear-gradient(
-      135deg,
-      rgba(0, 0, 0, 0.6),
-      rgba(0, 0, 0, 0.7)
-    ),
-    url("../image/banner.jpeg");
-  background-size: cover;
-  background-position: center;
-  color: var(--secondary-color);
-  padding: 100px 0;
-  min-height: 400px;
-  text-align: center;
-}
-
-.hero h1 {
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-}
-
-.hero p {
-  font-size: 1.2rem;
-  margin-bottom: 30px;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.hero-buttons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-} */
 
 /* Botões */
 .btn-primary,
@@ -593,13 +568,17 @@ footer {
   transform: translateY(-5px);
 }
 
+.team-photo {
+  width: 120px;
+  height: 120px;
+  overflow: hidden;
+}
+
 .team-photo img {
   width: 100%;
-  max-width: 120px;
-  height: auto;
-  border-radius: 50%;
-  margin-bottom: 15px;
+  height: 100%;
   object-fit: cover;
+  border-radius: 50%;
 }
 
 .team-info {
@@ -618,7 +597,7 @@ footer {
 
 .team-role {
   font-style: italic;
-  color: #555;
+  color: var(--gray-dark);
   display: block;
   margin-bottom: 10px;
   font-weight: 500;
@@ -718,6 +697,27 @@ footer {
   flex-direction: column;
   gap: 20px;
   align-items: center;
+}
+
+#cookie-banner {
+  display: none;
+  position: fixed;
+  color: #fff;
+  text-align: center;
+  z-index: 1000;
+
+  bottom: 10px;
+  right: 10px;
+  width: 300px;
+  border-radius: var(--border-radius);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  padding: 15px 20px;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+#cookie-banner button {
+  margin-top: 10px;
+  padding: 8px 20px;
 }
 
 /* Responsividade */
@@ -830,6 +830,10 @@ footer {
 
   nav a.active::after {
     width: 50px;
+  }
+
+  .hamburger.active span {
+    background-color: var(--primary-color);
   }
 
   /* Animação do hamburger para X */
