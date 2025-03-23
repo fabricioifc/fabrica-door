@@ -12,33 +12,33 @@ Nossa equipe multidisciplinar reúne profissionais apaixonados por educação e 
 
 Nossa equipe é coordenada por profissionais com experiência em educação e tecnologia.
 
-### Fabio José Rodrigues Pinheiro
+### Fabio José Rodrigues Pinheiro, MSc.
 
-![Fabio José Rodrigues Pinheiro](/images/equipe/default.jpg)
+![Fabio José Rodrigues Pinheiro](/images/equipe/fabio.webp)
 
 **Coordenador**
 
 Mestre em Ciência da Computação e professor do IFC Campus Videira
 
-### Fabricio Bizotto
+### Fabricio Bizotto, MSc.
 
-![Fabricio Bizotto](/images/equipe/default.jpg)
-
-**Professor**
-
-Engenheiro de Software especializado em desenvolvimento web.
-
-### Tiago Lopes Gonçalves
-
-![Fabricio Bizotto](/images/equipe/default.jpg)
+![Fabricio Bizotto](/images/equipe/fabricio.webp)
 
 **Professor**
 
 Engenheiro de Software especializado em desenvolvimento web.
 
-### Wanderson Rigo
+### Tiago Lopes Gonçalves, MSc.
 
-![Wanderson Rigo](/images/equipe/default.jpg)
+![Fabricio Bizotto](/images/equipe/tiago-lopes.webp)
+
+**Professor**
+
+Engenheiro de Software especializado em desenvolvimento web.
+
+### Wanderson Rigo, MSc.
+
+![Wanderson Rigo](/images/equipe/wanderson.webp)
 
 **Professor**
 
@@ -46,9 +46,9 @@ Engenheiro de Software especializado em desenvolvimento web.
 
 ## Desenvolvedores
 
-Conheça os desenvolvedores que fazem fizeram ou fazem parte da nossa equipe.
+Conheça os desenvolvedores que fazem ou fizeram parte da nossa equipe.
 
-### Paulo
+### Paulo Sergio Pierdona
 
 ![Paulo](/images/equipe/default.jpg)
 
@@ -56,7 +56,7 @@ Conheça os desenvolvedores que fazem fizeram ou fazem parte da nossa equipe.
 
 Aluno do curso de Ciência da Computação do IFC Campus Videira.
 
-### Gabriel
+### Gabriel Sousa
 
 ![Gabriel](/images/equipe/default.jpg)
 
@@ -64,7 +64,7 @@ Aluno do curso de Ciência da Computação do IFC Campus Videira.
 
 Aluno do curso de Ciência da Computação do IFC Campus Videira.
 
-### Maicon
+### Maicon de Oliveira da Silva
 
 ![Maicon](/images/equipe/default.jpg)
 
@@ -72,7 +72,7 @@ Aluno do curso de Ciência da Computação do IFC Campus Videira.
 
 Aluno do curso de Ciência da Computação do IFC Campus Videira.
 
-### Bruno Pergher
+### Bruno Vinicius Pergher
 
 ![Bruno Pergher](/images/equipe/default.jpg)
 
