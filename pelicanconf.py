@@ -43,7 +43,8 @@ MENUITEMS = [
 ]
 
 # Plugins
-PLUGINS = []
+PLUGIN_PATHS = ['plugins']
+PLUGINS = ['minify_plugin']
 
 # Configurações adicionais
 DEFAULT_PAGINATION = False
