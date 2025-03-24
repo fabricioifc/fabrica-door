@@ -50,7 +50,7 @@ Conheça os desenvolvedores que fazem ou fizeram parte da nossa equipe.
 
 ### Paulo Sergio Pierdona
 
-![Paulo](/images/equipe/default.jpg)
+![Paulo](/images/equipe/default.webp)
 
 **Desenvolvedor Full Stack**
 
@@ -58,7 +58,7 @@ Aluno do curso de Ciência da Computação do IFC Campus Videira.
 
 ### Gabriel Sousa
 
-![Gabriel](/images/equipe/default.jpg)
+![Gabriel](/images/equipe/default.webp)
 
 **Desenvolvedor Full Stack**
 
@@ -66,7 +66,7 @@ Aluno do curso de Ciência da Computação do IFC Campus Videira.
 
 ### Maicon de Oliveira da Silva
 
-![Maicon](/images/equipe/default.jpg)
+![Maicon](/images/equipe/default.webp)
 
 **Desenvolvedor Full Stack**
 
@@ -74,7 +74,7 @@ Aluno do curso de Ciência da Computação do IFC Campus Videira.
 
 ### Bruno Vinicius Pergher
 
-![Bruno Pergher](/images/equipe/default.jpg)
+![Bruno Pergher](/images/equipe/default.webp)
 
 **Desenvolvedor Full Stack**
 
