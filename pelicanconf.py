@@ -44,7 +44,7 @@ MENUITEMS = [
 
 # Plugins
 PLUGIN_PATHS = ['plugins']
-PLUGINS = ['minify_plugin']
+PLUGINS = ['minify_plugin', 'api_key_injector']
 
 # Configurações adicionais
 DEFAULT_PAGINATION = False
