@@ -53,7 +53,6 @@ document.addEventListener("DOMContentLoaded", function () {
           nome: sanitizeInput(nome),
           email: sanitizeInput(email),
           assunto: sanitizeInput(formEntries.assunto),
-          origin: window.location.hostname,
           mensagem: sanitizeInput(mensagem),
         }),
       };
