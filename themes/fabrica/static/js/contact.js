@@ -45,25 +45,11 @@ document.addEventListener("DOMContentLoaded", function () {
         return temp.innerHTML;
       };
 
-      // Função para criar o corpo do email
-      const createContactEmailBody = (data) => {
-        return `
-          <h2>Nova mensagem de contato</h2>
-          <p><strong>Nome:</strong> ${data.nome}</p>
-          <p><strong>Email:</strong> ${data.email}</p>
-          <p><strong>Assunto:</strong> ${data.assunto}</p>
-          <p><strong>Origem:</strong> ${data.origin}</p>
-          <hr>
-          <h3>Mensagem:</h3>
-          <p>${data.mensagem.replace(/\n/g, "<br>")}</p>
-        `;
-      };
-
       // Preparar dados sanitizados
       const emailData = {
         destinatario: "fabricio.bizotto@ifc.edu.br",
         assunto: "[Fábrica] Nova mensagem de contato",
-        corpo: createContactEmailBody({
+        corpo: window.createContactEmailBody({
           nome: sanitizeInput(nome),
           email: sanitizeInput(email),
           assunto: sanitizeInput(formEntries.assunto),
