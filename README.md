@@ -30,8 +30,6 @@ O SFS foi desenvolvido pela equipe da Fábrica de Software do IFC Videira.
 [![Licença](https://img.shields.io/badge/license-MIT-blue)](https://github.com/fabricioifc/fabrica-door/blob/main/LICENSE)
 ![GitHub last commit](https://img.shields.io/github/last-commit/fabricioifc/fabrica-door)
 
----
-
 ## Pré-requisitos
 
 Antes de rodar o SFS localmente, certifique-se de ter instalado:
@@ -95,5 +93,3 @@ $ pelican -r -l
 ## Considerações finais
 
 O SFS é um projeto de código aberto e está disponível para uso e contribuição de todos. Sinta-se à vontade para contribuir com o projeto e ajudar a melhorar o sistema.
-
----
