@@ -4,19 +4,15 @@
 
 O SFS é um sistema estático feito para divulgar os projetos desenvolvidos pela Fábrica de Software do IFC Videira, bem como as informações sobre a equipe e formas de contato.
 
-## Como acessar o SFS?
+## Onde encontrar online?
 
-Para acessar o SFS, basta acessar o endereço [https://fsw-ifc.brdrive.net/](https://fsw-ifc.brdrive.net/).
+Acesse o SFS em [https://fsw-ifc.brdrive.net/](https://fsw-ifc.brdrive.net/).
 
-## Quem desenvolveu o SFS?
+## Quem desenvolveu?
 
 O SFS foi desenvolvido pela equipe da Fábrica de Software do IFC Videira.
 
-## Quem mantém o SFS?
-
-O SFS é mantido pela equipe da Fábrica de Software do IFC Videira.
-
-## Quais tecnologias foram utilizadas no desenvolvimento do SFS?
+## Tecnologias utilizadas
 
 ![HTML5](https://img.shields.io/badge/-HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/-CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
@@ -28,20 +24,23 @@ O SFS é mantido pela equipe da Fábrica de Software do IFC Videira.
 ![Docker](https://img.shields.io/badge/-Docker-2496ED?style=flat-square&logo=docker&logoColor=white)
 ![GitHub](https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github&logoColor=white)
 
-## Como contribuir com o SFS?
+## Status do projeto
 
-Para contribuir com o SFS, basta seguir os passos abaixo:
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/fabricioifc/fabrica-door/actions)
+[![Licença](https://img.shields.io/badge/license-MIT-blue)](https://github.com/fabricioifc/fabrica-door/blob/main/LICENSE)
+![GitHub last commit](https://img.shields.io/github/last-commit/fabricioifc/fabrica-door)
 
-1. Faça um fork do repositório.
-2. Clone o repositório para a sua máquina.
-3. Faça as alterações necessárias.
-4. Faça um commit das alterações.
-5. Faça um push das alterações.
-6. Crie um pull request.
-7. Aguarde a análise e aprovação da equipe.
-8. Pronto! Sua contribuição será avaliada e, se aprovada, será incorporada ao SFS.
+---
 
-## Como rodar o SFS localmente?
+## Pré-requisitos
+
+Antes de rodar o SFS localmente, certifique-se de ter instalado:
+
+- [Python 3.x](https://www.python.org/) (para execução sem Docker)
+- [Docker](https://www.docker.com/) (opcional, para execução com contêineres)
+- [Git](https://git-scm.com/) (para clonar o repositório)
+
+## Como rodar o SFS localmente usando Docker?
 
 Para rodar o SFS localmente, basta seguir os passos abaixo:
 
@@ -96,3 +95,5 @@ $ pelican -r -l
 ## Considerações finais
 
 O SFS é um projeto de código aberto e está disponível para uso e contribuição de todos. Sinta-se à vontade para contribuir com o projeto e ajudar a melhorar o sistema.
+
+---
