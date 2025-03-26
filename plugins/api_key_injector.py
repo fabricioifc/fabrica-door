@@ -10,12 +10,17 @@ def load_api_key(pelican):
     
     # Obtém a API_KEY do ambiente
     api_key = os.environ.get('API_KEY', '')
+    email_fabrica = os.environ.get('EMAIL_FABRICA', '')
     
     if not api_key:
         print("AVISO: API_KEY não encontrada no arquivo .env")
+
+    if not email_fabrica:
+        print("AVISO: EMAIL_FABRICA não encontrada no arquivo .env")
     
     # Adiciona ao contexto global do Pelican
     pelican.settings['API_KEY'] = api_key
+    pelican.settings['EMAIL_FABRICA'] = email_fabrica
 
 def register():
     """Registra o plugin com o Pelican"""

@@ -45,9 +45,13 @@ document.addEventListener("DOMContentLoaded", function () {
         return temp.innerHTML;
       };
 
+      // Obter a API_KEY da configuração global
+      const API_KEY = window.CONFIG ? window.CONFIG.API_KEY : "";
+      const EMAIL_FABRICA = window.CONFIG ? window.CONFIG.EMAIL_FABRICA : "";
+
       // Preparar dados sanitizados
       const emailData = {
-        destinatario: "fabricio.bizotto@ifc.edu.br",
+        destinatario: EMAIL_FABRICA,
         assunto: "[Fábrica] Nova mensagem de contato",
         corpo: window.createContactEmailBody({
           nome: sanitizeInput(nome),
@@ -60,9 +64,6 @@ document.addEventListener("DOMContentLoaded", function () {
       // Desabilitar botão durante o envio
       submitButton.disabled = true;
       submitButton.textContent = "Enviando...";
-
-      // Obter a API_KEY da configuração global
-      const API_KEY = window.CONFIG ? window.CONFIG.API_KEY : "";
 
       const response = await fetch(
         "https://fsw-ifc.brdrive.net/services/email/api/enviar-email",
