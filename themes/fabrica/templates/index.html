@@ -380,8 +380,9 @@
   </div>
 </section> -->
 <section class="hero">
-  <video class="hero-video" autoplay loop muted playsinline>
-    <source src="{{ SITEURL }}/images/videos/video-hero-background.mp4" type="video/mp4" />
+  <video class="hero-video" autoplay loop muted playsinline
+    poster="{{ THEME_STATIC_URL }}/videos/video-hero-background_poster.webp" preload="none">
+    <source src="{{ THEME_STATIC_URL }}/videos/video-hero-background.mp4" type="video/mp4">
     Seu navegador não suporta vídeo HTML5.
   </video>
   <div class="hero-overlay">
@@ -488,10 +489,11 @@
 
 <!-- Seção com vídeo de fundo -->
 <section class="video-section">
-  <video class="video-background" autoplay loop muted playsinline>
-    <source src="{{ SITEURL }}/images/videos/background.mp4" type="video/mp4" />
-    Seu navegador não suporta vídeo HTML5.
+  <video class="video-background" autoplay loop muted playsinline
+    poster="{{ SITEURL }}/images/videos/background_poster.webp" preload="none">
+    <source src="{{ SITEURL }}/images/videos/background.mp4" type="video/mp4">
   </video>
+
   <div class="video-overlay">
     <h2>Vamos transformar a educação juntos?</h2>
     <p>

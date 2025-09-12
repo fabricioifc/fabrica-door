@@ -12,7 +12,7 @@ PATH = os.getenv("CONTENT_PATH", "content")
 OUTPUT_PATH = os.getenv("OUTPUT_PATH", "output")
 THEME = "themes/fabrica"
 
-STATIC_PATHS = ['images']
+STATIC_PATHS = ['images', 'videos']
 PAGE_PATHS = ['pages', 'projetos']  # Subdiretórios para páginas e projetos
 ARTICLE_PATHS = []
 
