@@ -48,7 +48,7 @@ log "Parando containers..."
 docker compose down || error_exit "Não foi possível parar os containers"
 
 # Verificar se o branch existe no repositório remoto (apenas em production)
-if [ "$ENVIRONMENT" = "prod" ] || [ "$ENVIRONMENT" = "production" ]; then
+# if [ "$ENVIRONMENT" = "prod" ] || [ "$ENVIRONMENT" = "production" ]; then
     # log "Verificando branch '$BRANCH' no GitHub..."
     # if ! git ls-remote --heads "$GITHUB_URL" "$BRANCH" >/dev/null; then
     #     error_exit "O branch $BRANCH não existe no repositório remoto"
@@ -59,11 +59,11 @@ if [ "$ENVIRONMENT" = "prod" ] || [ "$ENVIRONMENT" = "production" ]; then
     # git fetch origin && git reset --hard "origin/$BRANCH" || error_exit "Falha ao atualizar o repositório"
 
     # Criar rede se não existir
-    if ! docker network ls --format '{{.Name}}' | grep -q "$NETWORK_NAME"; then
-        log "Criando rede $NETWORK_NAME..."
-        docker network create "$NETWORK_NAME" || error_exit "Falha ao criar rede $NETWORK_NAME"
-    fi
-fi
+    # if ! docker network ls --format '{{.Name}}' | grep -q "$NETWORK_NAME"; then
+    #     log "Criando rede $NETWORK_NAME..."
+    #     docker network create "$NETWORK_NAME" || error_exit "Falha ao criar rede $NETWORK_NAME"
+    # fi
+# fi
 
 # Build e deploy
 log "Subindo containers..."
@@ -74,11 +74,11 @@ else
 fi
 
 # Conectar à rede NGINX se necessário (apenas em production)
-if [ "$ENVIRONMENT" = "prod" ] || [ "$ENVIRONMENT" = "production" ]; then
-    if ! docker network inspect -f '{{range .Containers}}{{.Name}}{{end}}' "$NETWORK_NAME_NGINX" | grep -q "$PROJECT_NAME"; then
-        log "Conectando $PROJECT_NAME à rede $NETWORK_NAME_NGINX..."
-        docker network connect "$NETWORK_NAME_NGINX" "$PROJECT_NAME" || error_exit "Falha ao conectar à rede NGINX"
-    fi
-fi
+# if [ "$ENVIRONMENT" = "prod" ] || [ "$ENVIRONMENT" = "production" ]; then
+#     if ! docker network inspect -f '{{range .Containers}}{{.Name}}{{end}}' "$NETWORK_NAME_NGINX" | grep -q "$PROJECT_NAME"; then
+#         log "Conectando $PROJECT_NAME à rede $NETWORK_NAME_NGINX..."
+#         docker network connect "$NETWORK_NAME_NGINX" "$PROJECT_NAME" || error_exit "Falha ao conectar à rede NGINX"
+#     fi
+# fi
 
 log "Deploy finalizado com sucesso em modo $ENVIRONMENT."
