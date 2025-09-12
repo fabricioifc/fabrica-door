@@ -286,6 +286,109 @@ header.scrolled {
   line-height: 1.5;
 }
 
+/* Container geral */
+.contact-wrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  padding: 1rem 0rem;
+  align-items: start;
+}
+
+.contact-card,
+.contact-map {
+  background: #fff;
+  border-radius: 16px;
+  padding: 1rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+/* Redes sociais */
+.contact-social {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.contact-social a {
+  font-size: 1.8rem;
+  background: #f3f3f3;
+  padding: 12px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.contact-social a:hover {
+  color: #fff;
+  transform: scale(1.2) rotate(8deg);
+}
+
+.contact-social a[aria-label="Instagram"]:hover {
+  background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af, #515bd4);
+}
+.contact-social a[aria-label="E-mail"]:hover {
+  background: #d93025;
+}
+.contact-social a[aria-label="GitHub"]:hover {
+  background: #24292e;
+}
+.contact-social a[aria-label="YouTube"]:hover {
+  background: #ff0000;
+}
+
+/* Área dos ícones */
+.contact-social {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+/* Estilo dos botões sociais */
+.social-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  color: #fff;
+  transition: all 0.35s ease;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animação de brilho sutil */
+.social-btn::before {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(45deg) translate(-100%, -100%);
+  transition: transform 0.5s ease;
+}
+.social-btn:hover::before {
+  transform: rotate(45deg) translate(100%, 100%);
+}
+
+/* Efeito de hover */
+.social-btn:hover {
+  transform: scale(1.2);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+/* Cores específicas */
+.social-btn.instagram { background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af, #515bd4); }
+.social-btn.email     { background: #d93025; }
+.social-btn.github    { background: #24292e; }
+.social-btn.youtube   { background: #ff0000; }
+
+
+
 /* Estilos de formulário */
 .form-group {
   margin-bottom: 20px;

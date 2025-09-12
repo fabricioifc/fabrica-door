@@ -57,6 +57,7 @@ JINJA_GLOBALS = {
 EMAIL_FABRICA = 'fabricadesoftware.videira@ifc.edu.br'
 GOOGLE_ANALYTICS = os.getenv("GOOGLE_ANALYTICS", "")
 SOCIAL_LINKS = [
+    ('instagram', 'https://www.instagram.com/fsw.ifcvideira/'),
     ('github', 'https://github.com/fabricaSoftwareVideira'),
     ('youtube', 'https://www.youtube.com/@FábricadeSoftwareCampusVideira')
 ]
