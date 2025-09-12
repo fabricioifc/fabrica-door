@@ -44,8 +44,8 @@ command -v docker >/dev/null 2>&1 || error_exit "Docker não está instalado"
 command -v docker compose >/dev/null 2>&1 || error_exit "Docker Compose não está instalado"
 
 # Parar os containers atuais
-log "Parando containers..."
-docker compose down || error_exit "Não foi possível parar os containers"
+# log "Parando containers..."
+# docker compose down || error_exit "Não foi possível parar os containers"
 
 # Verificar se o branch existe no repositório remoto (apenas em production)
 # if [ "$ENVIRONMENT" = "prod" ] || [ "$ENVIRONMENT" = "production" ]; then

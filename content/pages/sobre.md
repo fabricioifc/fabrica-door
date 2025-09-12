@@ -3,7 +3,7 @@ Slug: sobre
 
 # Sobre a Fábrica de Software
 
-A Fábrica de Software nasceu da convicção de que a tecnologia pode transformar positivamente a educação quando desenvolvida com propósito pedagógico real.
+A Fábrica de Software nasceu da convicção de que a tecnologia pode transformar positivamente a educação quando desenvolvida com propósito pedagógico.
 
 ## Nossa Missão
 
@@ -17,7 +17,6 @@ Ser referência regional no desenvolvimento de software, conectando educação e
 
 - **Inovação com propósito**: Tecnologia a serviço da aprendizagem
 - **Colaboração**: Parceria com profissionais e empresas da região
-- **Qualidade**: Excelência técnica
 - **Impacto social**: Compromisso com a transformação da educação
 
 ## Nossa História

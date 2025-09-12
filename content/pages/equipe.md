@@ -14,7 +14,7 @@ Nossa equipe é coordenada por profissionais com experiência em educação e te
 
 ### Diego Kroll, Doutor.
 
-![Diego Kroll](/images/equipe/default.webp)
+![Diego Kroll](/images/equipe/diego.webp)
 
 **Professor**
 
@@ -22,7 +22,7 @@ Doutor em Informática na Educação e professor do IFC Campus Videira
 
 ### Leila Lisiane Rossi
 
-![Leila Lisiane Rossi](/images/equipe/default.webp)
+![Leila Lisiane Rossi](/images/equipe/leila.webp)
 
 **Professor**
 
