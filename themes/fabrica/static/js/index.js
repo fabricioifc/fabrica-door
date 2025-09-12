@@ -1,19 +1,35 @@
-
 const canvas = document.getElementById('particle-canvas');
 const ctx = canvas.getContext('2d');
-
-function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-}
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
 
 const particles = [];
 const particleCount = 80;
 const emojiParticles = [];
 const emojiCount = 15;
 const emojis = ["🚀", "💻", "✨", "🎉", "🌟", "🔥"];
+
+
+function resizeCanvas() {
+    const oldWidth = canvas.width;
+    const oldHeight = canvas.height;
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const scaleX = canvas.width / oldWidth;
+    const scaleY = canvas.height / oldHeight;
+
+    particles.forEach(p => {
+        p.x *= scaleX;
+        p.y *= scaleY;
+    });
+    emojiParticles.forEach(e => {
+        e.x *= scaleX;
+        e.y *= scaleY;
+    });
+}
+
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
 
 class Particle {
     constructor() {
