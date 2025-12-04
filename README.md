@@ -51,7 +51,8 @@ Para rodar o SFS localmente, basta seguir os passos abaixo:
 4. Executar o script `deploy.sh` para subir o ambiente com o seguinte comando:
 
 ```bash
-$ ./deploy.sh dev
+$ ./deploy.sh dev # modo desenvolvimento
+$ ./deploy.sh prod # modo produção
 ```
 
 5. Acesse o endereço [http://localhost:8000/](http://localhost:8000/).
