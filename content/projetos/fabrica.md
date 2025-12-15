@@ -5,8 +5,9 @@ Status: published
 Situacao: Concluído
 Start_Date: Março 2025
 End_Date: Março 2025
-Gallery: images/projects/fabrica/logo.svg, images/projects/fabrica/logo.svg
+Gallery: images/projects/fabrica/logo.svg, images/projects/fabrica/fabrica-tela.png
 GitHub_URL: https://github.com/fabricioifc/fabrica-door
+Published_URL: https://fabrica.videira.ifc.edu.br
 Technologies: HTML, CSS, JavaScript, Python/Pelican
 Members: Fabricio Bizotto (Professor)
 Key_Features: Divulgação de projetos, Portfólio da equipe, Blog, Contato
