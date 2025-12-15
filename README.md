@@ -6,7 +6,7 @@ O SFS é um sistema estático feito para divulgar os projetos desenvolvidos pela
 
 ## Onde encontrar online?
 
-Acesse o SFS em [https://fsw-ifc.brdrive.net/](https://fsw-ifc.brdrive.net/).
+Acesse o SFS em [https://fabrica.videira.ifc.edu.br](https://fabrica.videira.ifc.edu.br)
 
 ## Quem desenvolveu?
 
