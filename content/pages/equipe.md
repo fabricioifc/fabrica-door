@@ -12,6 +12,22 @@ Nossa equipe multidisciplinar reúne profissionais apaixonados por educação e 
 
 Nossa equipe é coordenada por profissionais com experiência em educação e tecnologia.
 
+### Diego Kroll, Doutor.
+
+![Diego Kroll](/images/equipe/diego.webp)
+
+**Professor**
+
+Doutor em Informática na Educação e professor do IFC Campus Videira
+
+### Leila Lisiane Rossi
+
+![Leila Lisiane Rossi](/images/equipe/leila.webp)
+
+**Professor**
+
+Mestre em Ciência da Computação e professora do IFC Campus Videira
+
 ### Fabio José Rodrigues Pinheiro, MSc.
 
 ![Fabio José Rodrigues Pinheiro](/images/equipe/fabio.webp)
@@ -44,7 +60,7 @@ Mestre em Ciência da Computação e professor do IFC Campus Videira
 
 Mestre em Ciência da Computação e professor do IFC Campus Videira
 
-## Desenvolvedores
+## Participantes e Colaboradores
 
 Conheça os desenvolvedores que fazem ou fizeram parte da nossa equipe.
 
@@ -79,3 +95,19 @@ Aluno do curso de Ciência da Computação do IFC Campus Videira.
 **Desenvolvedor Full Stack**
 
 Aluno do curso de Ciência da Computação do IFC Campus Videira.
+
+### Ana
+
+![Ana](/images/equipe/default.webp)
+
+**Desenvolvedora Full Stack**
+
+Aluna do curso Técnico em Informática Integrado ao Ensino Médio do IFC Campus Videira.
+
+### Willian
+
+![Willian](/images/equipe/default.webp)
+
+**Desenvolvedor Full Stack**
+
+Aluno do curso Técnico em Informática Integrado ao Ensino Médio do IFC Campus Videira.

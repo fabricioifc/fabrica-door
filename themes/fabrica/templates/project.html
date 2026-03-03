@@ -5,8 +5,7 @@ endif %}{{ SITENAME }} {% endblock %} {% block content %} {% if page %}
     <h1 class="project-title">{{ page.title }}</h1>
     <div class="project-meta">
       <span
-        class="project-status {% if page.situacao == 'Em Andamento' %}status-ongoing{% endif %} {% if page.situacao == 'Concluído' %}status-completed{% endif %} {% if page.situacao == 'Em Planejamento' %}status-planned{% endif %}"
-      >
+        class="project-status {% if page.situacao == 'Em Andamento' %}status-ongoing{% endif %} {% if page.situacao == 'Concluído' %}status-completed{% endif %} {% if page.situacao == 'Em Planejamento' %}status-planned{% endif %}">
         {{ page.situacao }}
       </span>
       <span class="project-dates">
@@ -22,10 +21,7 @@ endif %}{{ SITENAME }} {% endblock %} {% block content %} {% if page %}
     <div class="project-main-content">
       {% if page.featured_image %}
       <div class="project-featured-image">
-        <img
-          src="{{ SITEURL }}/{{ page.featured_image }}"
-          alt="{{ page.title }}"
-        />
+        <img src="{{ SITEURL }}/{{ page.featured_image }}" alt="{{ page.title }}" />
       </div>
       {% endif %}
 
@@ -37,14 +33,8 @@ endif %}{{ SITENAME }} {% endblock %} {% block content %} {% if page %}
         <div class="gallery-container">
           {% for image in page.gallery.split(',') %}
           <div class="gallery-item">
-            <a
-              href="{{ SITEURL }}/{{ image.strip() }}"
-              data-lightbox="project-gallery"
-            >
-              <img
-                src="{{ SITEURL }}/{{ image.strip() }}"
-                alt="Imagem do projeto {{ page.title }}"
-              />
+            <a href="{{ SITEURL }}/{{ image.strip() }}" data-lightbox="project-gallery">
+              <img src="{{ SITEURL }}/{{ image.strip() }}" alt="Imagem do projeto {{ page.title }}" />
             </a>
           </div>
           {% endfor %}
@@ -61,7 +51,18 @@ endif %}{{ SITENAME }} {% endblock %} {% block content %} {% if page %}
           <i class="fab fa-github"></i> Ver no GitHub
         </a>
       </div>
-      {% endif %} {% if page.technologies %}
+      {% endif %}
+
+      {% if page.published_url %}
+      <div class="project-card">
+        <h3>Disponibilidade</h3>
+        <a href="{{ page.published_url }}" class="external-link" target="_blank">
+          <i class="fa-solid fa-link"></i> Acessar
+        </a>
+      </div>
+      {% endif %}
+
+      {% if page.technologies %}
       <div class="project-card">
         <h3>Tecnologias</h3>
         <ul class="technologies-list">

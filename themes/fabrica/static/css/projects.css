@@ -163,6 +163,22 @@
   background-color: #000000;
 }
 
+.external-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  color: #24292e;
+  background-color: var(--secondary-color);
+  border-radius: var(--border-radius);
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.external-link:hover {
+  background-color: #f8f8f8;
+}
+
 .technologies-list,
 .members-list,
 .features-list {

@@ -7,7 +7,7 @@ services:
     env_file:
       - .env
     networks:
-      - fabrica-door-network
+      - fabrica-network
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:${PORT}"]
       interval: 30s
@@ -16,5 +16,5 @@ services:
     restart: unless-stopped
 
 networks:
-  fabrica-door-network:
-    driver: bridge
+  fabrica-network:
+    external: true

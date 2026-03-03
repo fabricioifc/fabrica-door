@@ -6,7 +6,7 @@ O SFS é um sistema estático feito para divulgar os projetos desenvolvidos pela
 
 ## Onde encontrar online?
 
-Acesse o SFS em [https://fsw-ifc.brdrive.net/](https://fsw-ifc.brdrive.net/).
+Acesse o SFS em [https://fabrica.videira.ifc.edu.br](https://fabrica.videira.ifc.edu.br)
 
 ## Quem desenvolveu?
 
@@ -51,7 +51,8 @@ Para rodar o SFS localmente, basta seguir os passos abaixo:
 4. Executar o script `deploy.sh` para subir o ambiente com o seguinte comando:
 
 ```bash
-$ ./deploy.sh dev
+$ ./deploy.sh dev # modo desenvolvimento
+$ ./deploy.sh prod # modo produção
 ```
 
 5. Acesse o endereço [http://localhost:8000/](http://localhost:8000/).
