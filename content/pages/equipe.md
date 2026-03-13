@@ -32,7 +32,7 @@ Mestre em Ciência da Computação e professora do IFC Campus Videira
 
 ![Fabio José Rodrigues Pinheiro](/images/equipe/fabio.webp)
 
-**Coordenador**
+**Professor**
 
 Mestre em Ciência da Computação e professor do IFC Campus Videira
 
@@ -46,7 +46,7 @@ Mestre em Ciência da Computação e professor do IFC Campus Videira
 
 ### Tiago Lopes Gonçalves, MSc.
 
-![Fabricio Bizotto](/images/equipe/tiago-lopes.webp)
+![Tiago Lopes Gonçalves](/images/equipe/tiago-lopes.webp)
 
 **Professor**
 
@@ -96,18 +96,18 @@ Aluno do curso de Ciência da Computação do IFC Campus Videira.
 
 Aluno do curso de Ciência da Computação do IFC Campus Videira.
 
-### Ana
+### Ana Paula Deon
 
-![Ana](/images/equipe/default.webp)
+![Ana Paula Deon](/images/equipe/default.webp)
 
-**Desenvolvedora Full Stack**
+**Estagiária**
 
 Aluna do curso Técnico em Informática Integrado ao Ensino Médio do IFC Campus Videira.
 
-### Willian
+### Willian Henrique Moreira
 
-![Willian](/images/equipe/default.webp)
+![Willian Henrique Moreira](/images/equipe/default.webp)
 
-**Desenvolvedor Full Stack**
+**Estagiário**
 
 Aluno do curso Técnico em Informática Integrado ao Ensino Médio do IFC Campus Videira.
